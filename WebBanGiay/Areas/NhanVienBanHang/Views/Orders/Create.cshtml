@@ -1,0 +1,168 @@
+﻿@model WebBanGiay.Models.Order
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Tạo đơn hàng mới</h1>
+        <a href="@Url.Action("Index")" class="text-blue-600 hover:text-blue-800 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-red-600 mb-4" })
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Cột 1 -->
+                <div class="space-y-4">
+                    <!-- Mã đơn hàng -->
+                    <div>
+                        @Html.LabelFor(model => model.OrderNumber, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.OrderNumber, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.OrderNumber, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Khách hàng -->
+                    <div>
+                        @Html.LabelFor(model => model.CustomerID, "CustomerID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
+                        @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Ngày đặt hàng -->
+                    <div>
+                        @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Trạng thái -->
+                    <div>
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Tổng phụ -->
+                    <div>
+                        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Giảm giá -->
+                    <div>
+                        @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Phí vận chuyển -->
+                    <div>
+                        @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+                </div>
+
+                <!-- Cột 2 -->
+                <div class="space-y-4">
+                    <!-- Tổng tiền -->
+                    <div>
+                        @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Phương thức thanh toán -->
+                    <div>
+                        @Html.LabelFor(model => model.PaymentMethodID, "PaymentMethodID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.DropDownList("PaymentMethodID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
+                        @Html.ValidationMessageFor(model => model.PaymentMethodID, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Trạng thái thanh toán -->
+                    <div>
+                        @Html.LabelFor(model => model.PaymentStatus, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.PaymentStatus, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Địa chỉ giao hàng -->
+                    <div>
+                        @Html.LabelFor(model => model.ShippingAddress, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.ShippingAddress, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.ShippingAddress, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Số điện thoại -->
+                    <div>
+                        @Html.LabelFor(model => model.ShippingPhone, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.ShippingPhone, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.ShippingPhone, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Tên người nhận -->
+                    <div>
+                        @Html.LabelFor(model => model.ShippingName, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.ShippingName, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.ShippingName, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+
+                    <!-- Ghi chú -->
+                    <div>
+                        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-red-600 text-sm" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- Các trường khác -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <!-- Khuyến mãi -->
+                <div>
+                    @Html.LabelFor(model => model.PromotionID, "PromotionID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                    @Html.DropDownList("PromotionID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.PromotionID, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Người xử lý -->
+                <div>
+                    @Html.LabelFor(model => model.ProcessedBy, "ProcessedBy", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                    @Html.DropDownList("ProcessedBy", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
+                    @Html.ValidationMessageFor(model => model.ProcessedBy, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Ngày xử lý -->
+                <div>
+                    @Html.LabelFor(model => model.ProcessedDate, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                    @Html.EditorFor(model => model.ProcessedDate, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
+                    @Html.ValidationMessageFor(model => model.ProcessedDate, "", new { @class = "text-red-600 text-sm" })
+                </div>
+            </div>
+
+            <!-- Nút Submit -->
+            <div class="mt-8">
+                <button type="submit" class="w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+                    Tạo đơn hàng
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

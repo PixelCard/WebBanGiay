@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!-- Thêm Tailwind CSS từ CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#2c3e50',
+                        accent: '#e74c3c',
+                        light: '#ecf0f1',
+                        dark: '#2c3e50',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Thêm vào phần head -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Thêm trước khi đóng body -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script> <!-- Optional: Tiếng Việt -->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-secondary to-dark shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                @Html.ActionLink("My App", "Index", "Home", new { area = "" },
+                new { @class = "text-white text-2xl font-bold hover:scale-105 transition-transform" })
+
+                <button class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <div class="hidden md:flex space-x-4">
+                    @Html.ActionLink("Home", "Index", "Home", new { area = "" },
+                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
+                    @Html.ActionLink("About", "About", "Home", new { area = "" },
+                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
+                    @Html.ActionLink("Contact", "Contact", "Home", new { area = "" },
+                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 min-h-[calc(100vh-120px)]">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-6 shadow-inner">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

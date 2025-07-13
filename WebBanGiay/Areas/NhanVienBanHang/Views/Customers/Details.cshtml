@@ -1,0 +1,108 @@
+﻿@model WebBanGiay.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Customer Details</h2>
+            <h4 class="text-lg text-gray-600">Customer Information</h4>
+        </div>
+        <div class="mt-4 sm:mt-0">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }, new { @class = "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded" })
+        </div>
+    </div>
+
+    <hr class="mb-6 border-gray-300" />
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Customer Profile</h3>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl class="divide-y divide-gray-200">
+                <!-- Responsive grid for larger screens, stacked on mobile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Username)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Username)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Email)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Email)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.FullName)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.FullName)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Phone)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Phone)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Address)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.DateOfBirth)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Gender)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Gender)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.PreferredSize)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.PreferredSize)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.PreferredBrand)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.PreferredBrand)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Newsletter)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Newsletter)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.SMSNotification)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.SMSNotification)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.IsActive)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.IsActive)</dd>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 py-5 sm:px-6">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.CreatedDate)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.CreatedDate)</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.LastLogin)</dt>
+                        <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.LastLogin)</dd>
+                    </div>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
