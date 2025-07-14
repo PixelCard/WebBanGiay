@@ -1,0 +1,77 @@
+﻿@model WebBanGiay.Models.ProductVariant
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<h2 class="text-2xl font-bold mb-4">Edit Product Variant</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="space-y-4">
+        @Html.ValidationSummary(true, "", new { @class = "text-red-500" })
+        @Html.HiddenFor(model => model.VariantID)
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.ProductID, "Product", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" })
+                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.ColorID, "Color", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.DropDownList("ColorID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" })
+                @Html.ValidationMessageFor(model => model.ColorID, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.SizeID, "Size", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.DropDownList("SizeID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" })
+                @Html.ValidationMessageFor(model => model.SizeID, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.SKU, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.SKU, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" } })
+                @Html.ValidationMessageFor(model => model.SKU, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2">
+                @Html.LabelFor(model => model.StockQuantity, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.StockQuantity, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" } })
+                @Html.ValidationMessageFor(model => model.StockQuantity, "", new { @class = "text-red-500 text-sm" })
+            </div>
+
+            <div class="space-y-2 flex items-center">
+                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700" })
+                <div class="ml-2 mt-1">
+                    @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-red-500 text-sm" })
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end space-x-4 pt-4">
+            <a href="@Url.Action("Index")" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Back to List
+            </a>
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Save
+            </button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

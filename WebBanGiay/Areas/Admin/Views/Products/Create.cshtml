@@ -1,0 +1,128 @@
+﻿@model WebBanGiay.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-6">Create Product</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h4 class="text-xl font-semibold mb-4">Product Information</h4>
+            <hr class="mb-6">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-red-500 text-sm mb-4" })
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+                    @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.BrandID, "Brand", htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" })
+                    @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.Material, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.Material, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+                    @Html.ValidationMessageFor(model => model.Material, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.BasePrice, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.BasePrice, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+                    @Html.ValidationMessageFor(model => model.BasePrice, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+
+            <div class="mb-4">
+                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", Type = "date" }})
+                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="mb-6">
+                @Html.LabelFor(model => model.CreatedBy, "Created By", htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    @Html.DropDownList("CreatedBy", null, htmlAttributes: new { @class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" })
+                    @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Create
+                </button>
+
+                <a href="@Url.Action("Index")" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Thêm thư viện jQuery UI cho date picker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            // Khởi tạo date picker
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd", // Định dạng ngày tháng
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2030" // Phạm vi năm
+            });
+
+            // Hoặc sử dụng input type="date" mặc định của HTML5
+            // $(".datepicker").attr("type", "date");
+        });
+    </script>
+}

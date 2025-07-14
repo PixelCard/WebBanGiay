@@ -1,0 +1,79 @@
+﻿@model WebBanGiay.Models.ProductImage
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Details</h2>
+
+    <div class="space-y-6">
+        <div>
+            <h4 class="text-lg font-semibold text-gray-700 mb-3">ProductImage</h4>
+            <hr class="border-gray-200 my-2">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.ImageURL)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                        @if (!string.IsNullOrEmpty(Model.ImageURL))
+                        {
+                            <img src="@Model.ImageURL" alt="Product Image" class="mt-2 w-32 h-32 object-cover rounded-md">
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.ImageURL)
+                        }
+                    </dd>
+                </div>
+
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.ImageType)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.ImageType)</dd>
+                </div>
+
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.DisplayOrder)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.DisplayOrder)</dd>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.IsActive)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">
+                        <span class="@(Model.IsActive.HasValue ? "text-green-600" : "text-red-600")">
+                            @Html.DisplayFor(model => model.IsActive)
+                        </span>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.UploadedDate)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.UploadedDate)</dd>
+                </div>
+
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Product.ProductName)</dt>
+                    <dd class="mt-1 text-sm text-gray-900">@Html.DisplayFor(model => model.Product.ProductName)</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200">
+            <div class="flex flex-wrap gap-4">
+                <a href="@Url.Action("Edit", new { id = Model.ImageID })"
+                   class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+                    Edit
+                </a>
+                <a href="@Url.Action("Index")"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-200">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

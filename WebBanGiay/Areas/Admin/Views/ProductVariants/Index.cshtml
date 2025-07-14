@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebBanGiay.Models.ProductVariant>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Product Variants</h2>
+        <a href="@Url.Action("Create")" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+            Create New
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        @Html.DisplayNameFor(model => model.SKU)
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        @Html.DisplayNameFor(model => model.StockQuantity)
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Color
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Product
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Size
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.SKU)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.StockQuantity)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full @(item.IsActive.HasValue ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.Color.ColorName)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @Html.DisplayFor(modelItem => item.Size.SizeName)
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div class="space-x-2">
+                                <a href="@Url.Action("Edit", new { id=item.VariantID })" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <a href="@Url.Action("Details", new { id=item.VariantID })" class="text-gray-600 hover:text-gray-900">Details</a>
+                                <a href="@Url.Action("Delete", new { id=item.VariantID })" class="text-red-600 hover:text-red-900">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

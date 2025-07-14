@@ -1,0 +1,104 @@
+﻿@model WebBanGiay.Models.ProductImage
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="space-y-6">
+            <h4 class="text-lg font-semibold text-gray-700">ProductImage</h4>
+            <hr class="border-gray-200 mb-6">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-red-600 text-sm mb-4" })
+            @Html.HiddenFor(model => model.ImageID)
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Product Dropdown -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="ProductID">
+                        @Html.DisplayNameFor(model => model.ProductID)
+                    </label>
+                    @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" })
+                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Image URL -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="ImageURL">
+                        @Html.DisplayNameFor(model => model.ImageURL)
+                    </label>
+                    @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" } })
+                    @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-red-600 text-sm" })
+                    @if (!string.IsNullOrEmpty(Model.ImageURL))
+                    {
+                        <div class="mt-2">
+                            <img src="@Model.ImageURL" alt="Current Image" class="h-32 w-32 object-cover rounded-md">
+                        </div>
+                    }
+                </div>
+
+                <!-- Image Type -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="ImageType">
+                        @Html.DisplayNameFor(model => model.ImageType)
+                    </label>
+                    @Html.EditorFor(model => model.ImageType, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" } })
+                    @Html.ValidationMessageFor(model => model.ImageType, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Display Order -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="DisplayOrder">
+                        @Html.DisplayNameFor(model => model.DisplayOrder)
+                    </label>
+                    @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" } })
+                    @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Is Active Checkbox -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="IsActive">
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                    <div class="mt-1 flex items-center">
+                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" } })
+                        <span class="ml-2 text-sm text-gray-700">Active</span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-red-600 text-sm" })
+                </div>
+
+                <!-- Uploaded Date -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" for="UploadedDate">
+                        @Html.DisplayNameFor(model => model.UploadedDate)
+                    </label>
+                    @Html.EditorFor(model => model.UploadedDate, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" } })
+                    @Html.ValidationMessageFor(model => model.UploadedDate, "", new { @class = "text-red-600 text-sm" })
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-6 border-t border-gray-200 flex items-center gap-4">
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                    Save Changes
+                </button>
+                <span class="text-gray-400">|</span>
+                <a href="@Url.Action("Index")" class="text-blue-600 hover:text-blue-800 hover:underline">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
