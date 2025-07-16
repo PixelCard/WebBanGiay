@@ -18,7 +18,6 @@ namespace WebBanGiay.Models
         public Nullable<int> ProductID { get; set; }
         public string ImageURL { get; set; }
         public string ImageType { get; set; }
-        public Nullable<int> DisplayOrder { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> UploadedDate { get; set; }
     

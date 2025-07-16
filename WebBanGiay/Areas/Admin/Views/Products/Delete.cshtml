@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Material)</span>
-                    <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.Material)</span>
+                    <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Material.MaterialType)</span>
+                    <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.Material.MaterialType)</span>
                 </div>
 
                 <div class="flex flex-col">
@@ -46,11 +46,6 @@
 
             <!-- Column 2 -->
             <div class="space-y-4">
-                <div class="flex flex-col">
-                    <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.BasePrice)</span>
-                    <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.BasePrice)</span>
-                </div>
-
                 <div class="flex flex-col">
                     <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.IsActive)</span>
                     <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.IsActive)</span>
@@ -72,8 +67,8 @@
                 </div>
 
                 <div class="flex flex-col">
-                    <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Employee.Username)</span>
-                    <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.Employee.Username)</span>
+                    <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Employee.Account.UserName)</span>
+                    <span class="text-base font-normal text-gray-800 mt-1">@Html.DisplayFor(model => model.Employee.Account.UserName)</span>
                 </div>
             </div>
         </div>

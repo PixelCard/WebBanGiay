@@ -28,21 +28,21 @@ namespace WebBanGiay.Models
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> BrandID { get; set; }
         public string Description { get; set; }
-        public string Material { get; set; }
         public string Gender { get; set; }
-        public decimal BasePrice { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> MaterialID { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Material Material { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductVariant> ProductVariants { get; set; }
-        public virtual Employee Employee { get; set; }
     }
 }

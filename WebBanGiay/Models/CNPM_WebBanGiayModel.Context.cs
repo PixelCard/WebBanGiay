@@ -32,12 +32,9 @@ namespace WebBanGiay.Models
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<InventoryTransaction> InventoryTransactions { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<PriceHistory> PriceHistories { get; set; }
-        public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<ProductReview> ProductReviews { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductVariant> ProductVariants { get; set; }
         public virtual DbSet<Promotion> Promotions { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
@@ -48,6 +45,11 @@ namespace WebBanGiay.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Material> Materials { get; set; }
+        public virtual DbSet<ProductImage> ProductImages { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Shipping> Shippings { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

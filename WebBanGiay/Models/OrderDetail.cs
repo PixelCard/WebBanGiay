@@ -21,7 +21,7 @@ namespace WebBanGiay.Models
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
     
-        public virtual Order Order { get; set; }
         public virtual ProductVariant ProductVariant { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

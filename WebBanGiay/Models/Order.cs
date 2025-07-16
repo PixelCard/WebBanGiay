@@ -28,25 +28,23 @@ namespace WebBanGiay.Models
         public string Status { get; set; }
         public decimal SubTotal { get; set; }
         public Nullable<decimal> DiscountAmount { get; set; }
-        public Nullable<decimal> ShippingFee { get; set; }
         public decimal TotalAmount { get; set; }
         public Nullable<int> PaymentMethodID { get; set; }
         public string PaymentStatus { get; set; }
-        public string ShippingAddress { get; set; }
-        public string ShippingPhone { get; set; }
-        public string ShippingName { get; set; }
         public string Notes { get; set; }
         public Nullable<int> PromotionID { get; set; }
         public Nullable<int> ProcessedBy { get; set; }
         public Nullable<System.DateTime> ProcessedDate { get; set; }
+        public Nullable<int> ShippingID { get; set; }
     
+        public virtual Customer Customer { get; set; }
+        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }
         public virtual Promotion Promotion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Shipping Shipping { get; set; }
     }
 }

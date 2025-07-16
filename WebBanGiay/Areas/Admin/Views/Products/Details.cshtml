@@ -35,11 +35,6 @@
                         <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Category.CategoryName)</span>
                         <span class="text-lg font-semibold text-gray-800 mt-1">@Html.DisplayFor(model => model.Category.CategoryName)</span>
                     </div>
-
-                    <div class="flex flex-col">
-                        <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.BasePrice)</span>
-                        <span class="text-lg font-semibold text-blue-600 mt-1">@Html.DisplayFor(model => model.BasePrice)</span>
-                    </div>
                 </div>
 
                 <!-- Column 2 -->
@@ -50,8 +45,8 @@
                     </div>
 
                     <div class="flex flex-col">
-                        <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Material)</span>
-                        <span class="text-lg font-semibold text-gray-800 mt-1">@Html.DisplayFor(model => model.Material)</span>
+                        <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Material.MaterialType)</span>
+                        <span class="text-lg font-semibold text-gray-800 mt-1">@Html.DisplayFor(model => model.Material.MaterialType)</span>
                     </div>
 
                     <div class="flex flex-col">
@@ -67,8 +62,8 @@
                     </div>
 
                     <div class="flex flex-col">
-                        <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Employee.Username)</span>
-                        <span class="text-lg font-semibold text-gray-800 mt-1">@Html.DisplayFor(model => model.Employee.Username)</span>
+                        <span class="text-sm font-medium text-gray-500">@Html.DisplayNameFor(model => model.Employee.Account.UserName)</span>
+                        <span class="text-lg font-semibold text-gray-800 mt-1">@Html.DisplayFor(model => model.Employee.Account.UserName)</span>
                     </div>
                 </div>
             </div>

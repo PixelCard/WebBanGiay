@@ -13,15 +13,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FullName)
         </th>
         <th>
@@ -55,22 +46,16 @@
             @Html.DisplayNameFor(model => model.LastLogin)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Admin.Username)
+            @Html.DisplayNameFor(model => model.Account.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admin.FullName)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FullName)
         </td>
@@ -105,7 +90,10 @@
             @Html.DisplayFor(modelItem => item.LastLogin)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Admin.Username)
+            @Html.DisplayFor(modelItem => item.Account.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admin.FullName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |

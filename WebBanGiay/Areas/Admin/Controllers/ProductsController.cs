@@ -14,14 +14,14 @@ namespace WebBanGiay.Areas.Admin.Controllers
     {
         private CNPM_LTEntities db = new CNPM_LTEntities();
 
-        // GET: Admin/Products
+        // GET: Admin/Products1
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.Employee);
+            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.Employee).Include(p => p.Material);
             return View(products.ToList());
         }
 
-        // GET: Admin/Products/Details/5
+        // GET: Admin/Products1/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,21 +36,22 @@ namespace WebBanGiay.Areas.Admin.Controllers
             return View(product);
         }
 
-        // GET: Admin/Products/Create
+        // GET: Admin/Products1/Create
         public ActionResult Create()
         {
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
-            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "Username");
+            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "FullName");
+            ViewBag.MaterialID = new SelectList(db.Materials, "MaterialID", "MaterialType");
             return View();
         }
 
-        // POST: Admin/Products/Create
+        // POST: Admin/Products1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,ProductName,ProductCode,CategoryID,BrandID,Description,Material,Gender,BasePrice,IsActive,CreatedDate,CreatedBy")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,ProductName,ProductCode,CategoryID,BrandID,Description,Gender,IsActive,CreatedDate,CreatedBy,MaterialID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -61,11 +62,12 @@ namespace WebBanGiay.Areas.Admin.Controllers
 
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", product.BrandID);
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "Username", product.CreatedBy);
+            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "FullName", product.CreatedBy);
+            ViewBag.MaterialID = new SelectList(db.Materials, "MaterialID", "MaterialType", product.MaterialID);
             return View(product);
         }
 
-        // GET: Admin/Products/Edit/5
+        // GET: Admin/Products1/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,16 +81,17 @@ namespace WebBanGiay.Areas.Admin.Controllers
             }
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", product.BrandID);
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "Username", product.CreatedBy);
+            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "FullName", product.CreatedBy);
+            ViewBag.MaterialID = new SelectList(db.Materials, "MaterialID", "MaterialType", product.MaterialID);
             return View(product);
         }
 
-        // POST: Admin/Products/Edit/5
+        // POST: Admin/Products1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,ProductName,ProductCode,CategoryID,BrandID,Description,Material,Gender,BasePrice,IsActive,CreatedDate,CreatedBy")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,ProductName,ProductCode,CategoryID,BrandID,Description,Gender,IsActive,CreatedDate,CreatedBy,MaterialID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -98,11 +101,12 @@ namespace WebBanGiay.Areas.Admin.Controllers
             }
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", product.BrandID);
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "Username", product.CreatedBy);
+            ViewBag.CreatedBy = new SelectList(db.Employees, "EmployeeID", "FullName", product.CreatedBy);
+            ViewBag.MaterialID = new SelectList(db.Materials, "MaterialID", "MaterialType", product.MaterialID);
             return View(product);
         }
 
-        // GET: Admin/Products/Delete/5
+        // GET: Admin/Products1/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,7 +121,7 @@ namespace WebBanGiay.Areas.Admin.Controllers
             return View(product);
         }
 
-        // POST: Admin/Products/Delete/5
+        // POST: Admin/Products1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -138,3 +142,5 @@ namespace WebBanGiay.Areas.Admin.Controllers
         }
     }
 }
+
+

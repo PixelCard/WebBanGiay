@@ -1,3 +1,4 @@
+D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.VisualBasic.Core.targets
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.dll.config
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.pdb
@@ -17,7 +18,6 @@ D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.Managed.Core.targets
-D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.VisualBasic.Core.targets
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\Microsoft.Win32.Primitives.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\System.AppContext.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\roslyn\System.Collections.Immutable.dll

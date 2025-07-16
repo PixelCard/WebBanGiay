@@ -45,20 +45,14 @@
                         @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" })
                         @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-red-500 text-xs italic" })
                     </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BasePrice, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.EditorFor(model => model.BasePrice, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" } })
-                        @Html.ValidationMessageFor(model => model.BasePrice, "", new { @class = "text-red-500 text-xs italic" })
-                    </div>
                 </div>
 
                 <!-- Column 2 -->
                 <div class="space-y-4">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Material, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.EditorFor(model => model.Material, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" } })
-                        @Html.ValidationMessageFor(model => model.Material, "", new { @class = "text-red-500 text-xs italic" })
+                        @Html.LabelFor(model => model.MaterialID, "MaterialID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
+                        @Html.DropDownList("MaterialID", null, htmlAttributes: new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" })
+                        @Html.ValidationMessageFor(model => model.MaterialID, "", new { @class = "text-red-500 text-xs italic" })
                     </div>
 
                     <div class="form-group">

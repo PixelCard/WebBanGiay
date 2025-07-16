@@ -136,12 +136,14 @@
     <Compile Include="Areas\Admin\Controllers\ProductReviewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductVariantsController.cs" />
-    <Compile Include="Areas\NhanVienBanHang\Controllers\CustomersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CheckOutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductDetailsController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +186,9 @@
     <Compile Include="Models\InventoryTransaction.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Material.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\model class\Account.cs" />
     <Compile Include="Models\model class\order.cs" />
     <Compile Include="Models\Order.cs">
@@ -214,6 +219,9 @@
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Shipping.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShoppingCart.cs">
@@ -370,9 +378,6 @@
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Details.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Edit.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Index.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Create.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Details.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin.cshtml" />
@@ -396,12 +401,12 @@
     <Content Include="Areas\Admin\Views\ProductReviews\Details.cshtml" />
     <Content Include="Areas\Admin\Views\ProductReviews\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ProductReviews\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPage\Index.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />
@@ -458,6 +463,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\LoginPage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\ShoppingCart\ShoppingCartPage.cshtml" />
+    <Content Include="Views\CheckOut\Checkoutpage.cshtml" />
+    <Content Include="Views\ProductDetails\ProductDetailsPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -106,6 +106,13 @@
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ReferenceID" Type="int" />
   </EntityType>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="MaterialID" />
+    </Key>
+    <Property Name="MaterialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaterialType" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
   <EntityType Name="OrderDetails">
     <Key>
       <PropertyRef Name="OrderDetailID" />
@@ -128,17 +135,14 @@
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="SubTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="DiscountAmount" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="ShippingFee" Type="decimal" Precision="18" Scale="2" />
     <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="PaymentMethodID" Type="int" />
     <Property Name="PaymentStatus" Type="nvarchar" MaxLength="50" />
-    <Property Name="ShippingAddress" Type="nvarchar" MaxLength="500" />
-    <Property Name="ShippingPhone" Type="nvarchar" MaxLength="20" />
-    <Property Name="ShippingName" Type="nvarchar" MaxLength="100" />
     <Property Name="Notes" Type="nvarchar" MaxLength="500" />
     <Property Name="PromotionID" Type="int" />
     <Property Name="ProcessedBy" Type="int" />
     <Property Name="ProcessedDate" Type="datetime" />
+    <Property Name="ShippingID" Type="int" />
   </EntityType>
   <EntityType Name="PaymentMethods">
     <Key>
@@ -169,7 +173,6 @@
     <Property Name="ProductID" Type="int" />
     <Property Name="ImageURL" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="ImageType" Type="nvarchar" MaxLength="20" />
-    <Property Name="DisplayOrder" Type="int" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="UploadedDate" Type="datetime" />
   </EntityType>
@@ -200,12 +203,11 @@
     <Property Name="CategoryID" Type="int" />
     <Property Name="BrandID" Type="int" />
     <Property Name="Description" Type="nvarchar(max)" />
-    <Property Name="Material" Type="nvarchar" MaxLength="100" />
     <Property Name="Gender" Type="nvarchar" MaxLength="10" />
-    <Property Name="BasePrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
+    <Property Name="MaterialID" Type="int" />
   </EntityType>
   <EntityType Name="ProductVariants">
     <Key>
@@ -245,6 +247,16 @@
     </Key>
     <Property Name="IDRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenRole" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shipping">
+    <Key>
+      <PropertyRef Name="ShippingID" />
+    </Key>
+    <Property Name="ShippingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShippingAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="ShippingPhone" Type="nvarchar" MaxLength="20" />
+    <Property Name="ShippingName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ShippingFee" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="ShoppingCart">
     <Key>
@@ -611,6 +623,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Products">
+    <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Material">
+        <PropertyRef Name="MaterialID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="MaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Role">
     <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
     <End Role="Account" Type="Self.Account" Multiplicity="*" />
@@ -620,6 +644,18 @@
       </Principal>
       <Dependent Role="Account">
         <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shipping">
+    <End Role="Shipping" Type="Self.Shipping" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shipping">
+        <PropertyRef Name="ShippingID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ShippingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -663,6 +699,7 @@
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventoryTransactions" EntityType="Self.InventoryTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethods" Schema="dbo" store:Type="Tables" />
@@ -673,6 +710,7 @@
     <EntitySet Name="ProductVariants" EntityType="Self.ProductVariants" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Promotions" EntityType="Self.Promotions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shipping" EntityType="Self.Shipping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -788,9 +826,17 @@
       <End Role="Account" EntitySet="Account" />
       <End Role="Employees" EntitySet="Employees" />
     </AssociationSet>
+    <AssociationSet Name="FK_Products" Association="Self.FK_Products">
+      <End Role="Material" EntitySet="Material" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
     <AssociationSet Name="FK_Role" Association="Self.FK_Role">
       <End Role="Role" EntitySet="Role" />
       <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shipping" Association="Self.FK_Shipping">
+      <End Role="Shipping" EntitySet="Shipping" />
+      <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

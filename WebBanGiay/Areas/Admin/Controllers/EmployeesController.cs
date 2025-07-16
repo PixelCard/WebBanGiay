@@ -17,7 +17,7 @@ namespace WebBanGiay.Areas.Admin.Controllers
         // GET: Admin/Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.Admin);
+            var employees = db.Employees.Include(e => e.Account).Include(e => e.Admin);
             return View(employees.ToList());
         }
 
@@ -39,7 +39,8 @@ namespace WebBanGiay.Areas.Admin.Controllers
         // GET: Admin/Employees/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "Username");
+            ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email");
+            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "FullName");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace WebBanGiay.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeID,Username,Email,PasswordHash,FullName,Phone,Address,DateOfBirth,Gender,HireDate,Salary,Department,IsActive,CreatedDate,CreatedBy,LastLogin")] Employee employee)
+        public ActionResult Create([Bind(Include = "EmployeeID,FullName,Phone,Address,DateOfBirth,Gender,HireDate,Salary,Department,IsActive,CreatedDate,CreatedBy,LastLogin,IDAccount")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +58,8 @@ namespace WebBanGiay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "Username", employee.CreatedBy);
+            ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email", employee.IDAccount);
+            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "FullName", employee.CreatedBy);
             return View(employee);
         }
 
@@ -73,7 +75,8 @@ namespace WebBanGiay.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "Username", employee.CreatedBy);
+            ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email", employee.IDAccount);
+            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "FullName", employee.CreatedBy);
             return View(employee);
         }
 
@@ -82,7 +85,7 @@ namespace WebBanGiay.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeID,Username,Email,PasswordHash,FullName,Phone,Address,DateOfBirth,Gender,HireDate,Salary,Department,IsActive,CreatedDate,CreatedBy,LastLogin")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeID,FullName,Phone,Address,DateOfBirth,Gender,HireDate,Salary,Department,IsActive,CreatedDate,CreatedBy,LastLogin,IDAccount")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +93,8 @@ namespace WebBanGiay.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "Username", employee.CreatedBy);
+            ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email", employee.IDAccount);
+            ViewBag.CreatedBy = new SelectList(db.Admins, "AdminID", "FullName", employee.CreatedBy);
             return View(employee);
         }
 

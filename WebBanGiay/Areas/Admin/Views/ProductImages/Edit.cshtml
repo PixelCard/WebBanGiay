@@ -53,14 +53,6 @@
                     @Html.ValidationMessageFor(model => model.ImageType, "", new { @class = "text-red-600 text-sm" })
                 </div>
 
-                <!-- Display Order -->
-                <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-700" for="DisplayOrder">
-                        @Html.DisplayNameFor(model => model.DisplayOrder)
-                    </label>
-                    @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border" } })
-                    @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-red-600 text-sm" })
-                </div>
 
                 <!-- Is Active Checkbox -->
                 <div class="space-y-2">

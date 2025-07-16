@@ -48,7 +48,7 @@ namespace WebBanGiay.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ImageID,ProductID,ImageURL,ImageType,DisplayOrder,IsActive,UploadedDate")] ProductImage productImage)
+        public ActionResult Create([Bind(Include = "ImageID,ProductID,ImageURL,ImageType,IsActive,UploadedDate")] ProductImage productImage)
         {
             if (ModelState.IsValid)
             {

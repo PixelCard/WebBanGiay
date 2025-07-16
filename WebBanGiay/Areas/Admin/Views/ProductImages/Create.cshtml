@@ -47,13 +47,6 @@
                         new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" })
                     @Html.ValidationMessageFor(model => model.ImageType, "", new { @class = "text-red-500 text-sm" })
                 </div>
-
-                <div class="sm:col-span-3">
-                    <label for="DisplayOrder" class="block text-sm font-medium text-gray-700">Display Order</label>
-                    @Html.EditorFor(model => model.DisplayOrder,
-                        new { htmlAttributes = new { @class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500", type = "number", min = "0" } })
-                    @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-red-500 text-sm" })
-                </div>
             </div>
 
             <!-- Status and Upload Date -->

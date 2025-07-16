@@ -59,12 +59,13 @@
                                 <span class="text-gray-400">No image</span>
                             }
                         </td>
+
+
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             @item.ImageType
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            @item.DisplayOrder
-                        </td>
+
+
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full @(item.IsActive.HasValue ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
                                 @(item.IsActive.HasValue ? "Active" : "Inactive")

@@ -10,7 +10,7 @@
     <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Products" Relationship="Self.FK__Products__BrandI__48CFD27E" FromRole="Brands" ToRole="Products" />
+    <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__BrandI__48CFD27E" FromRole="Brand" ToRole="Product" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -21,7 +21,7 @@
     <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__47DBAE45" FromRole="Categories" ToRole="Products" />
+    <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__Catego__47DBAE45" FromRole="Category" ToRole="Product" />
   </EntityType>
   <EntityType Name="Color">
     <Key>
@@ -60,37 +60,8 @@
     <Property Name="Quantity" Type="Int32" Nullable="false" />
     <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <NavigationProperty Name="Order" Relationship="Self.FK__OrderDeta__Order__76969D2E" FromRole="OrderDetails" ToRole="Orders" />
     <NavigationProperty Name="ProductVariant" Relationship="Self.FK__OrderDeta__Varia__778AC167" FromRole="OrderDetails" ToRole="ProductVariants" />
-  </EntityType>
-  <EntityType Name="Order">
-    <Key>
-      <PropertyRef Name="OrderID" />
-    </Key>
-    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CustomerID" Type="Int32" />
-    <Property Name="OrderDate" Type="DateTime" Precision="3" />
-    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="SubTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="DiscountAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ShippingFee" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="PaymentMethodID" Type="Int32" />
-    <Property Name="PaymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ShippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="ShippingPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="ShippingName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="PromotionID" Type="Int32" />
-    <Property Name="ProcessedBy" Type="Int32" />
-    <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__76969D2E" FromRole="Orders" ToRole="OrderDetails" />
-    <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Orders__PaymentM__6FE99F9F" FromRole="Orders" ToRole="PaymentMethods" />
-    <NavigationProperty Name="Promotion" Relationship="Self.FK__Orders__Promotio__72C60C4A" FromRole="Orders" ToRole="Promotions" />
-    <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Order__7E37BEF6" FromRole="Orders" ToRole="ProductReviews" />
-    <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Order" ToRole="Customer" />
-    <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Order" ToRole="Employee" />
+    <NavigationProperty Name="Order" Relationship="CNPM_LTModel.FK__OrderDeta__Order__76969D2E" FromRole="OrderDetail" ToRole="Order" />
   </EntityType>
   <EntityType Name="PaymentMethod">
     <Key>
@@ -100,7 +71,7 @@
     <Property Name="MethodName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
-    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__PaymentM__6FE99F9F" FromRole="PaymentMethods" ToRole="Orders" />
+    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F" FromRole="PaymentMethod" ToRole="Order" />
   </EntityType>
   <EntityType Name="PriceHistory">
     <Key>
@@ -115,19 +86,6 @@
     <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ProductVariant" Relationship="Self.FK__PriceHist__Varia__0C85DE4D" FromRole="PriceHistory" ToRole="ProductVariants" />
     <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" FromRole="PriceHistory" ToRole="Employee" />
-  </EntityType>
-  <EntityType Name="ProductImage">
-    <Key>
-      <PropertyRef Name="ImageID" />
-    </Key>
-    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="Int32" />
-    <Property Name="ImageURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ImageType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="DisplayOrder" Type="Int32" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="UploadedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Product" Relationship="Self.FK__ProductIm__Produ__5812160E" FromRole="ProductImages" ToRole="Products" />
   </EntityType>
   <EntityType Name="ProductReview">
     <Key>
@@ -145,33 +103,10 @@
     <Property Name="ReviewDate" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
     <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Order" Relationship="Self.FK__ProductRe__Order__7E37BEF6" FromRole="ProductReviews" ToRole="Orders" />
-    <NavigationProperty Name="Product" Relationship="Self.FK__ProductRe__Produ__7C4F7684" FromRole="ProductReviews" ToRole="Products" />
     <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" FromRole="ProductReview" ToRole="Customer" />
     <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" FromRole="ProductReview" ToRole="Employee" />
-  </EntityType>
-  <EntityType Name="Product">
-    <Key>
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CategoryID" Type="Int32" />
-    <Property Name="BrandID" Type="Int32" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Material" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="BasePrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <NavigationProperty Name="Brand" Relationship="Self.FK__Products__BrandI__48CFD27E" FromRole="Products" ToRole="Brands" />
-    <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__47DBAE45" FromRole="Products" ToRole="Categories" />
-    <NavigationProperty Name="ProductImages" Relationship="Self.FK__ProductIm__Produ__5812160E" FromRole="Products" ToRole="ProductImages" />
-    <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Produ__7C4F7684" FromRole="Products" ToRole="ProductReviews" />
-    <NavigationProperty Name="ProductVariants" Relationship="Self.FK__ProductVa__Produ__5165187F" FromRole="Products" ToRole="ProductVariants" />
-    <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Product" ToRole="Employee" />
+    <NavigationProperty Name="Product" Relationship="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684" FromRole="ProductReview" ToRole="Product" />
+    <NavigationProperty Name="Order" Relationship="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" FromRole="ProductReview" ToRole="Order" />
   </EntityType>
   <EntityType Name="ProductVariant">
     <Key>
@@ -189,9 +124,9 @@
     <NavigationProperty Name="InventoryTransactions" Relationship="Self.FK__Inventory__Varia__114A936A" FromRole="ProductVariants" ToRole="InventoryTransactions" />
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Varia__778AC167" FromRole="ProductVariants" ToRole="OrderDetails" />
     <NavigationProperty Name="PriceHistories" Relationship="Self.FK__PriceHist__Varia__0C85DE4D" FromRole="ProductVariants" ToRole="PriceHistory" />
-    <NavigationProperty Name="Product" Relationship="Self.FK__ProductVa__Produ__5165187F" FromRole="ProductVariants" ToRole="Products" />
     <NavigationProperty Name="Size" Relationship="Self.FK__ProductVa__SizeI__534D60F1" FromRole="ProductVariants" ToRole="Sizes" />
     <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__Varia__07C12930" FromRole="ProductVariants" ToRole="ShoppingCart" />
+    <NavigationProperty Name="Product" Relationship="CNPM_LTModel.FK__ProductVa__Produ__5165187F" FromRole="ProductVariant" ToRole="Product" />
   </EntityType>
   <EntityType Name="Promotion">
     <Key>
@@ -211,8 +146,8 @@
     <Property Name="UsedCount" Type="Int32" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Promotio__72C60C4A" FromRole="Promotions" ToRole="Orders" />
     <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Promotion__Creat__628FA481" FromRole="Promotion" ToRole="Employee" />
+    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Promotio__72C60C4A" FromRole="Promotion" ToRole="Order" />
   </EntityType>
   <EntityType Name="ShoppingCart">
     <Key>
@@ -246,30 +181,6 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
-  <Association Name="FK__Products__BrandI__48CFD27E">
-    <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
-    <End Role="Products" Type="Self.Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Brands">
-        <PropertyRef Name="BrandID" />
-      </Principal>
-      <Dependent Role="Products">
-        <PropertyRef Name="BrandID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Products__Catego__47DBAE45">
-    <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
-    <End Role="Products" Type="Self.Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Categories">
-        <PropertyRef Name="CategoryID" />
-      </Principal>
-      <Dependent Role="Products">
-        <PropertyRef Name="CategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__ProductVa__Color__52593CB8">
     <End Role="Colors" Type="Self.Color" Multiplicity="0..1" />
     <End Role="ProductVariants" Type="Self.ProductVariant" Multiplicity="*" />
@@ -294,18 +205,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderDeta__Order__76969D2E">
-    <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Orders">
-        <PropertyRef Name="OrderID" />
-      </Principal>
-      <Dependent Role="OrderDetails">
-        <PropertyRef Name="OrderID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__OrderDeta__Varia__778AC167">
     <End Role="ProductVariants" Type="Self.ProductVariant" Multiplicity="0..1" />
     <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
@@ -318,42 +217,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Orders__PaymentM__6FE99F9F">
-    <End Role="PaymentMethods" Type="Self.PaymentMethod" Multiplicity="0..1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PaymentMethods">
-        <PropertyRef Name="PaymentMethodID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="PaymentMethodID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Orders__Promotio__72C60C4A">
-    <End Role="Promotions" Type="Self.Promotion" Multiplicity="0..1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Promotions">
-        <PropertyRef Name="PromotionID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="PromotionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__ProductRe__Order__7E37BEF6">
-    <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-    <End Role="ProductReviews" Type="Self.ProductReview" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Orders">
-        <PropertyRef Name="OrderID" />
-      </Principal>
-      <Dependent Role="ProductReviews">
-        <PropertyRef Name="OrderID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__PriceHist__Varia__0C85DE4D">
     <End Role="ProductVariants" Type="Self.ProductVariant" Multiplicity="0..1" />
     <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
@@ -363,42 +226,6 @@
       </Principal>
       <Dependent Role="PriceHistory">
         <PropertyRef Name="VariantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__ProductIm__Produ__5812160E">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductImages" Type="Self.ProductImage" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductImages">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__ProductRe__Produ__7C4F7684">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductReviews" Type="Self.ProductReview" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductReviews">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__ProductVa__Produ__5165187F">
-    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ProductVariants" Type="Self.ProductVariant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="ProductVariants">
-        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -432,25 +259,14 @@
     <EntitySet Name="Colors" EntityType="Self.Color" />
     <EntitySet Name="InventoryTransactions" EntityType="Self.InventoryTransaction" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-    <EntitySet Name="Orders" EntityType="Self.Order" />
     <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
     <EntitySet Name="PriceHistories" EntityType="Self.PriceHistory" />
-    <EntitySet Name="ProductImages" EntityType="Self.ProductImage" />
     <EntitySet Name="ProductReviews" EntityType="Self.ProductReview" />
-    <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="ProductVariants" EntityType="Self.ProductVariant" />
     <EntitySet Name="Promotions" EntityType="Self.Promotion" />
     <EntitySet Name="ShoppingCarts" EntityType="Self.ShoppingCart" />
     <EntitySet Name="Sizes" EntityType="Self.Size" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-    <AssociationSet Name="FK__Products__BrandI__48CFD27E" Association="Self.FK__Products__BrandI__48CFD27E">
-      <End Role="Brands" EntitySet="Brands" />
-      <End Role="Products" EntitySet="Products" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Products__Catego__47DBAE45" Association="Self.FK__Products__Catego__47DBAE45">
-      <End Role="Categories" EntitySet="Categories" />
-      <End Role="Products" EntitySet="Products" />
-    </AssociationSet>
     <AssociationSet Name="FK__ProductVa__Color__52593CB8" Association="Self.FK__ProductVa__Color__52593CB8">
       <End Role="Colors" EntitySet="Colors" />
       <End Role="ProductVariants" EntitySet="ProductVariants" />
@@ -459,41 +275,13 @@
       <End Role="ProductVariants" EntitySet="ProductVariants" />
       <End Role="InventoryTransactions" EntitySet="InventoryTransactions" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderDeta__Order__76969D2E" Association="Self.FK__OrderDeta__Order__76969D2E">
-      <End Role="Orders" EntitySet="Orders" />
-      <End Role="OrderDetails" EntitySet="OrderDetails" />
-    </AssociationSet>
     <AssociationSet Name="FK__OrderDeta__Varia__778AC167" Association="Self.FK__OrderDeta__Varia__778AC167">
       <End Role="ProductVariants" EntitySet="ProductVariants" />
       <End Role="OrderDetails" EntitySet="OrderDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__PaymentM__6FE99F9F" Association="Self.FK__Orders__PaymentM__6FE99F9F">
-      <End Role="PaymentMethods" EntitySet="PaymentMethods" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Orders__Promotio__72C60C4A" Association="Self.FK__Orders__Promotio__72C60C4A">
-      <End Role="Promotions" EntitySet="Promotions" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK__ProductRe__Order__7E37BEF6" Association="Self.FK__ProductRe__Order__7E37BEF6">
-      <End Role="Orders" EntitySet="Orders" />
-      <End Role="ProductReviews" EntitySet="ProductReviews" />
-    </AssociationSet>
     <AssociationSet Name="FK__PriceHist__Varia__0C85DE4D" Association="Self.FK__PriceHist__Varia__0C85DE4D">
       <End Role="ProductVariants" EntitySet="ProductVariants" />
       <End Role="PriceHistory" EntitySet="PriceHistories" />
-    </AssociationSet>
-    <AssociationSet Name="FK__ProductIm__Produ__5812160E" Association="Self.FK__ProductIm__Produ__5812160E">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductImages" EntitySet="ProductImages" />
-    </AssociationSet>
-    <AssociationSet Name="FK__ProductRe__Produ__7C4F7684" Association="Self.FK__ProductRe__Produ__7C4F7684">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductReviews" EntitySet="ProductReviews" />
-    </AssociationSet>
-    <AssociationSet Name="FK__ProductVa__Produ__5165187F" Association="Self.FK__ProductVa__Produ__5165187F">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="ProductVariants" EntitySet="ProductVariants" />
     </AssociationSet>
     <AssociationSet Name="FK__ProductVa__SizeI__534D60F1" Association="Self.FK__ProductVa__SizeI__534D60F1">
       <End Role="Sizes" EntitySet="Sizes" />
@@ -549,10 +337,6 @@
       <End Role="Account" EntitySet="Accounts" />
       <End Role="Employee" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__Customer__6A30C649" Association="CNPM_LTModel.FK__Orders__Customer__6A30C649">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
     <AssociationSet Name="FK__ProductRe__Custo__7D439ABD" Association="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ProductReview" EntitySet="ProductReviews" />
@@ -565,10 +349,6 @@
       <End Role="Employee" EntitySet="Employees" />
       <End Role="InventoryTransaction" EntitySet="InventoryTransactions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Orders__Processe__73BA3083" Association="CNPM_LTModel.FK__Orders__Processe__73BA3083">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
     <AssociationSet Name="FK__PriceHist__Chang__0E6E26BF" Association="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="PriceHistory" EntitySet="PriceHistories" />
@@ -576,10 +356,6 @@
     <AssociationSet Name="FK__ProductRe__Appro__02FC7413" Association="CNPM_LTModel.FK__ProductRe__Appro__02FC7413">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="ProductReview" EntitySet="ProductReviews" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Products__Create__4CA06362" Association="CNPM_LTModel.FK__Products__Create__4CA06362">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Product" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="FK__Promotion__Creat__628FA481" Association="CNPM_LTModel.FK__Promotion__Creat__628FA481">
       <End Role="Employee" EntitySet="Employees" />
@@ -593,6 +369,67 @@
     <AssociationSet Name="FK__Employees__Creat__2F10007B" Association="CNPM_LTModel.FK__Employees__Creat__2F10007B">
       <End Role="Admin" EntitySet="Admins" />
       <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <EntitySet Name="Materials" EntityType="CNPM_LTModel.Material" />
+    <EntitySet Name="ProductImages" EntityType="CNPM_LTModel.ProductImage" />
+    <EntitySet Name="Products" EntityType="CNPM_LTModel.Product" />
+    <AssociationSet Name="FK__Products__BrandI__48CFD27E" Association="CNPM_LTModel.FK__Products__BrandI__48CFD27E">
+      <End Role="Brand" EntitySet="Brands" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Catego__47DBAE45" Association="CNPM_LTModel.FK__Products__Catego__47DBAE45">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Create__4CA06362" Association="CNPM_LTModel.FK__Products__Create__4CA06362">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products" Association="CNPM_LTModel.FK_Products">
+      <End Role="Material" EntitySet="Materials" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductIm__Produ__5812160E" Association="CNPM_LTModel.FK__ProductIm__Produ__5812160E">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductImage" EntitySet="ProductImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductRe__Produ__7C4F7684" Association="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductReview" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductVa__Produ__5165187F" Association="CNPM_LTModel.FK__ProductVa__Produ__5165187F">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductVariant" EntitySet="ProductVariants" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="CNPM_LTModel.Order" />
+    <EntitySet Name="Shippings" EntityType="CNPM_LTModel.Shipping" />
+    <AssociationSet Name="FK__Orders__Customer__6A30C649" Association="CNPM_LTModel.FK__Orders__Customer__6A30C649">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Processe__73BA3083" Association="CNPM_LTModel.FK__Orders__Processe__73BA3083">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Order__76969D2E" Association="CNPM_LTModel.FK__OrderDeta__Order__76969D2E">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__PaymentM__6FE99F9F" Association="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F">
+      <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Promotio__72C60C4A" Association="CNPM_LTModel.FK__Orders__Promotio__72C60C4A">
+      <End Role="Promotion" EntitySet="Promotions" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductRe__Order__7E37BEF6" Association="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="ProductReview" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shipping" Association="CNPM_LTModel.FK_Shipping">
+      <End Role="Shipping" EntitySet="Shippings" />
+      <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -659,9 +496,9 @@
     <Property Name="LastLogin" Type="DateTime" Precision="3" />
     <Property Name="IDAccount" Type="Int32" />
     <NavigationProperty Name="Account" Relationship="CNPM_LTModel.FK_Account_Customer" FromRole="Customer" ToRole="Account" />
-    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Customer" ToRole="Order" />
     <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" FromRole="Customer" ToRole="ProductReview" />
     <NavigationProperty Name="ShoppingCarts" Relationship="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" FromRole="Customer" ToRole="ShoppingCart" />
+    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Customer" ToRole="Order" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -683,12 +520,12 @@
     <Property Name="IDAccount" Type="Int32" />
     <NavigationProperty Name="Account" Relationship="CNPM_LTModel.FK_Account_Employees" FromRole="Employee" ToRole="Account" />
     <NavigationProperty Name="InventoryTransactions" Relationship="CNPM_LTModel.FK__Inventory__Creat__14270015" FromRole="Employee" ToRole="InventoryTransaction" />
-    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Employee" ToRole="Order" />
     <NavigationProperty Name="PriceHistories" Relationship="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" FromRole="Employee" ToRole="PriceHistory" />
     <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" FromRole="Employee" ToRole="ProductReview" />
-    <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Employee" ToRole="Product" />
     <NavigationProperty Name="Promotions" Relationship="CNPM_LTModel.FK__Promotion__Creat__628FA481" FromRole="Employee" ToRole="Promotion" />
     <NavigationProperty Name="Admin" Relationship="CNPM_LTModel.FK__Employees__Creat__2F10007B" FromRole="Employee" ToRole="Admin" />
+    <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Employee" ToRole="Product" />
+    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Employee" ToRole="Order" />
   </EntityType>
   <Association Name="FK_Account_Customer">
     <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="0..1" />
@@ -711,18 +548,6 @@
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="IDAccount" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Orders__Customer__6A30C649">
-    <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="0..1" />
-    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="CustomerID" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -762,18 +587,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Orders__Processe__73BA3083">
-    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
-    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeID" />
-      </Principal>
-      <Dependent Role="Order">
-        <PropertyRef Name="ProcessedBy" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__PriceHist__Chang__0E6E26BF">
     <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
     <End Type="CNPM_LTModel.PriceHistory" Role="PriceHistory" Multiplicity="*" />
@@ -795,18 +608,6 @@
       </Principal>
       <Dependent Role="ProductReview">
         <PropertyRef Name="ApprovedBy" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Products__Create__4CA06362">
-    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
-    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeID" />
-      </Principal>
-      <Dependent Role="Product">
-        <PropertyRef Name="CreatedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -858,6 +659,255 @@
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="MaterialID" />
+    </Key>
+    <Property Name="MaterialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaterialType" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK_Products" FromRole="Material" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="ProductImage">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="ImageURL" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ImageType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="UploadedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Product" Relationship="CNPM_LTModel.FK__ProductIm__Produ__5812160E" FromRole="ProductImage" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="BrandID" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="MaterialID" Type="Int32" />
+    <NavigationProperty Name="Brand" Relationship="CNPM_LTModel.FK__Products__BrandI__48CFD27E" FromRole="Product" ToRole="Brand" />
+    <NavigationProperty Name="Category" Relationship="CNPM_LTModel.FK__Products__Catego__47DBAE45" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Product" ToRole="Employee" />
+    <NavigationProperty Name="Material" Relationship="CNPM_LTModel.FK_Products" FromRole="Product" ToRole="Material" />
+    <NavigationProperty Name="ProductImages" Relationship="CNPM_LTModel.FK__ProductIm__Produ__5812160E" FromRole="Product" ToRole="ProductImage" />
+    <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684" FromRole="Product" ToRole="ProductReview" />
+    <NavigationProperty Name="ProductVariants" Relationship="CNPM_LTModel.FK__ProductVa__Produ__5165187F" FromRole="Product" ToRole="ProductVariant" />
+  </EntityType>
+  <Association Name="FK__Products__BrandI__48CFD27E">
+    <End Type="CNPM_LTModel.Brand" Role="Brand" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brand">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Catego__47DBAE45">
+    <End Type="CNPM_LTModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Create__4CA06362">
+    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products">
+    <End Type="CNPM_LTModel.Material" Role="Material" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Material">
+        <PropertyRef Name="MaterialID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="MaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductIm__Produ__5812160E">
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ProductImage" Role="ProductImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductImage">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductRe__Produ__7C4F7684">
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ProductReview" Role="ProductReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductReview">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductVa__Produ__5165187F">
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ProductVariant" Role="ProductVariant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductVariant">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="DiscountAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="PaymentMethodID" Type="Int32" />
+    <Property Name="PaymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PromotionID" Type="Int32" />
+    <Property Name="ProcessedBy" Type="Int32" />
+    <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
+    <Property Name="ShippingID" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Order" ToRole="Employee" />
+    <NavigationProperty Name="OrderDetails" Relationship="CNPM_LTModel.FK__OrderDeta__Order__76969D2E" FromRole="Order" ToRole="OrderDetail" />
+    <NavigationProperty Name="PaymentMethod" Relationship="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F" FromRole="Order" ToRole="PaymentMethod" />
+    <NavigationProperty Name="Promotion" Relationship="CNPM_LTModel.FK__Orders__Promotio__72C60C4A" FromRole="Order" ToRole="Promotion" />
+    <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" FromRole="Order" ToRole="ProductReview" />
+    <NavigationProperty Name="Shipping" Relationship="CNPM_LTModel.FK_Shipping" FromRole="Order" ToRole="Shipping" />
+  </EntityType>
+  <EntityType Name="Shipping">
+    <Key>
+      <PropertyRef Name="ShippingID" />
+    </Key>
+    <Property Name="ShippingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingFee" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK_Shipping" FromRole="Shipping" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK__Orders__Customer__6A30C649">
+    <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Processe__73BA3083">
+    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ProcessedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Order__76969D2E">
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__PaymentM__6FE99F9F">
+    <End Type="CNPM_LTModel.PaymentMethod" Role="PaymentMethod" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentMethod">
+        <PropertyRef Name="PaymentMethodID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PaymentMethodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Promotio__72C60C4A">
+    <End Type="CNPM_LTModel.Promotion" Role="Promotion" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promotion">
+        <PropertyRef Name="PromotionID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PromotionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductRe__Order__7E37BEF6">
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ProductReview" Role="ProductReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="ProductReview">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shipping">
+    <End Type="CNPM_LTModel.Shipping" Role="Shipping" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shipping">
+        <PropertyRef Name="ShippingID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ShippingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

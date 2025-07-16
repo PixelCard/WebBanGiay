@@ -4,36 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="947314c661b74b059722f96ebbc58bfb" Name="Diagram1" ZoomLevel="92">
+      <Diagram DiagramId="947314c661b74b059722f96ebbc58bfb" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="CNPM_LTModel.Brand" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.Category" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.Color" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.InventoryTransaction" Width="1.5" PointX="5.25" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.OrderDetail" Width="1.5" PointX="12.75" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CNPM_LTModel.Order" Width="1.5" PointX="7.5" PointY="22.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.PaymentMethod" Width="1.5" PointX="5.25" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.PriceHistory" Width="1.5" PointX="8.25" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CNPM_LTModel.ProductImage" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.ProductReview" Width="1.5" PointX="9.75" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CNPM_LTModel.Product" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.ProductVariant" Width="1.5" PointX="10.5" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.Promotion" Width="1.5" PointX="5.25" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.ShoppingCart" Width="1.5" PointX="12.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.Size" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CNPM_LTModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Products__BrandI__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Products__Catego__47DBAE45" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductVa__Color__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__Inventory__Varia__114A936A" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__OrderDeta__Order__76969D2E" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__OrderDeta__Varia__778AC167" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Promotio__72C60C4A" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__PriceHist__Varia__0C85DE4D" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ProductIm__Produ__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684" ManuallyRouted="false" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ProductVa__Produ__5165187F" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductVa__SizeI__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="CNPM_LTModel.FK__ShoppingC__Varia__07C12930" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CNPM_LTModel.Account" Width="1.5" PointX="0.75" PointY="9.625" />
@@ -43,18 +31,34 @@
         <EntityTypeShape EntityType="CNPM_LTModel.Employee" Width="1.5" PointX="3" PointY="17.25" />
         <AssociationConnector Association="CNPM_LTModel.FK_Account_Customer" />
         <AssociationConnector Association="CNPM_LTModel.FK_Account_Employees" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Customer__6A30C649" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" />
         <AssociationConnector Association="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" />
         <AssociationConnector Association="CNPM_LTModel.FK__Inventory__Creat__14270015" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Processe__73BA3083" />
         <AssociationConnector Association="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Products__Create__4CA06362" />
         <AssociationConnector Association="CNPM_LTModel.FK__Promotion__Creat__628FA481" />
         <EntityTypeShape EntityType="CNPM_LTModel.Admin" Width="1.5" PointX="0.5" PointY="13.75" />
         <AssociationConnector Association="CNPM_LTModel.FK_Account_Admins" />
         <AssociationConnector Association="CNPM_LTModel.FK__Employees__Creat__2F10007B" />
+        <EntityTypeShape EntityType="CNPM_LTModel.Material" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="CNPM_LTModel.ProductImage" Width="1.5" PointX="7.5" PointY="10.375" />
+        <EntityTypeShape EntityType="CNPM_LTModel.Product" Width="1.5" PointX="5.25" PointY="8.375" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Products__BrandI__48CFD27E" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Products__Catego__47DBAE45" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Products__Create__4CA06362" />
+        <AssociationConnector Association="CNPM_LTModel.FK_Products" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ProductIm__Produ__5812160E" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ProductVa__Produ__5165187F" />
+        <EntityTypeShape EntityType="CNPM_LTModel.Order" Width="1.5" PointX="7.5" PointY="21.875" />
+        <EntityTypeShape EntityType="CNPM_LTModel.Shipping" Width="1.5" PointX="5.25" PointY="20.5" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Customer__6A30C649" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Processe__73BA3083" />
+        <AssociationConnector Association="CNPM_LTModel.FK__OrderDeta__Order__76969D2E" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Promotio__72C60C4A" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" />
+        <AssociationConnector Association="CNPM_LTModel.FK_Shipping" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

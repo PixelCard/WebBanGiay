@@ -12,30 +12,20 @@ namespace WebBanGiay.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Promotion
+    public partial class Shipping
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Promotion()
+        public Shipping()
         {
             this.Orders = new HashSet<Order>();
         }
     
-        public int PromotionID { get; set; }
-        public string PromotionName { get; set; }
-        public string Description { get; set; }
-        public string DiscountType { get; set; }
-        public decimal DiscountValue { get; set; }
-        public Nullable<decimal> MinOrderAmount { get; set; }
-        public Nullable<decimal> MaxDiscountAmount { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<int> UsageLimit { get; set; }
-        public Nullable<int> UsedCount { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int ShippingID { get; set; }
+        public string ShippingAddress { get; set; }
+        public string ShippingPhone { get; set; }
+        public string ShippingName { get; set; }
+        public Nullable<decimal> ShippingFee { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
     }
