@@ -27,9 +27,9 @@ namespace WebBanGiay.Models
         public Nullable<int> ApprovedBy { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
     
-        public virtual Customer Customer { get; set; }
-        public virtual Employee Employee { get; set; }
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

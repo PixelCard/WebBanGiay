@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminPageController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductImagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductReviewsController.cs" />
@@ -139,9 +140,13 @@
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
@@ -152,7 +157,6 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CNPM_LT_DBContext.cs" />
     <Compile Include="Models\CNPM_WebBanGiayModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +184,7 @@
     <Compile Include="Models\InventoryTransaction.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\model class\Account.cs" />
     <Compile Include="Models\model class\order.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
@@ -206,6 +211,9 @@
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Promotion.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShoppingCart.cs">
@@ -393,6 +401,7 @@
     <Content Include="Areas\Admin\Views\Employees\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPage\Index.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />
@@ -447,6 +456,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\LoginPage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

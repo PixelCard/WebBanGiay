@@ -26,9 +26,6 @@ namespace WebBanGiay.Models
         }
     
         public int EmployeeID { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
@@ -41,8 +38,9 @@ namespace WebBanGiay.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastLogin { get; set; }
+        public Nullable<int> IDAccount { get; set; }
     
-        public virtual Admin Admin { get; set; }
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InventoryTransaction> InventoryTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -55,5 +53,6 @@ namespace WebBanGiay.Models
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Promotion> Promotions { get; set; }
+        public virtual Admin Admin { get; set; }
     }
 }

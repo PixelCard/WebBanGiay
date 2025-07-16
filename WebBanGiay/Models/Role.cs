@@ -12,15 +12,18 @@ namespace WebBanGiay.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ShoppingCart
+    public partial class Role
     {
-        public int CartID { get; set; }
-        public Nullable<int> CustomerID { get; set; }
-        public Nullable<int> VariantID { get; set; }
-        public int Quantity { get; set; }
-        public Nullable<System.DateTime> AddedDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Role()
+        {
+            this.Accounts = new HashSet<Account>();
+        }
     
-        public virtual ProductVariant ProductVariant { get; set; }
-        public virtual Customer Customer { get; set; }
+        public int IDRole { get; set; }
+        public string TenRole { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

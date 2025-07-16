@@ -25,7 +25,7 @@ namespace WebBanGiay.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ReferenceID { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ProductVariant ProductVariant { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

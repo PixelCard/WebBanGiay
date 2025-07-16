@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center relative">
+    <!-- Background image + overlay + stars -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1522124624696-7ea32eb9592c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBzdGFyc3xlbnwwfHwwfHx8MA%3D%3D"
+             alt="mountain background"
+             class="w-full h-full object-cover absolute inset-0" />
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900 via-purple-700 to-blue-400 opacity-80"></div>
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <circle cx="100" cy="100" r="1.5" fill="white" opacity="0.8" />
+                <circle cx="400" cy="200" r="1" fill="white" opacity="0.7" />
+                <circle cx="800" cy="150" r="1.2" fill="white" opacity="0.8" />
+                <circle cx="1200" cy="80" r="1.4" fill="white" opacity="0.7" />
+                <circle cx="600" cy="50" r="1.1" fill="white" opacity="0.8" />
+                <circle cx="300" cy="300" r="1.3" fill="white" opacity="0.7" />
+                <circle cx="1000" cy="250" r="1.2" fill="white" opacity="0.8" />
+                <circle cx="1300" cy="180" r="1.1" fill="white" opacity="0.7" />
+                <circle cx="200" cy="500" r="1.2" fill="white" opacity="0.8" />
+                <circle cx="900" cy="400" r="1.3" fill="white" opacity="0.7" />
+            </g>
+        </svg>
+    </div>
+
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen w-full">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-8 w-full max-w-md border border-white/20">
+                <h2 class="text-3xl font-bold text-white text-center mb-8">Register</h2>
+                <div class="mb-4">
+                    <label class="block text-white mb-2" for="Email">Email</label>
+                    <div class="flex items-center bg-white/20 rounded-lg px-3">
+                        <input class="w-full bg-transparent outline-none py-2 text-white placeholder-white" type="email" id="Email" name="Email" placeholder="Email" required />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-white mb-2" for="PasswordHash">Password</label>
+                    <div class="flex items-center bg-white/20 rounded-lg px-3">
+                        <input class="w-full bg-transparent outline-none py-2 text-white placeholder-white" type="password" id="PasswordHash" name="PasswordHash" placeholder="Password" required />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-white mb-2" for="UserName">User Name</label>
+                    <div class="flex items-center bg-white/20 rounded-lg px-3">
+                        <input class="w-full bg-transparent outline-none py-2 text-white placeholder-white" type="text" id="UserName" name="UserName" placeholder="User Name" required />
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-white text-purple-700 font-bold py-2 rounded-full shadow hover:bg-purple-100 transition">Register</button>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="text-red-400 text-center mt-4">@ViewBag.Error</div>
+                }
+                <div class="text-center mt-6 text-white">
+                    Đã có tài khoản?
+                    <a href="@Url.Action("LoginPage", "Account")" class="font-bold underline hover:text-purple-200">Đăng nhập</a>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

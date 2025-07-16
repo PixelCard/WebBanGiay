@@ -22,7 +22,7 @@ namespace WebBanGiay.Models
         public Nullable<int> ChangedBy { get; set; }
         public string Reason { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ProductVariant ProductVariant { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

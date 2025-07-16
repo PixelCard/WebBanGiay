@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+    // Demo số liệu, sau này truyền từ controller
+    var soTaiKhoan = 120;
+    var soSanPham = 350;
+    var tongDoanhThu = 125000000; // VND
+}
+
+<div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 mb-2">Thống kê hệ thống</h2>
+    <p class="text-gray-500">Tổng quan số liệu quản trị website.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <!-- Số tài khoản -->
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+        <div class="bg-blue-100 text-blue-600 rounded-full p-4 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </div>
+        <div class="text-2xl font-bold">@soTaiKhoan</div>
+        <div class="text-gray-500">Tài khoản đã tạo</div>
+    </div>
+    <!-- Số sản phẩm -->
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+        <div class="bg-green-100 text-green-600 rounded-full p-4 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V7a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4" /></svg>
+        </div>
+        <div class="text-2xl font-bold">@soSanPham</div>
+        <div class="text-gray-500">Sản phẩm hiện có</div>
+    </div>
+    <!-- Tổng doanh thu -->
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+        <div class="bg-yellow-100 text-yellow-600 rounded-full p-4 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 0V4m0 16v-4" /></svg>
+        </div>
+        <div class="text-2xl font-bold">@String.Format("{0:N0}", tongDoanhThu) <span class="text-base">₫</span></div>
+        <div class="text-gray-500">Tổng doanh thu</div>
+    </div>
+</div>
+
+<!-- Có thể bổ sung thêm các biểu đồ, bảng thống kê chi tiết ở đây -->
+

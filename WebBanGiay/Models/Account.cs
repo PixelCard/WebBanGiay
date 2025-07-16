@@ -12,25 +12,28 @@ namespace WebBanGiay.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Admin
+    public partial class Account
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Admin()
+        public Account()
         {
+            this.Customers = new HashSet<Customer>();
             this.Employees = new HashSet<Employee>();
+            this.Admins = new HashSet<Admin>();
         }
     
-        public int AdminID { get; set; }
-        public string FullName { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> LastLogin { get; set; }
-        public Nullable<int> IDAccount { get; set; }
+        public int IDTK { get; set; }
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
+        public string UserName { get; set; }
+        public Nullable<int> IDRole { get; set; }
     
-        public virtual Account Account { get; set; }
+        public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admin> Admins { get; set; }
     }
 }

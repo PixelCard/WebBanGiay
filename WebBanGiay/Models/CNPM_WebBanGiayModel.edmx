@@ -4,21 +4,29 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CNPM_LTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CNPM_LTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="IDTK" />
+          </Key>
+          <Property Name="IDTK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDRole" Type="int" />
+        </EntityType>
         <EntityType Name="Admins">
           <Key>
             <PropertyRef Name="AdminID" />
           </Key>
           <Property Name="AdminID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="LastLogin" Type="datetime" />
+          <Property Name="IDAccount" Type="int" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -55,9 +63,6 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
@@ -70,15 +75,13 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="LastLogin" Type="datetime" />
+          <Property Name="IDAccount" Type="int" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="EmployeeID" />
           </Key>
           <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
@@ -91,6 +94,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastLogin" Type="datetime" />
+          <Property Name="IDAccount" Type="int" />
         </EntityType>
         <EntityType Name="InventoryTransactions">
           <Key>
@@ -239,6 +243,13 @@
           <Property Name="UsedCount" Type="int" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenRole" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -569,6 +580,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Account_Admins">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Customer">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Employees">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IDRole" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -601,6 +660,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="CNPM_LTModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
@@ -617,6 +677,7 @@
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductVariants" EntityType="Self.ProductVariants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Promotions" EntityType="Self.Promotions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -720,28 +781,27 @@
             <End Role="ProductVariants" EntitySet="ProductVariants" />
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
           </AssociationSet>
+          <AssociationSet Name="FK_Account_Admins" Association="Self.FK_Account_Admins">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Customer" Association="Self.FK_Account_Customer">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Employees" Association="Self.FK_Account_Employees">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Role" Association="Self.FK_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CNPM_LTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Admin">
-          <Key>
-            <PropertyRef Name="AdminID" />
-          </Key>
-          <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastLogin" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Creat__2F10007B" FromRole="Admins" ToRole="Employees" />
-        </EntityType>
         <EntityType Name="Brand">
           <Key>
             <PropertyRef Name="BrandID" />
@@ -775,58 +835,6 @@
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="ProductVariants" Relationship="Self.FK__ProductVa__Color__52593CB8" FromRole="Colors" ToRole="ProductVariants" />
         </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerID" />
-          </Key>
-          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PreferredSize" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PreferredBrand" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Newsletter" Type="Boolean" />
-          <Property Name="SMSNotification" Type="Boolean" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastLogin" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__6A30C649" FromRole="Customers" ToRole="Orders" />
-          <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Custo__7D439ABD" FromRole="Customers" ToRole="ProductReviews" />
-          <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__Custo__06CD04F7" FromRole="Customers" ToRole="ShoppingCart" />
-        </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="EmployeeID" />
-          </Key>
-          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="HireDate" Type="DateTime" Precision="0" />
-          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="LastLogin" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Admin" Relationship="Self.FK__Employees__Creat__2F10007B" FromRole="Employees" ToRole="Admins" />
-          <NavigationProperty Name="InventoryTransactions" Relationship="Self.FK__Inventory__Creat__14270015" FromRole="Employees" ToRole="InventoryTransactions" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Processe__73BA3083" FromRole="Employees" ToRole="Orders" />
-          <NavigationProperty Name="PriceHistories" Relationship="Self.FK__PriceHist__Chang__0E6E26BF" FromRole="Employees" ToRole="PriceHistory" />
-          <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Appro__02FC7413" FromRole="Employees" ToRole="ProductReviews" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Create__4CA06362" FromRole="Employees" ToRole="Products" />
-          <NavigationProperty Name="Promotions" Relationship="Self.FK__Promotion__Creat__628FA481" FromRole="Employees" ToRole="Promotions" />
-        </EntityType>
         <EntityType Name="InventoryTransaction">
           <Key>
             <PropertyRef Name="TransactionID" />
@@ -841,8 +849,8 @@
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ReferenceID" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Inventory__Creat__14270015" FromRole="InventoryTransactions" ToRole="Employees" />
           <NavigationProperty Name="ProductVariant" Relationship="Self.FK__Inventory__Varia__114A936A" FromRole="InventoryTransactions" ToRole="ProductVariants" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Inventory__Creat__14270015" FromRole="InventoryTransaction" ToRole="Employee" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -879,12 +887,12 @@
           <Property Name="PromotionID" Type="Int32" />
           <Property Name="ProcessedBy" Type="Int32" />
           <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__Customer__6A30C649" FromRole="Orders" ToRole="Customers" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Orders__Processe__73BA3083" FromRole="Orders" ToRole="Employees" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__76969D2E" FromRole="Orders" ToRole="OrderDetails" />
           <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Orders__PaymentM__6FE99F9F" FromRole="Orders" ToRole="PaymentMethods" />
           <NavigationProperty Name="Promotion" Relationship="Self.FK__Orders__Promotio__72C60C4A" FromRole="Orders" ToRole="Promotions" />
           <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Order__7E37BEF6" FromRole="Orders" ToRole="ProductReviews" />
+          <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Order" ToRole="Employee" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -907,8 +915,8 @@
           <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
           <Property Name="ChangedBy" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__PriceHist__Chang__0E6E26BF" FromRole="PriceHistory" ToRole="Employees" />
           <NavigationProperty Name="ProductVariant" Relationship="Self.FK__PriceHist__Varia__0C85DE4D" FromRole="PriceHistory" ToRole="ProductVariants" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" FromRole="PriceHistory" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -939,10 +947,10 @@
           <Property Name="ReviewDate" Type="DateTime" Precision="3" />
           <Property Name="ApprovedBy" Type="Int32" />
           <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__ProductRe__Custo__7D439ABD" FromRole="ProductReviews" ToRole="Customers" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__ProductRe__Appro__02FC7413" FromRole="ProductReviews" ToRole="Employees" />
           <NavigationProperty Name="Order" Relationship="Self.FK__ProductRe__Order__7E37BEF6" FromRole="ProductReviews" ToRole="Orders" />
           <NavigationProperty Name="Product" Relationship="Self.FK__ProductRe__Produ__7C4F7684" FromRole="ProductReviews" ToRole="Products" />
+          <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" FromRole="ProductReview" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" FromRole="ProductReview" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -962,10 +970,10 @@
           <Property Name="CreatedBy" Type="Int32" />
           <NavigationProperty Name="Brand" Relationship="Self.FK__Products__BrandI__48CFD27E" FromRole="Products" ToRole="Brands" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__47DBAE45" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Products__Create__4CA06362" FromRole="Products" ToRole="Employees" />
           <NavigationProperty Name="ProductImages" Relationship="Self.FK__ProductIm__Produ__5812160E" FromRole="Products" ToRole="ProductImages" />
           <NavigationProperty Name="ProductReviews" Relationship="Self.FK__ProductRe__Produ__7C4F7684" FromRole="Products" ToRole="ProductReviews" />
           <NavigationProperty Name="ProductVariants" Relationship="Self.FK__ProductVa__Produ__5165187F" FromRole="Products" ToRole="ProductVariants" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Product" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ProductVariant">
           <Key>
@@ -1005,8 +1013,8 @@
           <Property Name="UsedCount" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Promotion__Creat__628FA481" FromRole="Promotions" ToRole="Employees" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Promotio__72C60C4A" FromRole="Promotions" ToRole="Orders" />
+          <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK__Promotion__Creat__628FA481" FromRole="Promotion" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -1017,8 +1025,8 @@
           <Property Name="VariantID" Type="Int32" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="AddedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__ShoppingC__Custo__06CD04F7" FromRole="ShoppingCart" ToRole="Customers" />
           <NavigationProperty Name="ProductVariant" Relationship="Self.FK__ShoppingC__Varia__07C12930" FromRole="ShoppingCart" ToRole="ProductVariants" />
+          <NavigationProperty Name="Customer" Relationship="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" FromRole="ShoppingCart" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -1040,18 +1048,6 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK__Employees__Creat__2F10007B">
-          <End Role="Admins" Type="Self.Admin" Multiplicity="0..1" />
-          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Admins">
-              <PropertyRef Name="AdminID" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Products__BrandI__48CFD27E">
           <End Role="Brands" Type="Self.Brand" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
@@ -1085,114 +1081,6 @@
             </Principal>
             <Dependent Role="ProductVariants">
               <PropertyRef Name="ColorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__Customer__6A30C649">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProductRe__Custo__7D439ABD">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="ProductReviews" Type="Self.ProductReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="ProductReviews">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ShoppingC__Custo__06CD04F7">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="ShoppingCart">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Inventory__Creat__14270015">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="InventoryTransactions" Type="Self.InventoryTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="InventoryTransactions">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__Processe__73BA3083">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="ProcessedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PriceHist__Chang__0E6E26BF">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="PriceHistory">
-              <PropertyRef Name="ChangedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProductRe__Appro__02FC7413">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="ProductReviews" Type="Self.ProductReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="ProductReviews">
-              <PropertyRef Name="ApprovedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Products__Create__4CA06362">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Promotion__Creat__628FA481">
-          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Promotions" Type="Self.Promotion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="Promotions">
-              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1341,12 +1229,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CNPM_LTEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Colors" EntityType="Self.Color" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="InventoryTransactions" EntityType="Self.InventoryTransaction" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
@@ -1360,10 +1245,6 @@
           <EntitySet Name="ShoppingCarts" EntityType="Self.ShoppingCart" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <AssociationSet Name="FK__Employees__Creat__2F10007B" Association="Self.FK__Employees__Creat__2F10007B">
-            <End Role="Admins" EntitySet="Admins" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK__Products__BrandI__48CFD27E" Association="Self.FK__Products__BrandI__48CFD27E">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
@@ -1375,42 +1256,6 @@
           <AssociationSet Name="FK__ProductVa__Color__52593CB8" Association="Self.FK__ProductVa__Color__52593CB8">
             <End Role="Colors" EntitySet="Colors" />
             <End Role="ProductVariants" EntitySet="ProductVariants" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__6A30C649" Association="Self.FK__Orders__Customer__6A30C649">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProductRe__Custo__7D439ABD" Association="Self.FK__ProductRe__Custo__7D439ABD">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="ProductReviews" EntitySet="ProductReviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ShoppingC__Custo__06CD04F7" Association="Self.FK__ShoppingC__Custo__06CD04F7">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Inventory__Creat__14270015" Association="Self.FK__Inventory__Creat__14270015">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="InventoryTransactions" EntitySet="InventoryTransactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__Processe__73BA3083" Association="Self.FK__Orders__Processe__73BA3083">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PriceHist__Chang__0E6E26BF" Association="Self.FK__PriceHist__Chang__0E6E26BF">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="PriceHistory" EntitySet="PriceHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProductRe__Appro__02FC7413" Association="Self.FK__ProductRe__Appro__02FC7413">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="ProductReviews" EntitySet="ProductReviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Products__Create__4CA06362" Association="Self.FK__Products__Create__4CA06362">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Promotion__Creat__628FA481" Association="Self.FK__Promotion__Creat__628FA481">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="Promotions" EntitySet="Promotions" />
           </AssociationSet>
           <AssociationSet Name="FK__Inventory__Varia__114A936A" Association="Self.FK__Inventory__Varia__114A936A">
             <End Role="ProductVariants" EntitySet="ProductVariants" />
@@ -1490,6 +1335,67 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Accounts" EntityType="CNPM_LTModel.Account" />
+          <EntitySet Name="Roles" EntityType="CNPM_LTModel.Role" />
+          <AssociationSet Name="FK_Role" Association="CNPM_LTModel.FK_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="CNPM_LTModel.Customer" />
+          <EntitySet Name="Employees" EntityType="CNPM_LTModel.Employee" />
+          <AssociationSet Name="FK_Account_Customer" Association="CNPM_LTModel.FK_Account_Customer">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Employees" Association="CNPM_LTModel.FK_Account_Employees">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Customer__6A30C649" Association="CNPM_LTModel.FK__Orders__Customer__6A30C649">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductRe__Custo__7D439ABD" Association="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ProductReview" EntitySet="ProductReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShoppingC__Custo__06CD04F7" Association="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Creat__14270015" Association="CNPM_LTModel.FK__Inventory__Creat__14270015">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="InventoryTransaction" EntitySet="InventoryTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Processe__73BA3083" Association="CNPM_LTModel.FK__Orders__Processe__73BA3083">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceHist__Chang__0E6E26BF" Association="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PriceHistory" EntitySet="PriceHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductRe__Appro__02FC7413" Association="CNPM_LTModel.FK__ProductRe__Appro__02FC7413">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProductReview" EntitySet="ProductReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Create__4CA06362" Association="CNPM_LTModel.FK__Products__Create__4CA06362">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Promotion__Creat__628FA481" Association="CNPM_LTModel.FK__Promotion__Creat__628FA481">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Promotion" EntitySet="Promotions" />
+          </AssociationSet>
+          <EntitySet Name="Admins" EntityType="CNPM_LTModel.Admin" />
+          <AssociationSet Name="FK_Account_Admins" Association="CNPM_LTModel.FK_Account_Admins">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Admin" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__Creat__2F10007B" Association="CNPM_LTModel.FK__Employees__Creat__2F10007B">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1502,28 +1408,267 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="IDTK" />
+          </Key>
+          <Property Name="IDTK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDRole" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="CNPM_LTModel.FK_Role" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="Customers" Relationship="CNPM_LTModel.FK_Account_Customer" FromRole="Account" ToRole="Customer" />
+          <NavigationProperty Name="Employees" Relationship="CNPM_LTModel.FK_Account_Employees" FromRole="Account" ToRole="Employee" />
+          <NavigationProperty Name="Admins" Relationship="CNPM_LTModel.FK_Account_Admins" FromRole="Account" ToRole="Admin" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IDRole" />
+          </Key>
+          <Property Name="IDRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="CNPM_LTModel.FK_Role" FromRole="Role" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_Role">
+          <End Type="CNPM_LTModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IDRole" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredSize" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PreferredBrand" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Newsletter" Type="Boolean" />
+          <Property Name="SMSNotification" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="IDAccount" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="CNPM_LTModel.FK_Account_Customer" FromRole="Customer" ToRole="Account" />
+          <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Customer__6A30C649" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" FromRole="Customer" ToRole="ProductReview" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" FromRole="Customer" ToRole="ShoppingCart" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HireDate" Type="DateTime" Precision="0" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="IDAccount" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="CNPM_LTModel.FK_Account_Employees" FromRole="Employee" ToRole="Account" />
+          <NavigationProperty Name="InventoryTransactions" Relationship="CNPM_LTModel.FK__Inventory__Creat__14270015" FromRole="Employee" ToRole="InventoryTransaction" />
+          <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Employee" ToRole="Order" />
+          <NavigationProperty Name="PriceHistories" Relationship="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" FromRole="Employee" ToRole="PriceHistory" />
+          <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" FromRole="Employee" ToRole="ProductReview" />
+          <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Employee" ToRole="Product" />
+          <NavigationProperty Name="Promotions" Relationship="CNPM_LTModel.FK__Promotion__Creat__628FA481" FromRole="Employee" ToRole="Promotion" />
+          <NavigationProperty Name="Admin" Relationship="CNPM_LTModel.FK__Employees__Creat__2F10007B" FromRole="Employee" ToRole="Admin" />
+        </EntityType>
+        <Association Name="FK_Account_Customer">
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Employees">
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Customer__6A30C649">
+          <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductRe__Custo__7D439ABD">
+          <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.ProductReview" Role="ProductReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="ProductReview">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShoppingC__Custo__06CD04F7">
+          <End Type="CNPM_LTModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Creat__14270015">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.InventoryTransaction" Role="InventoryTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="InventoryTransaction">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Processe__73BA3083">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ProcessedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceHist__Chang__0E6E26BF">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.PriceHistory" Role="PriceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="PriceHistory">
+              <PropertyRef Name="ChangedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductRe__Appro__02FC7413">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.ProductReview" Role="ProductReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="ProductReview">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Create__4CA06362">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Promotion__Creat__628FA481">
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Promotion" Role="Promotion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Promotion">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminID" />
+          </Key>
+          <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="IDAccount" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="CNPM_LTModel.FK_Account_Admins" FromRole="Admin" ToRole="Account" />
+          <NavigationProperty Name="Employees" Relationship="CNPM_LTModel.FK__Employees__Creat__2F10007B" FromRole="Admin" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Account_Admins">
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IDTK" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="IDAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__Creat__2F10007B">
+          <End Type="CNPM_LTModel.Admin" Role="Admin" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="AdminID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CNPM_LTModelStoreContainer" CdmEntityContainer="CNPM_LTEntities">
-          <EntitySetMapping Name="Admins">
-            <EntityTypeMapping TypeName="CNPM_LTModel.Admin">
-              <MappingFragment StoreEntitySet="Admins">
-                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="CNPM_LTModel.Brand">
               <MappingFragment StoreEntitySet="Brands">
@@ -1554,50 +1699,6 @@
                 <ScalarProperty Name="ColorName" ColumnName="ColorName" />
                 <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="CNPM_LTModel.Customer">
-              <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="PreferredSize" ColumnName="PreferredSize" />
-                <ScalarProperty Name="PreferredBrand" ColumnName="PreferredBrand" />
-                <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
-                <ScalarProperty Name="SMSNotification" ColumnName="SMSNotification" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="CNPM_LTModel.Employee">
-              <MappingFragment StoreEntitySet="Employees">
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1815,6 +1916,79 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CNPM_LTModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CNPM_LTModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="CNPM_LTModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IDTK" ColumnName="IDTK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CNPM_LTModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="TenRole" ColumnName="TenRole" />
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="CNPM_LTModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SMSNotification" ColumnName="SMSNotification" />
+                <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
+                <ScalarProperty Name="PreferredBrand" ColumnName="PreferredBrand" />
+                <ScalarProperty Name="PreferredSize" ColumnName="PreferredSize" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="CNPM_LTModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="CNPM_LTModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
