@@ -1,6 +1,7 @@
-﻿
+﻿@model WebBanGiay.Models.Product
+
 @{
-    ViewBag.Title = "ProductDetailsPage";
+    ViewBag.Title = Model.ProductName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -24,6 +25,327 @@
             color: #555555 !important;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
         }
+
+    .size-option {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .size-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border-color: #007bff;
+            background-color: #ffffff;
+        }
+
+        .size-option.selected {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-color: #007bff;
+            box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+            transform: translateY(-2px);
+        }
+
+            .size-option.selected div:first-child {
+                color: white !important;
+            }
+
+            .size-option.selected div:last-child {
+                color: #ffffff !important;
+            }
+
+        .size-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .size-option:hover::before {
+            left: 100%;
+        }
+
+    .color-option {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .color-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            border-color: #007bff;
+        }
+
+        .color-option.selected {
+            border: 3px solid #007bff;
+            box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+            transform: scale(1.05);
+        }
+
+            .color-option.selected::after {
+                content: '✓';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-weight: bold;
+                font-size: 20px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+                z-index: 2;
+            }
+
+        .color-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .color-option:hover::before {
+            opacity: 1;
+        }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+        .quantity-controls button {
+            border: none;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .quantity-controls button:hover {
+                background: #e9ecef;
+            }
+
+            .quantity-controls input {
+        border: none;
+        text-align: center;
+        padding: 8px;
+        width: 60px;
+    }
+
+    /* Hide the auto-generated qtybtn buttons */
+    .qtybtn {
+        display: none !important;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .product__details__text h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .product__details__price {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .color-option {
+            width: 50px !important;
+            height: 50px !important;
+            margin-right: 15px !important;
+        }
+
+        .size-option {
+            min-width: 80px !important;
+            max-width: 120px !important;
+            padding: 8px 10px !important;
+            margin-right: 8px !important;
+            margin-bottom: 10px !important;
+            flex: 1 1 auto !important;
+        }
+
+        .size-option div:first-child {
+            font-size: 12px !important;
+        }
+
+        .size-option div:last-child {
+            font-size: 10px !important;
+        }
+
+        .size-options {
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+        }
+
+        .product__details__quantity {
+            margin-bottom: 25px !important;
+        }
+
+        .product__details__quantity .mb-3 {
+            margin-bottom: 15px !important;
+        }
+
+        .product__details__quantity .mb-3 span {
+            font-size: 15px !important;
+        }
+
+        .primary-btn {
+            padding: 10px 20px !important;
+            font-size: 14px !important;
+            width: 100% !important;
+            margin-bottom: 10px !important;
+        }
+
+        .heart-icon {
+            width: 45px !important;
+            height: 45px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .d-flex.justify-content-end {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+
+        .d-flex.justify-content-end .primary-btn {
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
+
+        .d-flex.justify-content-end .heart-icon {
+            margin-left: 0 !important;
+            align-self: center !important;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .product__details__text {
+            padding: 20px 15px !important;
+        }
+
+        .product__details__text h3 {
+            font-size: 20px;
+        }
+
+        .product__details__price {
+            font-size: 24px;
+        }
+
+        .color-option {
+            width: 45px !important;
+            height: 45px !important;
+            margin-right: 10px !important;
+        }
+
+        .size-option {
+            min-width: 70px !important;
+            max-width: 100px !important;
+            padding: 6px 8px !important;
+            margin-right: 6px !important;
+            margin-bottom: 8px !important;
+            flex: 1 1 auto !important;
+        }
+
+        .size-option div:first-child {
+            font-size: 11px !important;
+        }
+
+        .size-option div:last-child {
+            font-size: 9px !important;
+        }
+
+        .size-options {
+            flex-wrap: wrap !important;
+            gap: 6px !important;
+        }
+
+        .product__details__quantity input {
+            width: 60px !important;
+            height: 40px !important;
+        }
+
+        .product__details__quantity button {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        .primary-btn {
+            padding: 12px 15px !important;
+            font-size: 13px !important;
+        }
+
+        .heart-icon {
+            width: 40px !important;
+            height: 40px !important;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .product__details__text {
+            padding: 15px 10px !important;
+        }
+
+        .color-options {
+            justify-content: center !important;
+        }
+
+        .size-option {
+            min-width: 60px !important;
+            max-width: 80px !important;
+            padding: 5px 6px !important;
+            margin-right: 4px !important;
+            margin-bottom: 6px !important;
+        }
+
+        .size-option div:first-child {
+            font-size: 10px !important;
+        }
+
+        .size-option div:last-child {
+            font-size: 8px !important;
+        }
+
+        .size-options {
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+        }
+
+        .d-flex.justify-content-between {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+
+        .d-flex.justify-content-between a {
+            margin-top: 5px !important;
+            font-size: 12px !important;
+        }
+
+        .product__details__quantity {
+            margin-bottom: 20px !important;
+        }
+    }
 </style>
 
 <!-- Page Preloder -->
@@ -34,12 +356,10 @@
 <!-- Humberger Begin -->
 <div class="humberger__menu__overlay"></div>
 
-
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
         <a href="#"><img src="~/Content/img/logo.png" alt=""></a>
     </div>
-
 
     <div class="humberger__menu__cart">
         <ul>
@@ -48,7 +368,6 @@
         </ul>
         <div class="header__cart__price">item: <span>$150.00</span></div>
     </div>
-
 
     <div class="humberger__menu__widget">
         <div class="header__top__right__language">
@@ -70,8 +389,6 @@
             <li><a href="./shop-grid.html">Shop</a></li>
             <li>
                 <a href="#">Pages</a>
-
-
                 <ul class="header__menu__dropdown">
                     <li><a href="./shop-details.html">Shop Details</a></li>
                     <li><a href="./shoping-cart.html">Shoping Cart</a></li>
@@ -236,10 +553,10 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>ProductDetails</h2>
+                    <h2>@Model.ProductName</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <span>ProductDetails</span>
+                        <a href="@Url.Action("Index", "Home")">Home</a>
+                        <span>@Model.ProductName</span>
                     </div>
                 </div>
             </div>
@@ -247,60 +564,162 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
-
 <!-- Product Details Section Begin -->
 <section class="product-details spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
-                        <img class="product__details__pic__item--large"
-                             src="img/product/details/product-details-1.jpg" alt="">
+                        @if (Model.ProductImages != null && Model.ProductImages.Any())
+                        {
+                            var mainImage = Model.ProductImages.FirstOrDefault();
+                            <img class="product__details__pic__item--large" id="mainImage"
+                                 src="@mainImage.ImageURL" alt="@Model.ProductName">
+                        }
+                        else
+                        {
+                            <img class="product__details__pic__item--large" id="mainImage"
+                                 src="~/Content/img/product/default-product.jpg" alt="@Model.ProductName">
+                        }
                     </div>
                     <div class="product__details__pic__slider owl-carousel">
-                        <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                             src="img/product/details/thumb-1.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                             src="img/product/details/thumb-2.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                             src="img/product/details/thumb-3.jpg" alt="">
-                        <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                             src="img/product/details/thumb-4.jpg" alt="">
+                        @if (Model.ProductImages != null && Model.ProductImages.Any())
+                        {
+                            foreach (var image in Model.ProductImages.Take(4))
+                            {
+                                <img data-imgbigurl="@image.ImageURL" class="thumbnail-image"
+                                     src="@image.ImageURL" alt="@Model.ProductName" onclick="changeMainImage('@image.ImageURL')">
+                            }
+                        }
                     </div>
                 </div>
+
             </div>
-            <div class="col-lg-6 col-md-6">
+
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="product__details__text">
-                    <h3>Vetgetable’s Package</h3>
+                    <h3>@Model.ProductName</h3>
+
                     <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>(18 reviews)</span>
+                        @{
+                            var avgRating = Model.ProductReviews?.Any() == true ? Model.ProductReviews.Average(r => r.Rating) : 0;
+                            var reviewCount = Model.ProductReviews?.Count() ?? 0;
+                        }
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= avgRating)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
+                            else if (i - avgRating < 1)
+                            {
+                                <i class="fa fa-star-half-o"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-star-o"></i>
+                            }
+                        }
+                        <span>(@reviewCount reviews)</span>
                     </div>
-                    <div class="product__details__price">$50.00</div>
-                    <p>
-                        Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                        vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                        quam vehicula elementum sed sit amet dui. Proin eget tortor risus.
-                    </p>
-                    <div class="product__details__quantity">
+
+                    <div class="product__details__price" id="productPrice">
+                        @{
+                            var minPrice = ViewBag.Variants != null ? ((List<WebBanGiay.Models.model_class.VariantDTO>)ViewBag.Variants).Min(v => v.Price) : 0;
+                        }
+                        $@minPrice.ToString("N0")
+                    </div>
+
+                    <p>@Model.Description</p>
+
+                    <!-- Color Selection -->
+                    @if (ViewBag.AvailableColors != null && ((List<WebBanGiay.Models.Color>)ViewBag.AvailableColors).Any())
+                    {
+                        <div class="product__details__quantity mb-4">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <div class="mb-3">
+                                        <span class="font-weight-bold text-dark" style="font-size: 16px;">Màu sắc</span>
+                                    </div>
+                                    <div class="color-options d-flex justify-content-start align-items-center">
+                                        @foreach (var color in (List<WebBanGiay.Models.Color>)ViewBag.AvailableColors)
+                                        {
+                                            <div class="color-option mr-3"
+                                                 style="width: 60px; height: 60px; border-radius: 12px; background-color: @color.ColorCode; border: 3px solid #ddd; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+                                                 data-color-id="@color.ColorID"
+                                                 onclick="selectColor(@color.ColorID)">
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Size Selection -->
+                    @if (ViewBag.AvailableSizes != null && ((List<WebBanGiay.Models.Size>)ViewBag.AvailableSizes).Any())
+                    {
+                        <div class="product__details__quantity mb-4">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="font-weight-bold text-dark" style="font-size: 16px;">Kích cỡ</span>
+                                            <a href="#" class="text-primary" style="font-size: 14px;">
+                                                <i class="fa fa-ruler" style="margin-right: 5px;"></i>
+                                                Hướng dẫn chọn kích cỡ
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="size-options d-flex flex-row flex-wrap">
+                                        @foreach (var size in (List<WebBanGiay.Models.Size>)ViewBag.AvailableSizes)
+                                        {
+                                            var variantsForSize = ((List<WebBanGiay.Models.model_class.VariantDTO>)ViewBag.Variants).Where(v => v.SizeID == size.SizeID).ToList();
+                                            var minPriceForSize = variantsForSize.Any() ? variantsForSize.Min(v => v.Price) : 0;
+                                            <div class="size-option mr-3 mb-2 px-4 py-3 border rounded"
+                                                 style="cursor: pointer; transition: all 0.3s ease; min-width: 120px; text-align: center; background-color: #f8f9fa; border: 2px solid #e9ecef;"
+                                                 data-size-id="@size.SizeID"
+                                                 data-price="@minPriceForSize"
+                                                 onclick="selectSize(@size.SizeID, @minPriceForSize)">
+                                                <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">@size.SizeName</div>
+                                                <div style="font-size: 13px; color: #007bff; font-weight: 500;">$@minPriceForSize.ToString("N0")</div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Quantity Selection -->
+                    <div class="product__details__quantity mb-4">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <div class="mb-3">
+                                    <span class="font-weight-bold text-dark" style="font-size: 16px;">Số lượng</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-outline-secondary" style="width: 45px; height: 45px; border-radius: 0; border-right: none;" onclick="changeQuantity(-1)">-</button>
+                                    <input type="text" value="1" id="quantity" style="width: 80px; height: 45px; text-align: center; border: 1px solid #ddd; border-left: none; border-right: none; font-size: 16px;">
+                                    <button type="button" class="btn btn-outline-secondary" style="width: 45px; height: 45px; border-radius: 0; border-left: none;" onclick="changeQuantity(1)">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">ADD TO CARD</a>
-                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+
+                    <!-- Action Buttons -->
+                    <div class="product__details__quantity mb-4">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <a href="#" class="primary-btn mr-3" onclick="addToCart()" style="padding: 12px 30px; font-size: 16px; font-weight: 600; margin-left:13px">ADD TO CARD</a>
+                            <a href="#" class="heart-icon" style="margin-left: 10px;"><span class="icon_heart_alt"></span></a>
+                        </div>
+                    </div>
+
+
                     <ul>
-                        <li><b>Availability</b> <span>In Stock</span></li>
-                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                        <li><b>Weight</b> <span>0.5 kg</span></li>
+                        <li><b>Availability</b> <span id="availability">In Stock</span></li>
                         <li>
                             <b>Share on</b>
                             <div class="share">
@@ -313,7 +732,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-12">
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -326,78 +747,66 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                               aria-selected="false">Reviews <span>(1)</span></a>
+                               aria-selected="false">Reviews <span>(@reviewCount)</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
-                                <h6>Products Infomation</h6>
+                                <h6>Product Information</h6>
+                                <p>@Model.Description</p>
                                 <p>
-                                    Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                    suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                    vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                    Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                    accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                    pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                    elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                    et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                    vel, ullamcorper sit amet ligula. Proin eget tortor risus.
-                                </p>
-                                <p>
-                                    Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                    Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                    porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                    sed sit amet dui. Proin eget tortor risus.
+                                    This product is made with high-quality materials and designed for comfort and style.
+                                    Perfect for everyday wear and special occasions.
                                 </p>
                             </div>
                         </div>
                         <div class="tab-pane" id="tabs-2" role="tabpanel">
                             <div class="product__details__tab__desc">
-                                <h6>Products Infomation</h6>
-                                <p>
-                                    Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                    Proin eget tortor risus.
-                                </p>
-                                <p>
-                                    Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                </p>
+                                <h6>Product Specifications</h6>
+                                <ul>
+                                    <li><strong>Product Code:</strong> @Model.ProductCode</li>
+                                    <li><strong>Brand:</strong> @(Model.Brand != null ? Model.Brand.BrandName : "N/A")</li>
+                                    <li><strong>Category:</strong> @(Model.Category != null ? Model.Category.CategoryName : "N/A")</li>
+                                    <li><strong>Material:</strong> @(Model.Material != null ? Model.Material.MaterialType : "N/A")</li>
+                                    <li><strong>Gender:</strong> @Model.Gender</li>
+                                    <li><strong>Created Date:</strong> @(Model.CreatedDate.HasValue ? Model.CreatedDate.Value.ToString("dd/MM/yyyy") : "N/A")</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="tab-pane" id="tabs-3" role="tabpanel">
                             <div class="product__details__tab__desc">
-                                <h6>Products Infomation</h6>
-                                <p>
-                                    Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                    Proin eget tortor risus.
-                                </p>
+                                <h6>Customer Reviews</h6>
+                                @if (Model.ProductReviews != null && Model.ProductReviews.Any())
+                                {
+                                    foreach (var review in Model.ProductReviews.Take(5))
+                                    {
+                                        <div class="review-item mb-3 p-3 border rounded">
+                                            <div class="d-flex justify-content-between">
+                                                <strong>@review.Customer?.FullName</strong>
+                                                <div>
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        if (i <= review.Rating)
+                                                        {
+                                                            <i class="fa fa-star text-warning"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-star-o"></i>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <p class="mt-2">@review.Comment</p>
+                                            <small class="text-muted">@review.ReviewDate?.ToString("dd/MM/yyyy")</small>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No reviews yet. Be the first to review this product!</p>
+                                }
                             </div>
                         </div>
                     </div>
@@ -407,78 +816,167 @@
     </div>
 </section>
 <!-- Product Details Section End -->
+
+
+
 <!-- Related Product Section Begin -->
 <section class="related-product">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title related__product__title">
-                    <h2>Related Product</h2>
+                    <h2>Related Products</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
+            @{
+                dynamic relatedProducts = null;
+                if (ViewBag.Variants != null)
+                {
+                    relatedProducts = ((List<WebBanGiay.Models.model_class.VariantDTO>)ViewBag.Variants)
+                        .GroupBy(v => v.ProductID)
+                        .Select(g => new { 
+                            ProductID = g.Key,
+                            ProductName = g.First().ProductName,
+                            ProductImage = g.First().ProductImage,
+                            MinPrice = g.Min(v => v.Price)
+                        })
+                        .Where(p => p.ProductID != Model.ProductID)
+                        .Take(4)
+                        .ToList();
+                }
+            }
+
+            @if (relatedProducts != null && relatedProducts.Count > 0)
+            {
+                foreach (var relatedProduct in relatedProducts)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="@relatedProduct.ProductImage">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = relatedProduct.ProductID })"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = relatedProduct.ProductID })">@relatedProduct.ProductName</a></h6>
+                                <h5>$@relatedProduct.MinPrice.ToString("N0")</h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="product__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>Không có sản phẩm liên quan</p>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="img/product/product-7.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
 <!-- Related Product Section End -->
+
+<script>
+    let selectedColorId = null;
+    let selectedSizeId = null;
+    let selectedPrice = @minPrice;
+
+    function changeMainImage(imageUrl) {
+        document.getElementById('mainImage').src = imageUrl;
+    }
+
+    function selectColor(colorId) {
+        selectedColorId = colorId;
+        // Remove previous selection
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Add selection to clicked option
+        event.target.classList.add('selected');
+        updatePrice();
+    }
+
+    function selectSize(sizeId, price) {
+        selectedSizeId = sizeId;
+        selectedPrice = price;
+        // Remove previous selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Add selection to clicked option
+        event.target.classList.add('selected');
+        updatePrice();
+    }
+
+    function updatePrice() {
+        if (selectedSizeId) {
+            document.getElementById('productPrice').innerHTML = '$' + selectedPrice.toLocaleString();
+        }
+    }
+
+    function changeQuantity(delta) {
+        const quantityInput = document.getElementById('quantity');
+        let currentQuantity = parseInt(quantityInput.value) || 1;
+        currentQuantity = Math.max(1, currentQuantity + delta);
+        quantityInput.value = currentQuantity;
+    }
+
+    function addToCart() {
+        if (!selectedSizeId) {
+            alert('Vui lòng chọn kích thước!');
+            return;
+        }
+
+        const quantity = parseInt(document.getElementById('quantity').value);
+        if (quantity <= 0) {
+            alert('Số lượng phải lớn hơn 0!');
+            return;
+        }
+
+        // Tìm variant ID dựa trên size và color đã chọn
+        const variants = @Html.Raw(Json.Encode(ViewBag.Variants));
+        let selectedVariant = null;
+        
+        if (selectedColorId && selectedSizeId) {
+            selectedVariant = variants.find(v => v.SizeID === selectedSizeId && v.ColorID === selectedColorId);
+        } else if (selectedSizeId) {
+            selectedVariant = variants.find(v => v.SizeID === selectedSizeId);
+        }
+        
+        if (!selectedVariant) {
+            alert('Vui lòng chọn màu sắc và kích thước!');
+            return;
+        }
+
+        // Gửi AJAX request
+        $.ajax({
+            url: '@Url.Action("AddToCart", "ProductDetails")',
+            type: 'POST',
+            data: {
+                variantId: selectedVariant.VariantID,
+                quantity: quantity
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    // Cập nhật số lượng sản phẩm trong cart icon
+                    updateCartIcon(response.cartCount);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
+            }
+        });
+    }
+
+    function updateCartIcon(cartCount) {
+        // Cập nhật số lượng trong cart icon
+        $('.header__cart ul li a i.fa-shopping-bag + span').text(cartCount);
+    }
+</script>

@@ -14,26 +14,12 @@ namespace WebBanGiay.Controllers
         // GET: ShoppingCart
         public ActionResult ShoppingCartPage()
         {
-            // Lấy danh sách sản phẩm với variants và sizes
-            var productsWithVariants = db.Products
-                .Where(p => p.IsActive == true)
-                .Select(p => new
-                {
-                    Product = p,
-                    Variants = p.ProductVariants
-                        .Where(v => v.IsActive == true)
-                        .Select(v => new
-                        {
-                            Variant = v,
-                            Color = v.Color,
-                            Size = v.Size,
-                            Price = v.Price,
-                            StockQuantity = v.StockQuantity
-                        }).ToList()
-                }).ToList();
-
-            ViewBag.ProductsWithVariants = productsWithVariants;
-
+            // Lấy cart từ session
+            var cart = Session["Cart"] as List<WebBanGiay.Models.model_class.CartItem> ?? new List<WebBanGiay.Models.model_class.CartItem>();
+            
+            ViewBag.Cart = cart;
+            ViewBag.CartTotal = cart.Sum(item => item.TotalPrice);
+            
             return View();
         }
 

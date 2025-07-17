@@ -66,6 +66,17 @@
                 </div>
             </div>
 
+            <div class="mb-4">
+                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })
+                <div>
+                    <select name="Gender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">-- Select Gender --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-red-500 text-xs italic" })
+                </div>
+            </div>
 
             <div class="mb-4">
                 @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "block text-gray-700 text-sm font-bold mb-2" })

@@ -1,0 +1,42 @@
+﻿@model WebBanGiay.Models.Color
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="max-w-xl mx-auto mt-8 bg-white p-8 rounded-lg shadow">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Color Details</h2>
+    <div class="space-y-4">
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.ColorName):</span>
+            <span class="text-gray-900">@Html.DisplayFor(model => model.ColorName)</span>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.ColorCode):</span>
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded border border-gray-300" style="background-color: @Model.ColorCode;"></div>
+                <span class="text-gray-900">@Html.DisplayFor(model => model.ColorCode)</span>
+            </div>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.IsActive):</span>
+            @if (Model.IsActive == true)
+            {
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Active
+                </span>
+            }
+            else
+            {
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    Inactive
+                </span>
+            }
+        </div>
+    </div>
+    <div class="flex space-x-4 mt-8">
+        <a href="@Url.Action("Edit", new { id = Model.ColorID })" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded shadow transition duration-150">Edit</a>
+        <a href="@Url.Action("Index")" class="text-gray-600 hover:underline self-center">Back to List</a>
+    </div>
+</div>

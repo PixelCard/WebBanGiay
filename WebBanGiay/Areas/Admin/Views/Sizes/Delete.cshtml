@@ -1,0 +1,39 @@
+﻿@model WebBanGiay.Models.Size
+
+@{
+    ViewBag.Title = "Delete Size";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="max-w-xl mx-auto mt-8 bg-white p-8 rounded-lg shadow">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Delete Size</h2>
+    <div class="mb-6 text-red-600 font-semibold">Are you sure you want to delete this?</div>
+    <div class="space-y-4 mb-6">
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.SizeName):</span>
+            <span class="text-gray-900">@Html.DisplayFor(model => model.SizeName)</span>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.SizeType):</span>
+            <span class="text-gray-900">@Html.DisplayFor(model => model.SizeType)</span>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+            <span class="font-semibold text-gray-700">@Html.DisplayNameFor(model => model.IsActive):</span>
+            @if (Model.IsActive == true)
+            {
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Active</span>
+            }
+            else
+            {
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Inactive</span>
+            }
+        </div>
+    </div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        <div class="flex space-x-4 mt-8">
+            <input type="submit" value="Delete" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded shadow transition duration-150" />
+            <a href="@Url.Action("Index")" class="text-gray-600 hover:text-blue-600 underline self-center">Back to List</a>
+        </div>
+    }
+</div>

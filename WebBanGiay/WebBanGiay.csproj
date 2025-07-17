@@ -131,11 +131,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminPageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BrandsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ColorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MaterialsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductImagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductReviewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductVariantsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SizesController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
@@ -190,7 +195,9 @@
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\model class\Account.cs" />
+    <Compile Include="Models\model class\CartItem.cs" />
     <Compile Include="Models\model class\order.cs" />
+    <Compile Include="Models\model class\VariantDTO.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
@@ -407,6 +414,31 @@
     <Content Include="Areas\Admin\Views\Employees\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employees\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Colors\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Colors\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Colors\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Colors\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Colors\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Sizes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Sizes\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Sizes\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Sizes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Sizes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Materials\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Materials\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Materials\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Materials\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Materials\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />
