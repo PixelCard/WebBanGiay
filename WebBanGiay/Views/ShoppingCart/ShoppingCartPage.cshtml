@@ -562,7 +562,7 @@
                         <li>Subtotal <span>$@ViewBag.CartTotal.ToString("0.00")</span></li>
                         <li>Total <span>$@ViewBag.CartTotal.ToString("0.00")</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    <a href="@Url.Action("Checkoutpage", "CheckOut")" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>
             </div>
         </div>
