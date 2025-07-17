@@ -141,6 +141,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductVariantsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SizesController.cs" />
+    <Compile Include="Areas\NhanVienBanHang\Controllers\CustomersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
@@ -439,6 +440,9 @@
     <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Create.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Details.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Index.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />

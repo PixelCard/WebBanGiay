@@ -57,6 +57,60 @@ namespace WebBanGiay.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Checkoutpage(FormCollection form)
+        {
+            // Lấy customer từ session
+            if (Session["UserID"] == null)
+                return RedirectToAction("LoginPage", "Account");
+
+            int userID = (int)Session["UserID"];
+            var customer = db.Customers.FirstOrDefault(c => c.IDAccount == userID && c.IsActive == true);
+            if (customer == null)
+                return RedirectToAction("LoginPage", "Account");
+
+            // Lấy giỏ hàng
+            var cart = Session["Cart"] as List<WebBanGiay.Models.model_class.CartItem>;
+            if (cart == null || !cart.Any())
+                return RedirectToAction("ShoppingCartPage", "ShoppingCart");
+
+            // Lấy phương thức thanh toán từ form
+            string paymentMethod = form["paymentMethod"];
+            int paymentMethodId = (paymentMethod == "cod") ? 1 : 2;
+
+            // Tạo shipping mới
+            var shipping = new Shipping
+            {
+                ShippingAddress = customer.Address,
+                ShippingPhone = customer.Phone,
+                ShippingName = customer.FullName,
+                ShippingFee = 25.00m
+            };
+            db.Shippings.Add(shipping);
+            db.SaveChanges();
+
+            // Tạo order mới
+            var order = new Order
+            {
+                CustomerID = customer.CustomerID,
+                OrderDate = DateTime.Now,
+                Status = "pending",
+                SubTotal = cart.Sum(x => x.TotalPrice),
+                TotalAmount = cart.Sum(x => x.TotalPrice) + 25.00m,
+                ShippingID = shipping.ShippingID,
+                PaymentMethodID = paymentMethodId,
+                PaymentStatus = "Process"
+            };
+            db.Orders.Add(order);
+            db.SaveChanges();
+
+            // Xóa giỏ hàng sau khi đặt hàng thành công
+            Session["Cart"] = null;
+
+            // Chuyển hướng tới trang cảm ơn hoặc đơn hàng thành công
+            return RedirectToAction("OrderSuccess");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -318,7 +318,7 @@
     <div class="container">
         <div class="checkout__form">
             <h4>Billing Details</h4>
-            <form action="#">
+            @using (Html.BeginForm("Checkoutpage", "CheckOut", FormMethod.Post)) {
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
@@ -460,7 +460,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
 </section>

@@ -1,0 +1,104 @@
+﻿@model WebBanGiay.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2 class="text-2xl font-bold mb-6">Create Customer</h2>
+<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="grid grid-cols-1 gap-6">
+            <div>
+                @Html.LabelFor(model => model.FullName, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Phone, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Address, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.DateOfBirth, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Gender, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.PreferredSize, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.PreferredSize, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.PreferredSize, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.PreferredBrand, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.PreferredBrand, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.PreferredBrand, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Newsletter, new { @class = "block text-sm font-medium text-gray-700" })
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Newsletter)
+                    @Html.ValidationMessageFor(model => model.Newsletter, "", new { @class = "text-red-500 text-xs" })
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.SMSNotification, new { @class = "block text-sm font-medium text-gray-700" })
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.SMSNotification)
+                    @Html.ValidationMessageFor(model => model.SMSNotification, "", new { @class = "text-red-500 text-xs" })
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.IsActive, new { @class = "block text-sm font-medium text-gray-700" })
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-red-500 text-xs" })
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.CreatedDate, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.LastLogin, new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.EditorFor(model => model.LastLogin, new { htmlAttributes = new { @class = "border rounded px-3 py-2 w-full" } })
+                @Html.ValidationMessageFor(model => model.LastLogin, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.IDAccount, "IDAccount", new { @class = "block text-sm font-medium text-gray-700" })
+                @Html.DropDownList("IDAccount", null, htmlAttributes: new { @class = "border rounded px-3 py-2 w-full" })
+                @Html.ValidationMessageFor(model => model.IDAccount, "", new { @class = "text-red-500 text-xs" })
+            </div>
+
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "ml-4 text-gray-600 hover:underline" })
+            </div>
+        </div>
+    }
+</div>

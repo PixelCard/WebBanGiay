@@ -1,0 +1,67 @@
+﻿@model WebBanGiay.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2 class="text-2xl font-bold mb-6">Customer Details</h2>
+<div class="max-w-xl mx-auto bg-white p-8 rounded shadow">
+    <dl class="divide-y divide-gray-200">
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Full Name</dt>
+            <dd class="text-gray-900">@Model.FullName</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Phone</dt>
+            <dd class="text-gray-900">@Model.Phone</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Address</dt>
+            <dd class="text-gray-900">@Model.Address</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Date of Birth</dt>
+            <dd class="text-gray-900">@Model.DateOfBirth</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Gender</dt>
+            <dd class="text-gray-900">@Model.Gender</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Preferred Size</dt>
+            <dd class="text-gray-900">@Model.PreferredSize</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Preferred Brand</dt>
+            <dd class="text-gray-900">@Model.PreferredBrand</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Newsletter</dt>
+            <dd class="text-gray-900">@Model.Newsletter</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">SMS Notification</dt>
+            <dd class="text-gray-900">@Model.SMSNotification</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Is Active</dt>
+            <dd class="text-gray-900">@Model.IsActive</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Created Date</dt>
+            <dd class="text-gray-900">@Model.CreatedDate</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Last Login</dt>
+            <dd class="text-gray-900">@Model.LastLogin</dd>
+        </div>
+        <div class="py-4 flex justify-between">
+            <dt class="font-medium text-gray-700">Account Email</dt>
+            <dd class="text-gray-900">@Model.Account.Email</dd>
+        </div>
+    </dl>
+    <div class="mt-6">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "text-blue-600 hover:underline" })
+    </div>
+</div>
