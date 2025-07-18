@@ -78,16 +78,27 @@ namespace WebBanGiay.Controllers
             string paymentMethod = form["paymentMethod"];
             int paymentMethodId = (paymentMethod == "cod") ? 1 : 2;
 
-            // Tạo shipping mới
-            var shipping = new Shipping
+            // Kiểm tra người dùng có chọn giao hàng tận nơi không
+            bool isShipping = !string.IsNullOrEmpty(form["shipping"]);
+
+            // Lấy ghi chú đơn hàng (order notes)
+            string notes = string.IsNullOrWhiteSpace(form["orderNotes"]) ? null : form["orderNotes"].Trim();
+
+            int? shippingId = null;
+            if (isShipping)
             {
-                ShippingAddress = customer.Address,
-                ShippingPhone = customer.Phone,
-                ShippingName = customer.FullName,
-                ShippingFee = 25.00m
-            };
-            db.Shippings.Add(shipping);
-            db.SaveChanges();
+                // Tạo shipping mới
+                var shipping = new Shipping
+                {
+                    ShippingAddress = customer.Address,
+                    ShippingPhone = customer.Phone,
+                    ShippingName = customer.FullName,
+                    ShippingFee = 25.00m
+                };
+                db.Shippings.Add(shipping);
+                db.SaveChanges();
+                shippingId = shipping.ShippingID;
+            }
 
             // Tạo order mới
             var order = new Order
@@ -97,18 +108,39 @@ namespace WebBanGiay.Controllers
                 Status = "pending",
                 SubTotal = cart.Sum(x => x.TotalPrice),
                 TotalAmount = cart.Sum(x => x.TotalPrice) + 25.00m,
-                ShippingID = shipping.ShippingID,
+                ShippingID = shippingId,
                 PaymentMethodID = paymentMethodId,
-                PaymentStatus = "Process"
+                PaymentStatus = "Pending",
+                OrderNumber = Guid.NewGuid().ToString(),
+                Notes = notes
             };
-            db.Orders.Add(order);
-            db.SaveChanges();
+
+            try
+            {
+                db.Orders.Add(order);
+                db.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+                return View("Error"); 
+            }
 
             // Xóa giỏ hàng sau khi đặt hàng thành công
             Session["Cart"] = null;
 
-            // Chuyển hướng tới trang cảm ơn hoặc đơn hàng thành công
-            return RedirectToAction("OrderSuccess");
+            // Chuyển hướng tới trang cảm ơn hoặc đơn hàng thành công   
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)

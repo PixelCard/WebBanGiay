@@ -30,6 +30,7 @@ namespace WebBanGiay.Controllers
                 // Lưu thông tin vào Session
                 Session["Email"] = account.Email;
                 Session["Role"] = account.Role.TenRole;
+                Session["UserID"] = account.IDTK;
 
                 // Phân quyền chuyển trang
                 if (account.Role.TenRole == "Admin")

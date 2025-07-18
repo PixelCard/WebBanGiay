@@ -349,6 +349,7 @@
                                         var lastName = nameParts.Length > 1 ? string.Join(" ", nameParts.Skip(1)) : "";
                                         <input type="text" value="@lastName" readonly style="background-color: #f8f9fa;">
                                     }
+
                                     else
                                     {
                                         <input type="text" name="lastName" required>
@@ -402,9 +403,10 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="checkout__input">
                             <p>Order notes<span>*</span></p>
-                            <input type="text"
+                            <input type="text" name="orderNotes" 
                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                         </div>
                     </div>
