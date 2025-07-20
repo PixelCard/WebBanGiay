@@ -10,6 +10,7 @@ using WebBanGiay.Models;
 using WebBanGiay.Filters;
 using System.Configuration;
 using System.Net.Mail;
+using System.Net;
 
 namespace WebBanGiay.Controllers
 {

@@ -144,6 +144,17 @@
     <Property Name="ProcessedDate" Type="datetime" />
     <Property Name="ShippingID" Type="int" />
   </EntityType>
+  <EntityType Name="OTPLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="OTP" Type="nvarchar" MaxLength="10" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ExpiryDate" Type="datetime" />
+    <Property Name="IsUsed" Type="bit" />
+  </EntityType>
   <EntityType Name="PaymentMethods">
     <Key>
       <PropertyRef Name="PaymentMethodID" />
@@ -702,6 +713,7 @@
     <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OTPLog" EntityType="Self.OTPLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethods" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductImages" EntityType="Self.ProductImages" Schema="dbo" store:Type="Tables" />

@@ -59,6 +59,7 @@
         <AssociationConnector Association="CNPM_LTModel.FK__Orders__Promotio__72C60C4A" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" />
         <AssociationConnector Association="CNPM_LTModel.FK_Shipping" />
+        <EntityTypeShape EntityType="CNPM_LTModel.OTPLog" Width="1.5" PointX="12.625" PointY="2.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

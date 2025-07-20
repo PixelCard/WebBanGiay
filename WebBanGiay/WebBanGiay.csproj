@@ -206,6 +206,9 @@
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OTPLog.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PaymentMethod.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
@@ -476,7 +479,6 @@
     <Content Include="Content\sass\_sidebar.scss" />
     <Content Include="Content\sass\_variable.scss" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
-    <Content Include="Content\js\email-otp.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />

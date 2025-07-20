@@ -431,6 +431,7 @@
       <End Role="Shipping" EntitySet="Shippings" />
       <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
+    <EntitySet Name="OTPLogs" EntityType="CNPM_LTModel.OTPLog" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -911,4 +912,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="OTPLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="OTP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="IsUsed" Type="Boolean" />
+  </EntityType>
 </Schema>
