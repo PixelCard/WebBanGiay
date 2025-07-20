@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebBanGiay.Models;
+using WebBanGiay.Filters;
 
 namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
 {
+    [NhanVienBanHangAuthorize]
     public class CustomersController : Controller
     {
         private CNPM_LTEntities db = new CNPM_LTEntities();

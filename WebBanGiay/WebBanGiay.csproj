@@ -147,11 +147,13 @@
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
-    <Compile Include="Controllers\EncodingFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderAccountController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Filters\EncodingFilter.cs" />
+    <Compile Include="Filters\NhanVienBanHangAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -388,10 +390,7 @@
     <Content Include="Areas\NhanVienBanHang\Views\Orders\Details.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Orders\Edit.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Orders\Index.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Create.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Delete.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Details.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Edit.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />

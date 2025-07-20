@@ -119,6 +119,21 @@ namespace WebBanGiay.Controllers
             {
                 db.Orders.Add(order);
                 db.SaveChanges();
+
+                // Thêm chi tiết đơn hàng cho từng sản phẩm trong giỏ hàng
+                foreach (var item in cart)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderID = order.OrderID,
+                        VariantID = item.VariantID,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.Price, // Giá tại thời điểm đặt hàng
+                        TotalPrice = item.TotalPrice // Tổng tiền cho sản phẩm này
+                    };
+                    db.OrderDetails.Add(orderDetail);
+                }
+                db.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
