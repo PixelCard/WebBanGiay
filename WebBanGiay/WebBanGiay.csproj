@@ -147,6 +147,7 @@
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
+    <Compile Include="Controllers\EncodingFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -267,6 +268,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\elegant-icons.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\jquery-ui.min.css" />
@@ -342,6 +344,7 @@
     <Content Include="Content\img\product\product-8.jpg" />
     <Content Include="Content\img\product\product-9.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\jquery-3.3.1.min.js" />
     <Content Include="Content\js\jquery-ui.min.js" />
     <Content Include="Content\js\jquery.nice-select.min.js" />
@@ -473,6 +476,7 @@
     <Content Include="Content\sass\_sidebar.scss" />
     <Content Include="Content\sass\_variable.scss" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Content\js\email-otp.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
@@ -495,13 +499,14 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\LoginPage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\ShoppingCart\ShoppingCartPage.cshtml" />
     <Content Include="Views\CheckOut\Checkoutpage.cshtml" />
     <Content Include="Views\ProductDetails\ProductDetailsPage.cshtml" />
+    <Content Include="Views\Account\AccountDetails.cshtml" />
+    <Content Include="Views\Account\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

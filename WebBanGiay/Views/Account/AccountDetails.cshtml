@@ -1,0 +1,368 @@
+﻿
+@{
+    ViewBag.Title = "AccountDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .account-details {
+        background: #f8f9fa;
+        padding: 50px 0;
+    }
+
+    .account-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .account-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #7fad39;
+    }
+
+        .account-header h2 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+    .account-info {
+        margin-bottom: 25px;
+    }
+
+    .info-group {
+        display: flex;
+        margin-bottom: 15px;
+        align-items: center;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #555;
+        min-width: 150px;
+        margin-right: 15px;
+    }
+
+    .info-value {
+        color: #333;
+        font-size: 16px;
+    }
+
+    .account-actions {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-edit {
+        background: #7fad39;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 15px;
+        transition: background 0.3s;
+    }
+
+        .btn-edit:hover {
+            background: #6b9a2f;
+            color: white;
+            text-decoration: none;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+
+    .role-badge {
+        background: #7fad39;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    @@media (max-width: 768px) {
+        .account-card {
+            padding: 20px;
+        }
+
+        .info-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .info-label {
+            min-width: auto;
+            margin-bottom: 5px;
+        }
+
+        .account-actions {
+            text-align: center;
+        }
+
+        .btn-edit, .btn-back {
+            display: block;
+            margin: 10px auto;
+            width: 200px;
+        }
+    }
+</style>
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+    </div>
+    <div class="humberger__menu__cart">
+        <ul>
+            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+            <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
+        </ul>
+        <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
+    </div>
+    <div class="humberger__menu__widget">
+        <div class="header__top__right__language">
+            <img src="~/Content/img/language.png" alt="">
+            <div>English</div>
+            <span class="arrow_carrot-down"></span>
+            <ul>
+                <li><a href="#">Spanis</a></li>
+                <li><a href="#">English</a></li>
+            </ul>
+        </div>
+        <div class="header__top__right__auth">
+            @if (Session["Email"] != null)
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+            }
+            else
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+            }
+        </div>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li><a href="#">Cửa hàng</a></li>
+            <li>
+                <a href="#">Trang</a>
+                <ul class="header__menu__dropdown">
+                    <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                    <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                    @if (Session["Email"] != null)
+                    {
+                        <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                        <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                        <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                    }
+                </ul>
+            </li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="header__top__right__social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+    </div>
+    <div class="humberger__menu__contact">
+        <ul>
+            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+            <li>Free Shipping for all Order of $99</li>
+        </ul>
+    </div>
+</div>
+<!-- Humberger End -->
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+                        <ul>
+                            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                            <li>Free Shipping for all Order of $99</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        </div>
+                        <div class="header__top__right__language">
+                            <img src="~/Content/img/language.png" alt="">
+                            <div>English</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li><a href="#">Spanis</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </div>
+                        <div class="header__top__right__auth">
+                            @if (Session["Email"] != null)
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        <li><a href="#">Cửa hàng</a></li>
+                        <li>
+                            <a href="#">Trang</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                                <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                                @if (Session["Email"] != null)
+                                {
+                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                        <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
+                    </ul>
+                    <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+
+<!-- Account Details Section Begin -->
+<section class="account-details">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="account-card">
+                    <div class="account-header">
+                        <h2>Thông tin tài khoản</h2>
+                        <p>Xem và quản lý thông tin cá nhân của bạn</p>
+                    </div>
+
+                    <div class="account-info">
+                        <div class="info-group">
+                            <span class="info-label">ID Tài khoản:</span>
+                            <span class="info-value">@Model.IDTK</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Tên người dùng:</span>
+                            <span class="info-value">@Model.UserName</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value">@Model.Email</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Vai trò:</span>
+                            <span class="info-value">
+                                @if (Model.Role != null)
+                                {
+                                    <span class="role-badge">@Model.Role.TenRole</span>
+                                }
+                                else
+                                {
+                                    <span class="role-badge">Chưa phân quyền</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="account-actions">
+                        <a href="@Url.Action("EditAccount", "Account")" class="btn-edit">Chỉnh sửa thông tin</a>
+                        <a href="@Url.Action("Index", "Home")" class="btn-back">Quay về trang chủ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Account Details Section End -->
+

@@ -9,14 +9,14 @@
 
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a href="#"><img src="~/Content/img/logo.png" alt=""></a>
+        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
     </div>
     <div class="humberger__menu__cart">
         <ul>
             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
         </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
+        <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
     </div>
     <div class="humberger__menu__widget">
         <div class="header__top__right__language">
@@ -28,25 +28,41 @@
                 <li><a href="#">English</a></li>
             </ul>
         </div>
-        <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
-        </div>
+                                <div class="header__top__right__auth">
+                            @if (Session["Email"] != null)
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+                            }
+                        </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="active"><a href="./index.html">Home</a></li>
-            <li><a href="./shop-grid.html">Shop</a></li>
+            <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li><a href="#">Cửa hàng</a></li>
             <li>
-                <a href="#">Pages</a>
+                <a href="#">Trang</a>
                 <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">Shop Details</a></li>
-                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                    <li><a href="./checkout.html">Check Out</a></li>
-                    <li><a href="./blog-details.html">Blog Details</a></li>
+                    <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                    <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                    @if (Session["Email"] != null)
+                    {
+                        <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                        <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                        <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                    }
                 </ul>
             </li>
-            <li><a href="./blog.html">Blog</a></li>
-            <li><a href="./contact.html">Contact</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Liên hệ</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -64,8 +80,9 @@
     </div>
 </div>
 <!-- Humberger End -->
-<!-- Header Section Begin -->
 
+
+<!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
         <div class="container">
@@ -96,7 +113,15 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            @if (Session["Email"] != null)
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -107,25 +132,33 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="~/Content/img/logo.png" alt=""></a>
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
-                        <li><a href="./shop-grid.html">Shop</a></li>
+                        <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        <li><a href="#">Cửa hàng</a></li>
                         <li>
-                            <a href="#">Pages</a>
+                            <a href="#">Trang</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                <li><a href="./checkout.html">Check Out</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
+                                <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                                <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                                @if (Session["Email"] != null)
+                                {
+                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                                }
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </nav>
             </div>
@@ -133,9 +166,9 @@
                 <div class="header__cart">
                     <ul>
                         <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
                     </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
                 </div>
             </div>
         </div>
@@ -145,8 +178,9 @@
     </div>
 </header>
 <!-- Header Section End -->
-<!-- Hero Section Begin -->
 
+
+<!-- Hero Section Begin -->
 <section class="hero">
     <div class="container">
         <div class="row">
@@ -154,20 +188,16 @@
                 <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
-                        <span>All departments</span>
+                        <span>Tất cả danh mục</span>
                     </div>
                     <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var category in ViewBag.Categories)
+                            {
+                                <li><a href="#">@category.CategoryName</a></li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
@@ -176,11 +206,11 @@
                     <div class="hero__search__form">
                         <form action="#">
                             <div class="hero__search__categories">
-                                All Categories
+                                Tất cả danh mục
                                 <span class="arrow_carrot-down"></span>
                             </div>
-                            <input type="text" placeholder="What do yo u need?">
-                            <button type="submit" class="site-btn">SEARCH</button>
+                            <input type="text" placeholder="Bạn cần tìm gì?">
+                            <button type="submit" class="site-btn">TÌM KIẾM</button>
                         </form>
                     </div>
                     <div class="hero__search__phone">
@@ -193,219 +223,120 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero__item set-bg" data-setbg="~/Content/img/hero/banner.jpg">
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br />100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
+                <div class="hero__slider owl-carousel">
+                    <div class="hero__item set-bg" data-setbg="@Url.Content("~/Content/img/banner/banner-1.jpg")">
+                        <div class="hero__text">
+                            <span>GIÀY CHÍNH HÃNG</span>
+                            <h2>Thời trang <br />100% Chất lượng</h2>
+                            <p>Miễn phí vận chuyển cho đơn hàng từ 500K</p>
+                            <a href="#" class="primary-btn">MUA NGAY</a>
+                        </div>
+                    </div>
+
+                    <div class="hero__item set-bg" data-setbg="@Url.Content("~/Content/img/banner/banner-2.jpg")">
+                        <div class="hero__text">
+                            <span>GIÀY THỂ THAO</span>
+                            <h2>Phong cách <br />Năng động</h2>
+                            <p>Khám phá bộ sưu tập giày thể thao mới nhất</p>
+                            <a href="#" class="primary-btn">KHÁM PHÁ</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <!-- Hero Section End -->
 
 
-<!-- Categories Section Begin -->
+<!-- Brands Section Begin -->
 <section class="categories">
     <div class="container">
         <div class="row">
             <div class="categories__slider owl-carousel">
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-1.jpg">
-                        <h5><a href="#">Fresh Fruit</a></h5>
+                @if (ViewBag.Brands != null && ((List<WebBanGiay.Models.Brand>)ViewBag.Brands).Any())
+                {
+                    foreach (var brand in ViewBag.Brands)
+                    {
+                        <div class="col-lg-3">
+                            <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-1.jpg">
+                                <h5><a href="#">@brand.BrandName</a></h5>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center">
+                        <p>Chưa có thương hiệu nào được hiển thị.</p>
                     </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-2.jpg">
-                        <h5><a href="#">Dried Fruit</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-3.jpg">
-                        <h5><a href="#">Vegetables</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-4.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="~/Content/img/categories/cat-5.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
 </section>
-<!-- Categories Section End -->
+<!-- Brands Section End -->
+
+
 <!-- Featured Section Begin -->
 <section class="featured spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Featured Product</h2>
+                    <h2>Sản phẩm nổi bật</h2>
                 </div>
                 <div class="featured__controls">
                     <ul>
-                        <li class="active" data-filter="*">All</li>
-                        <li data-filter=".oranges">Oranges</li>
-                        <li data-filter=".fresh-meat">Fresh Meat</li>
-                        <li data-filter=".vegetables">Vegetables</li>
-                        <li data-filter=".fastfood">Fastfood</li>
+                        <li class="active" data-filter="*">Tất cả</li>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var category in ViewBag.Categories)
+                            {
+                                var categoryClass = category.CategoryName?.ToLower().Replace(" ", "-") ?? "default";
+                                <li data-filter=".@categoryClass">@category.CategoryName</li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
         </div>
         <div class="row featured__filter">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-1.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
+                @if (ViewBag.FeaturedProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.FeaturedProducts).Any())
+                {
+                    foreach (var product in ViewBag.FeaturedProducts)
+                    {
+                        var brandClass = product.Brand?.BrandName?.ToLower().Replace(" ", "-") ?? "default";
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix @brandClass">
+                            <div class="featured__item">
+                                <div class="featured__item__pic set-bg" data-setbg="@product.GetFirstImageUrl()">
+                                    <ul class="featured__item__pic__hover">
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="featured__item__text">
+                                    <h6><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })">@product.ProductName</a></h6>
+                                    <h5>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center">
+                        <p>Chưa có sản phẩm nào được hiển thị.</p>
                     </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-2.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-3.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-4.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-5.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-6.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/img/featured/feature-7.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="~/Content/~/Content/img/featured/feature-8.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
+                }
         </div>
     </div>
 </section>
 <!-- Featured Section End -->
-<!-- Banner Begin -->
-<div class="banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="banner__pic">
-                    <img src="~/Content/~/Content/img/banner/banner-1.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="banner__pic">
-                    <img src="~/Content/~/Content/img/banner/banner-2.jpg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Banner End -->
+
+
 <!-- Latest Product Section Begin -->
 <section class="latest-product spad">
     <div class="container">
@@ -414,64 +345,38 @@
                 <div class="latest-product__text">
                     <h4>Latest Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/~/Content/img/latest-product/lp-1.jpg" alt="">
+                        @if (ViewBag.LatestProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.LatestProducts).Any())
+                        {
+                            var latestProducts = ViewBag.LatestProducts as List<WebBanGiay.Models.Product>;
+                            var chunkedProducts = latestProducts.Select((product, index) => new { product, index })
+                                                              .GroupBy(x => x.index / 3)
+                                                              .Select(g => g.Select(x => x.product).ToList())
+                                                              .ToList();
+
+                            foreach (var productGroup in chunkedProducts)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var product in productGroup)
+                                    {
+                                        <a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="@product.GetFirstImageUrl()" alt="@product.ProductName">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6>@product.ProductName</h6>
+                                                <span>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</span>
+                                            </div>
+                                        </a>
+                                    }
                                 </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/~/Content/img/latest-product/lp-1.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                <p class="text-center">Chưa có sản phẩm mới.</p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -479,64 +384,39 @@
                 <div class="latest-product__text">
                     <h4>Top Rated Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-1.jpg" alt="">
+                        @if (ViewBag.TopRatedProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.TopRatedProducts).Any())
+                        {
+                            var topRatedProducts = ViewBag.TopRatedProducts as List<WebBanGiay.Models.Product>;
+                            var chunkedProducts = topRatedProducts.Select((product, index) => new { product, index })
+                                                                 .GroupBy(x => x.index / 3)
+                                                                 .Select(g => g.Select(x => x.product).ToList())
+                                                                 .ToList();
+
+                            foreach (var productGroup in chunkedProducts)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var product in productGroup)
+                                    {
+                                        <a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="@product.GetFirstImageUrl()" alt="@product.ProductName">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6>@product.ProductName</h6>
+                                                <span>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</span>
+                                                <small>⭐ @(product.HasApprovedReviews() ? product.GetAverageRating().ToString("F1") : "0.0")</small>
+                                            </div>
+                                        </a>
+                                    }
                                 </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-1.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                <p class="text-center">Chưa có sản phẩm đánh giá cao.</p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -544,64 +424,39 @@
                 <div class="latest-product__text">
                     <h4>Review Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-1.jpg" alt="">
+                        @if (ViewBag.TopRatedProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.TopRatedProducts).Any())
+                        {
+                            var reviewProducts = ViewBag.TopRatedProducts as List<WebBanGiay.Models.Product>;
+                            var chunkedProducts = reviewProducts.Select((product, index) => new { product, index })
+                                                               .GroupBy(x => x.index / 3)
+                                                               .Select(g => g.Select(x => x.product).ToList())
+                                                               .ToList();
+
+                            foreach (var productGroup in chunkedProducts)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var product in productGroup)
+                                    {
+                                        <a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="@product.GetFirstImageUrl()" alt="@product.ProductName">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6>@product.ProductName</h6>
+                                                <span>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</span>
+                                                <small>@product.GetReviewCount() reviews</small>
+                                            </div>
+                                        </a>
+                                    }
                                 </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="latest-prdouct__slider__item">
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-1.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-2.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                            <a href="#" class="latest-product__item">
-                                <div class="latest-product__item__pic">
-                                    <img src="~/Content/img/latest-product/lp-3.jpg" alt="">
-                                </div>
-                                <div class="latest-product__item__text">
-                                    <h6>Crab Pool Security</h6>
-                                    <span>$30.00</span>
-                                </div>
-                            </a>
-                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                <p class="text-center">Chưa có sản phẩm review.</p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -609,6 +464,8 @@
     </div>
 </section>
 <!-- Latest Product Section End -->
+
+
 <!-- Blog Section Begin -->
 <section class="from-blog spad">
     <div class="container">

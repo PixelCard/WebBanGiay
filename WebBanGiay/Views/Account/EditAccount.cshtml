@@ -1,0 +1,528 @@
+﻿@model WebBanGiay.Models.Account
+
+@{
+    ViewBag.Title = "Chỉnh sửa thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .edit-account {
+        background: #f8f9fa;
+        padding: 50px 0;
+    }
+
+    .edit-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .edit-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #7fad39;
+    }
+
+    .edit-header h2 {
+        color: #333;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #7fad39;
+        box-shadow: 0 0 0 2px rgba(127, 173, 57, 0.2);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-col {
+        flex: 1;
+    }
+
+    .btn-save {
+        background: #7fad39;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 15px;
+        transition: background 0.3s;
+        cursor: pointer;
+    }
+
+    .btn-save:hover {
+        background: #6b9a2f;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s;
+    }
+
+    .btn-cancel:hover {
+        background: #5a6268;
+        color: white;
+        text-decoration: none;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    @@media (max-width: 768px) {
+        .edit-card {
+            padding: 20px;
+        }
+
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .btn-save, .btn-cancel {
+            display: block;
+            margin: 10px auto;
+            width: 200px;
+            text-align: center;
+        }
+    }
+</style>
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+    </div>
+    <div class="humberger__menu__cart">
+        <ul>
+            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+            <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
+        </ul>
+        <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
+    </div>
+    <div class="humberger__menu__widget">
+        <div class="header__top__right__language">
+            <img src="~/Content/img/language.png" alt="">
+            <div>English</div>
+            <span class="arrow_carrot-down"></span>
+            <ul>
+                <li><a href="#">Spanis</a></li>
+                <li><a href="#">English</a></li>
+            </ul>
+        </div>
+        <div class="header__top__right__auth">
+            @if (Session["Email"] != null)
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+            }
+            else
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+            }
+        </div>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li><a href="#">Cửa hàng</a></li>
+            <li>
+                <a href="#">Trang</a>
+                <ul class="header__menu__dropdown">
+                    <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                    <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                    @if (Session["Email"] != null)
+                    {
+                        <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                        <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                        <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                    }
+                </ul>
+            </li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="header__top__right__social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+    </div>
+    <div class="humberger__menu__contact">
+        <ul>
+            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+            <li>Free Shipping for all Order of $99</li>
+        </ul>
+    </div>
+</div>
+<!-- Humberger End -->
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+                        <ul>
+                            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                            <li>Free Shipping for all Order of $99</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        </div>
+                        <div class="header__top__right__language">
+                            <img src="~/Content/img/language.png" alt="">
+                            <div>English</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li><a href="#">Spanis</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </div>
+                        <div class="header__top__right__auth">
+                            @if (Session["Email"] != null)
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        <li><a href="#">Cửa hàng</a></li>
+                        <li>
+                            <a href="#">Trang</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                                <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                                @if (Session["Email"] != null)
+                                {
+                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                        <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
+                    </ul>
+                    <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+<!-- Edit Account Section Begin -->
+<section class="edit-account">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="edit-card">
+                    <div class="edit-header">
+                        <h2>Chỉnh sửa thông tin</h2>
+                        <p>Cập nhật thông tin cá nhân của bạn</p>
+                    </div>
+
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="alert alert-success">
+                            @ViewBag.Success
+                        </div>
+                    }
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("EditAccount", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-section">
+                            <h3 class="section-title">Thông tin tài khoản</h3>
+
+                            <div class="form-group">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="Email" value="@Model.Email" readonly>
+                                <small class="text-muted">Email không thể thay đổi</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="UserName">Tên người dùng</label>
+                                <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-title">Thông tin cá nhân</h3>
+
+                            <div class="form-group">
+                                <label for="FullName">Họ và tên</label>
+                                <input type="text" class="form-control" id="FullName" name="FullName" value="@(ViewBag.Customer?.FullName ?? "")" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="Phone">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="Phone" name="Phone" value="@(ViewBag.Customer?.Phone ?? "")">
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="Gender">Giới tính</label>
+                                        <select class="form-control" id="Gender" name="Gender">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="Nam" @(ViewBag.Customer?.Gender == "Nam" ? "selected" : "")>Nam</option>
+                                            <option value="Nữ" @(ViewBag.Customer?.Gender == "Nữ" ? "selected" : "")>Nữ</option>
+                                            <option value="Khác" @(ViewBag.Customer?.Gender == "Khác" ? "selected" : "")>Khác</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Address">Địa chỉ</label>
+                                <textarea class="form-control" id="Address" name="Address" rows="3">@(ViewBag.Customer?.Address ?? "")</textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="PreferredSize">Size giày yêu thích</label>
+                                        <select class="form-control" id="PreferredSize" name="PreferredSize">
+                                            <option value="">Chọn size</option>
+                                            <option value="36" @(ViewBag.Customer?.PreferredSize == "36" ? "selected" : "")>36</option>
+                                            <option value="37" @(ViewBag.Customer?.PreferredSize == "37" ? "selected" : "")>37</option>
+                                            <option value="38" @(ViewBag.Customer?.PreferredSize == "38" ? "selected" : "")>38</option>
+                                            <option value="39" @(ViewBag.Customer?.PreferredSize == "39" ? "selected" : "")>39</option>
+                                            <option value="40" @(ViewBag.Customer?.PreferredSize == "40" ? "selected" : "")>40</option>
+                                            <option value="41" @(ViewBag.Customer?.PreferredSize == "41" ? "selected" : "")>41</option>
+                                            <option value="42" @(ViewBag.Customer?.PreferredSize == "42" ? "selected" : "")>42</option>
+                                            <option value="43" @(ViewBag.Customer?.PreferredSize == "43" ? "selected" : "")>43</option>
+                                            <option value="44" @(ViewBag.Customer?.PreferredSize == "44" ? "selected" : "")>44</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="PreferredBrand">Thương hiệu yêu thích</label>
+                                        <input type="text" class="form-control" id="PreferredBrand" name="PreferredBrand" value="@(ViewBag.Customer?.PreferredBrand ?? "")" placeholder="VD: Nike, Adidas, Puma...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn-save">Lưu thay đổi</button>
+                            <a href="@Url.Action("AccountDetails", "Account")" class="btn-cancel">Hủy bỏ</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Edit Account Section End -->
+<!-- Footer Section Begin -->
+<footer class="footer spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+                    </div>
+                    <ul>
+                        <li>Address: 60-49 Road 11378 New York</li>
+                        <li>Phone: +65 11.188.888</li>
+                        <li>Email: hello.colorlib@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                <div class="footer__widget">
+                    <h6>Useful Links</h6>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">About Our Shop</a></li>
+                        <li><a href="#">Secure Shopping</a></li>
+                        <li><a href="#">Delivery infomation</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Our Sitemap</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">Who We Are</a></li>
+                        <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Projects</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Innovation</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="footer__widget">
+                    <h6>Join Our Newsletter Now</h6>
+                    <p>Get E-mail updates about our latest shop and special offers.</p>
+                    <form action="#">
+                        <input type="text" placeholder="Enter your mail">
+                        <button type="submit" class="site-btn">Subscribe</button>
+                    </form>
+                    <div class="footer__widget__social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer__copyright">
+                    <div class="footer__copyright__text">
+                        <p>
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        </p>
+                    </div>
+                    <div class="footer__copyright__payment"><img src="~/Content/img/payment-item.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+<!-- Js Plugins -->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.nice-select.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.slicknav.js"></script>
+<script src="~/Scripts/mixitup.min.js"></script>
+<script src="~/Scripts/owl.carousel.min.js"></script>
+<script src="~/Scripts/main.js"></script>

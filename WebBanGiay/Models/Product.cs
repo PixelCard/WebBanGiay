@@ -11,6 +11,7 @@ namespace WebBanGiay.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     
     public partial class Product
     {
@@ -44,5 +45,44 @@ namespace WebBanGiay.Models
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductVariant> ProductVariants { get; set; }
+
+        // Helper methods
+        public decimal GetMinPrice()
+        {
+            var activeVariants = ProductVariants?.Where(v => v.IsActive == true).ToList();
+            return activeVariants != null && activeVariants.Any() ? activeVariants.Min(v => v.Price) : 0;
+        }
+
+        public decimal GetMaxPrice()
+        {
+            var activeVariants = ProductVariants?.Where(v => v.IsActive == true).ToList();
+            return activeVariants != null && activeVariants.Any() ? activeVariants.Max(v => v.Price) : 0;
+        }
+
+        public string GetFirstImageUrl()
+        {
+            return ProductImages?.FirstOrDefault(i => i.IsActive == true)?.ImageURL ?? "/Content/img/featured/feature-1.jpg";
+        }
+
+        public double GetAverageRating()
+        {
+            var approvedReviews = ProductReviews?.Where(r => r.IsApproved == true).ToList();
+            return approvedReviews != null && approvedReviews.Any() ? approvedReviews.Average(r => r.Rating) : 0;
+        }
+
+        public int GetReviewCount()
+        {
+            return ProductReviews?.Where(r => r.IsApproved == true).Count() ?? 0;
+        }
+
+        public bool HasActiveVariants()
+        {
+            return ProductVariants?.Any(v => v.IsActive == true) ?? false;
+        }
+
+        public bool HasApprovedReviews()
+        {
+            return ProductReviews?.Any(r => r.IsApproved == true) ?? false;
+        }
     }
 }

@@ -5,10 +5,15 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using WebBanGiay.Models;
+using WebBanGiay.Filters;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace WebBanGiay.Controllers
 {
+    [EncodingFilter]
     public class AccountController : Controller
     {
         private CNPM_LTEntities _dbContext = new CNPM_LTEntities();
@@ -81,6 +86,133 @@ namespace WebBanGiay.Controllers
                 ViewBag.Error = "Đăng ký thất bại: " + ex.Message;
                 return View();
             }
+        }
+
+        public ActionResult Logout()
+        {
+            // Xóa session
+            Session.Clear();
+            Session.Abandon();
+            
+            // Chuyển về trang chủ
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult AccountDetails()
+        {
+            // Kiểm tra đăng nhập
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("LoginPage");
+            }
+
+            // Lấy thông tin tài khoản từ session
+            string email = Session["Email"].ToString();
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.Email == email);
+
+            if (account == null)
+            {
+                Session.Clear();
+                return RedirectToAction("LoginPage");
+            }
+
+            return View(account);
+        }
+
+        public ActionResult EditAccount()
+        {
+            // Kiểm tra đăng nhập
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("LoginPage");
+            }
+
+            // Lấy thông tin tài khoản và customer từ session
+            string email = Session["Email"].ToString();
+            var account = _dbContext.Accounts.Include("Customers").FirstOrDefault(a => a.Email == email);
+
+            if (account == null)
+            {
+                Session.Clear();
+                return RedirectToAction("LoginPage");
+            }
+
+            // Lấy thông tin customer nếu có
+            var customer = account.Customers.FirstOrDefault();
+            
+            ViewBag.Customer = customer;
+            return View(account);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAccount(string UserName, string FullName, string Phone, string Address, string Gender, string PreferredSize, string PreferredBrand)
+        {
+            // Kiểm tra đăng nhập
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("LoginPage");
+            }
+
+            try
+            {
+                string email = Session["Email"].ToString();
+                var account = _dbContext.Accounts.Include("Customers").FirstOrDefault(a => a.Email == email);
+
+                if (account == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("LoginPage");
+                }
+
+                // Cập nhật thông tin tài khoản
+                account.UserName = UserName;
+
+                // Cập nhật hoặc tạo thông tin customer
+                var customer = account.Customers.FirstOrDefault();
+                if (customer == null)
+                {
+                    // Tạo customer mới
+                    customer = new Customer
+                    {
+                        FullName = FullName,
+                        Phone = Phone,
+                        Address = Address,
+                        Gender = Gender,
+                        PreferredSize = PreferredSize,
+                        PreferredBrand = PreferredBrand,
+                        IsActive = true,
+                        CreatedDate = DateTime.Now,
+                        IDAccount = account.IDTK
+                    };
+                    _dbContext.Customers.Add(customer);
+                }
+                else
+                {
+                    // Cập nhật customer hiện có
+                    customer.FullName = FullName;
+                    customer.Phone = Phone;
+                    customer.Address = Address;
+                    customer.Gender = Gender;
+                    customer.PreferredSize = PreferredSize;
+                    customer.PreferredBrand = PreferredBrand;
+                }
+
+                _dbContext.SaveChanges();
+                ViewBag.Success = "Cập nhật thông tin thành công!";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Có lỗi xảy ra: " + ex.Message;
+            }
+
+            // Load lại dữ liệu để hiển thị
+            string emailReload = Session["Email"].ToString();
+            var accountReload = _dbContext.Accounts.Include("Customers").FirstOrDefault(a => a.Email == emailReload);
+            var customerReload = accountReload?.Customers.FirstOrDefault();
+            ViewBag.Customer = customerReload;
+
+            return View(accountReload);
         }
     }
 }

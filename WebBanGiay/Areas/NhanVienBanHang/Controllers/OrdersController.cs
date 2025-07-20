@@ -132,6 +132,7 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         public ActionResult Cancel(int id)
         {
             var order = db.Orders.Find(id);
+
             if (order == null)
             {
                 return HttpNotFound();
