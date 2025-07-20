@@ -1,59 +1,52 @@
 ﻿@model WebBanGiay.Models.OrderDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết sản phẩm trong đơn hàng";
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>OrderDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UnitPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.OrderNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order.OrderNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductVariant.SKU)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductVariant.SKU)
-        </dd>
-
-    </dl>
+<div class="container" style="max-width: 600px; margin: 0 auto;">
+    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chi tiết sản phẩm trong đơn hàng</h2>
+    <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
+        <dl class="row" style="font-size: 1.08em;">
+            <dt class="col-sm-5">Số lượng</dt>
+            <dd class="col-sm-7">
+                <span class="badge badge-@(Model.Quantity >= 10 ? "danger" : "primary")" style="font-size:1em;">@Model.Quantity</span>
+            </dd>
+            <dt class="col-sm-5">Đơn giá</dt>
+            <dd class="col-sm-7">@Model.UnitPrice.ToString("N0") VNĐ</dd>
+            <dt class="col-sm-5">Thành tiền</dt>
+            <dd class="col-sm-7">@Model.TotalPrice.ToString("N0") VNĐ</dd>
+            <dt class="col-sm-5">Mã đơn hàng</dt>
+            <dd class="col-sm-7">@Model.Order?.OrderNumber</dd>
+            <dt class="col-sm-5">Mã SKU</dt>
+            <dd class="col-sm-7">@Model.ProductVariant?.SKU</dd>
+        </dl>
+    </div>
+    <div class="text-center">
+        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderDetailID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<style>
+    .badge-primary {
+        background-color: #3182ce;
+        color: #fff;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .badge-danger {
+        background-color: #e53e3e;
+        color: #fff;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .card {
+        border: none;
+    }
+    .mr-2 { margin-right: 0.5em; }
+    @@media (max-width: 768px) {
+        .container { font-size: 0.97em; }
+        .mb-4 { margin-bottom: 1rem !important; }
+    }
+</style>

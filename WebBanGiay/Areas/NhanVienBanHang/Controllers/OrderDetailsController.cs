@@ -37,6 +37,26 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
             }
             return View(orderDetail);
         }
+
+        //GET: NhanVienBanHang/OrderDetails/HistoryByCustomer/5
+        public ActionResult HistoryByCustomer(int? customerId)
+        {
+            if (customerId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Lấy tất cả các OrderDetail của các đơn hàng thuộc khách hàng này
+            var orderDetails = db.OrderDetails
+                .Include(od => od.Order)
+                .Include(od => od.ProductVariant)
+                .Where(od => od.Order.CustomerID == customerId)
+                .OrderByDescending(od => od.Order.OrderDate)
+                .ToList();
+
+            ViewBag.Customer = db.Customers.Find(customerId);
+            return View(orderDetails);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

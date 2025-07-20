@@ -41,6 +41,8 @@ namespace WebBanGiay.Controllers
                 // Phân quyền chuyển trang
                 if (account.Role.TenRole == "Admin")
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
+                else if (account.Role.TenRole == "Employess") 
+                    return RedirectToAction("OrdersByDate", "Statistics", new { area = "NhanVienBanHang" });
                 else
                     return RedirectToAction("Index", "Home");
             }
@@ -96,7 +98,7 @@ namespace WebBanGiay.Controllers
             Session.Abandon();
             
             // Chuyển về trang chủ
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LoginPage", "Account");
         }
 
         public ActionResult AccountDetails()

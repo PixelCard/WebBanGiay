@@ -9,7 +9,7 @@ namespace WebBanGiay.Filters
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var session = httpContext.Session;
-            if (session == null || session["Role"] == null || session["Role"].ToString() != "NhanVienBanHang")
+            if (session == null || session["Role"] == null || session["Role"].ToString() != "Employess")
             {
                 return false;
             }

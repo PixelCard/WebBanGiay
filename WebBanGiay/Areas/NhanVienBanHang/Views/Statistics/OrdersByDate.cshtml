@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebBanGiay.Models.model_class.OrderByDate>
+
+@{
+    ViewBag.Title = "Thống kê số đơn theo ngày";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container" style="max-width: 900px; margin: 0 auto;">
+    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Thống kê số đơn theo ngày</h2>
+
+    <form method="get" class="mb-4 d-flex flex-wrap justify-content-center align-items-center gap-2" style="gap: 1em;">
+        <label class="mb-0">Từ ngày:</label>
+        <input type="date" name="from" class="form-control" style="max-width: 180px;" value="@((ViewBag.From as DateTime?)?.ToString("yyyy-MM-dd"))" />
+        <label class="mb-0">Đến ngày:</label>
+        <input type="date" name="to" class="form-control" style="max-width: 180px;" value="@((ViewBag.To as DateTime?)?.ToString("yyyy-MM-dd"))" />
+        <button type="submit" class="btn btn-primary px-4">Lọc</button>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center" style="background: #fff; border-radius: 12px; overflow: hidden;">
+            <thead style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: #fff;">
+                <tr style="text-align: center;">
+                    <th style="min-width: 120px;">Ngày</th>
+                    <th style="min-width: 160px;">Tổng số đơn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr style="text-align: center; vertical-align: middle;">
+                            <td>@(((DateTime)item.Date).ToString("dd/MM/yyyy"))</td>
+                            <td><span class="badge badge-info" style="font-size:1.1em; padding:0.5em 1.2em;">@item.TotalOrders</span></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="2" class="text-center text-muted">Không có dữ liệu trong khoảng thời gian này.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .badge-info {
+        background-color: #4299e1;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    .table thead th {
+        vertical-align: middle;
+        font-size: 1.05em;
+        letter-spacing: 0.5px;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        font-size: 1em;
+    }
+
+    @@media (max-width: 768px) {
+        .container {
+            font-size: 0.97em;
+        }
+
+        .table-responsive {
+            font-size: 0.95em;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem !important;
+        }
+
+        form.d-flex {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+
+            form.d-flex label, form.d-flex input, form.d-flex button {
+                margin-bottom: 0.5em;
+            }
+    }
+</style>
+

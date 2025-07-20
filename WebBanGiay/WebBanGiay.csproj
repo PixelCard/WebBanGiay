@@ -144,6 +144,8 @@
     <Compile Include="Areas\NhanVienBanHang\Controllers\CustomersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\NhanVienBanHang\Controllers\PromotionsController.cs" />
+    <Compile Include="Areas\NhanVienBanHang\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="Models\model class\Account.cs" />
     <Compile Include="Models\model class\CartItem.cs" />
     <Compile Include="Models\model class\order.cs" />
+    <Compile Include="Models\model class\OrderByDate.cs" />
     <Compile Include="Models\model class\VariantDTO.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
@@ -449,6 +452,10 @@
     <Content Include="Areas\NhanVienBanHang\Views\Customers\Create.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Customers\Details.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Customers\Index.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Promotions\Details.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Promotions\Edit.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Promotions\Index.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\HistoryByCustomer.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />
@@ -478,6 +485,7 @@
     <Content Include="Content\sass\_shoping-cart.scss" />
     <Content Include="Content\sass\_sidebar.scss" />
     <Content Include="Content\sass\_variable.scss" />
+    <Content Include="Areas\NhanVienBanHang\Views\Statistics\OrdersByDate.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

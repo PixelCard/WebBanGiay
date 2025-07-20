@@ -1,0 +1,69 @@
+﻿@model WebBanGiay.Models.Promotion
+
+@{
+    ViewBag.Title = "Chi tiết khuyến mãi";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container" style="max-width: 700px; margin: 0 auto;">
+    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chi tiết khuyến mãi</h2>
+    <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
+        <dl class="row" style="font-size: 1.08em;">
+            <dt class="col-sm-5">Tên khuyến mãi</dt>
+            <dd class="col-sm-7">@Model.PromotionName</dd>
+            <dt class="col-sm-5">Mô tả</dt>
+            <dd class="col-sm-7">@Model.Description</dd>
+            <dt class="col-sm-5">Loại giảm giá</dt>
+            <dd class="col-sm-7">@Model.DiscountType</dd>
+            <dt class="col-sm-5">Giá trị giảm</dt>
+            <dd class="col-sm-7">@Model.DiscountValue</dd>
+            <dt class="col-sm-5">Đơn hàng tối thiểu</dt>
+            <dd class="col-sm-7">@Model.MinOrderAmount</dd>
+            <dt class="col-sm-5">Giảm tối đa</dt>
+            <dd class="col-sm-7">@Model.MaxDiscountAmount</dd>
+            <dt class="col-sm-5">Ngày bắt đầu</dt>
+            <dd class="col-sm-7">@Model.StartDate?.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-5">Ngày kết thúc</dt>
+            <dd class="col-sm-7">@Model.EndDate?.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-5">Trạng thái</dt>
+            <dd class="col-sm-7">
+                <span class="badge badge-@(Model.IsActive.HasValue ? "success" : "secondary")">@(Model.IsActive.HasValue ? "Đang hoạt động" : "Ngừng")</span>
+            </dd>
+            <dt class="col-sm-5">Giới hạn lượt dùng</dt>
+            <dd class="col-sm-7">@Model.UsageLimit</dd>
+            <dt class="col-sm-5">Đã sử dụng</dt>
+            <dd class="col-sm-7">@Model.UsedCount</dd>
+            <dt class="col-sm-5">Ngày tạo</dt>
+            <dd class="col-sm-7">@Model.CreatedDate?.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-5">Nhân viên tạo</dt>
+            <dd class="col-sm-7">@Model.Employee?.FullName</dd>
+        </dl>
+    </div>
+    <div class="text-center">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.PromotionID }, new { @class = "btn btn-warning mr-2" })
+        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>
+
+<style>
+    .badge-success {
+        background-color: #38a169;
+        color: #fff;
+        font-weight: 500;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .badge-secondary {
+        background-color: #a0aec0;
+        color: #fff;
+        font-weight: 500;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .card { border: none; }
+    .mr-2 { margin-right: 0.5em; }
+    @@media (max-width: 768px) {
+        .container { font-size: 0.97em; }
+        .mb-4 { margin-bottom: 1rem !important; }
+    }
+</style>

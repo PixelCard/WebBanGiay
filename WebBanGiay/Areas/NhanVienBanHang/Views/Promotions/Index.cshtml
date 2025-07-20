@@ -1,0 +1,95 @@
+﻿@model IEnumerable<WebBanGiay.Models.Promotion>
+
+@{
+    ViewBag.Title = "Danh sách khuyến mãi";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container" style="max-width: 1200px; margin: 0 auto;">
+    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Danh sách khuyến mãi</h2>
+    <div class="mb-3 text-right">
+        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success" })
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" style="background: #fff; border-radius: 12px; overflow: hidden;">
+            <thead style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: #fff;">
+                <tr style="text-align: center;">
+                    <th>Tên khuyến mãi</th>
+                    <th>Mô tả</th>
+                    <th>Loại giảm giá</th>
+                    <th>Giá trị giảm</th>
+                    <th>Đơn hàng tối thiểu</th>
+                    <th>Giảm tối đa</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Trạng thái</th>
+                    <th>Giới hạn lượt dùng</th>
+                    <th>Đã sử dụng</th>
+                    <th>Ngày tạo</th>
+                    <th>Nhân viên tạo</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="text-align: center; vertical-align: middle;">
+                        <td>@item.PromotionName</td>
+                        <td>@item.Description</td>
+                        <td>@item.DiscountType</td>
+                        <td>@item.DiscountValue</td>
+                        <td>@item.MinOrderAmount</td>
+                        <td>@item.MaxDiscountAmount</td>
+                        <td>@item.StartDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@item.EndDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <span class="badge badge-@(item.IsActive.HasValue ? "success" : "secondary")">@(item.IsActive.Value ? "Đang hoạt động" : "Ngừng")</span>
+                        </td>
+                        <td>@item.UsageLimit</td>
+                        <td>@item.UsedCount</td>
+                        <td>@item.CreatedDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Employee?.FullName</td>
+                        <td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.PromotionID }, new { @class = "btn btn-sm btn-warning" })
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.PromotionID }, new { @class = "btn btn-sm btn-info ml-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .badge-success {
+        background-color: #38a169;
+        color: #fff;
+        font-weight: 500;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .badge-secondary {
+        background-color: #a0aec0;
+        color: #fff;
+        font-weight: 500;
+        padding: 0.4em 0.8em;
+        border-radius: 8px;
+    }
+    .table thead th {
+        vertical-align: middle;
+        font-size: 1.05em;
+        letter-spacing: 0.5px;
+    }
+    .table td, .table th {
+        vertical-align: middle;
+        font-size: 1em;
+    }
+    .btn {
+        min-width: 70px;
+    }
+    .ml-1 { margin-left: 0.5em; }
+    @@media (max-width: 768px) {
+        .table-responsive { font-size: 0.95em; }
+        .mb-4, .mb-3 { margin-bottom: 1rem !important; }
+    }
+</style>

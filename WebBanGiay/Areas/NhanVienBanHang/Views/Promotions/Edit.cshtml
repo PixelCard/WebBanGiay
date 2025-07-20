@@ -1,0 +1,99 @@
+﻿@model WebBanGiay.Models.Promotion
+
+@{
+    ViewBag.Title = "Chỉnh sửa khuyến mãi";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container" style="max-width: 700px; margin: 0 auto;">
+    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chỉnh sửa khuyến mãi</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.PromotionID)
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.PromotionName)
+                @Html.EditorFor(model => model.PromotionName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PromotionName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.Description)
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.DiscountType)
+                @Html.EditorFor(model => model.DiscountType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.DiscountValue)
+                @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.MinOrderAmount)
+                @Html.EditorFor(model => model.MinOrderAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MinOrderAmount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.MaxDiscountAmount)
+                @Html.EditorFor(model => model.MaxDiscountAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaxDiscountAmount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.StartDate)
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.EndDate)
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.IsActive)
+                <div class="form-check">
+                    @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.UsageLimit)
+                @Html.EditorFor(model => model.UsageLimit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsageLimit, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.UsedCount)
+                @Html.EditorFor(model => model.UsedCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsedCount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.CreatedBy, "Nhân viên tạo")
+                @Html.DropDownList("CreatedBy", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.CreatedDate)
+                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="text-center mt-4">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary px-4 py-2 mr-2" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card { border: none; }
+    .mr-2 { margin-right: 0.5em; }
+    .form-check-input { margin-left: 0; }
+    @@media (max-width: 768px) {
+        .container { font-size: 0.97em; }
+        .mb-4 { margin-bottom: 1rem !important; }
+    }
+</style>
