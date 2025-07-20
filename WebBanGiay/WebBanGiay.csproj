@@ -149,6 +149,7 @@
     <Compile Include="Controllers\CheckOutController.cs" />
     <Compile Include="Controllers\EncodingFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderAccountController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
@@ -509,6 +510,7 @@
     <Content Include="Views\ProductDetails\ProductDetailsPage.cshtml" />
     <Content Include="Views\Account\AccountDetails.cshtml" />
     <Content Include="Views\Account\EditAccount.cshtml" />
+    <Content Include="Views\OrderAccount\OrderAccountPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

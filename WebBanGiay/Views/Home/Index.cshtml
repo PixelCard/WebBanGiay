@@ -32,6 +32,7 @@
                             @if (Session["Email"] != null)
                             {
                                 <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("OrderAccountPage", "OrderAccount")" style="margin-left: 10px;"><i class="fa fa-list"></i> Đơn hàng</a>
                                 <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                             }
                             else
@@ -49,11 +50,12 @@
                 <ul class="header__menu__dropdown">
                     <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
                     <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
-                    @if (Session["Email"] != null)
-                    {
-                        <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
-                        <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
-                    }
+                                                    @if (Session["Email"] != null)
+                                {
+                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("OrderAccountPage", "OrderAccount")">Đơn hàng của tôi</a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                                }
                     else
                     {
                         <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
@@ -116,6 +118,7 @@
                             @if (Session["Email"] != null)
                             {
                                 <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("OrderAccountPage", "OrderAccount")" style="margin-left: 10px;"><i class="fa fa-list"></i> Đơn hàng</a>
                                 <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                             }
                             else
@@ -148,6 +151,7 @@
                                 @if (Session["Email"] != null)
                                 {
                                     <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("OrderAccountPage", "OrderAccount")">Đơn hàng của tôi</a></li>
                                     <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
                                 }
                                 else
