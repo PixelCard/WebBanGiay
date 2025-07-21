@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebBanGiay.Models;
 using WebBanGiay.Filters;
+using WebBanGiay.helper;
 
 namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
 {
@@ -62,6 +63,8 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
             {
                 db.Orders.Add(order);
                 db.SaveChanges();
+                // Gọi helper phân loại khách hàng
+                CustomerHelper.PhanLoaiKhachHang(db, order.CustomerID.Value);
                 return RedirectToAction("Index");
             }
 

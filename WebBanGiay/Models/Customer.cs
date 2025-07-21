@@ -17,9 +17,9 @@ namespace WebBanGiay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
+            this.Orders = new HashSet<Order>();
             this.ProductReviews = new HashSet<ProductReview>();
             this.ShoppingCarts = new HashSet<ShoppingCart>();
-            this.Orders = new HashSet<Order>();
         }
     
         public int CustomerID { get; set; }
@@ -36,13 +36,15 @@ namespace WebBanGiay.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> LastLogin { get; set; }
         public Nullable<int> IDAccount { get; set; }
+        public Nullable<int> LoaiID { get; set; }
     
         public virtual Account Account { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual LoaiKhachHang LoaiKhachHang { get; set; }
     }
 }

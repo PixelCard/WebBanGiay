@@ -7,11 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebBanGiay.Models;
-using WebBanGiay.Filters;
 
 namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
 {
-    [NhanVienBanHangAuthorize]
     public class CustomersController : Controller
     {
         private CNPM_LTEntities db = new CNPM_LTEntities();
@@ -19,7 +17,7 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         // GET: NhanVienBanHang/Customers
         public ActionResult Index()
         {
-            var customers = db.Customers.Include(c => c.Account);
+            var customers = db.Customers.Include(c => c.Account).Include(c => c.LoaiKhachHang);
             return View(customers.ToList());
         }
 
@@ -42,6 +40,7 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         public ActionResult Create()
         {
             ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email");
+            ViewBag.LoaiID = new SelectList(db.LoaiKhachHangs, "LoaiID", "LoaiKhachHangName");
             return View();
         }
 
@@ -50,19 +49,20 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerID,FullName,Phone,Address,DateOfBirth,Gender,PreferredSize,PreferredBrand,Newsletter,SMSNotification,IsActive,CreatedDate,LastLogin,IDAccount")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerID,FullName,Phone,Address,DateOfBirth,Gender,PreferredSize,PreferredBrand,Newsletter,SMSNotification,IsActive,CreatedDate,LastLogin,IDAccount,LoaiID")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                customer.LoaiID = 1;
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.IDAccount = new SelectList(db.Accounts, "IDTK", "Email", customer.IDAccount);
+            ViewBag.LoaiID = new SelectList(db.LoaiKhachHangs, "LoaiID", "LoaiKhachHangName", customer.LoaiID);
             return View(customer);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

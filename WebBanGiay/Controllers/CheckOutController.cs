@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanGiay.Models;
+using WebBanGiay.helper;
 
 namespace WebBanGiay.Controllers
 {
@@ -134,6 +135,9 @@ namespace WebBanGiay.Controllers
                     db.OrderDetails.Add(orderDetail);
                 }
                 db.SaveChanges();
+
+                // Gọi helper phân loại khách hàng
+                CustomerHelper.PhanLoaiKhachHang(db, order.CustomerID.Value);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {

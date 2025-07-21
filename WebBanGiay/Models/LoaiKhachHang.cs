@@ -12,27 +12,18 @@ namespace WebBanGiay.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class LoaiKhachHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public LoaiKhachHang()
         {
-            this.Employees = new HashSet<Employee>();
-            this.Admins = new HashSet<Admin>();
             this.Customers = new HashSet<Customer>();
         }
     
-        public int IDTK { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public string UserName { get; set; }
-        public Nullable<int> IDRole { get; set; }
+        public int LoaiID { get; set; }
+        public string LoaiKhachHangName { get; set; }
+        public string descriptions { get; set; }
     
-        public virtual Role Role { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admin> Admins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
     }

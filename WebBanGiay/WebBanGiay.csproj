@@ -144,6 +144,8 @@
     <Compile Include="Areas\NhanVienBanHang\Controllers\CustomersController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\NhanVienBanHang\Controllers\ProductComboDetailsController.cs" />
+    <Compile Include="Areas\NhanVienBanHang\Controllers\ProductComboesController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\PromotionsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\NhanVienBanHang\NhanVienBanHangAreaRegistration.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="helper\CustomerHelper.cs" />
     <Compile Include="Models\Account.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
@@ -198,6 +201,9 @@
     <Compile Include="Models\InventoryTransaction.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoaiKhachHang.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Material.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
@@ -222,6 +228,12 @@
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductCombo.cs">
+      <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductComboDetail.cs">
       <DependentUpon>CNPM_WebBanGiayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImage.cs">
@@ -449,13 +461,23 @@
     <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Create.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Details.cshtml" />
-    <Content Include="Areas\NhanVienBanHang\Views\Customers\Index.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Promotions\Details.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Promotions\Edit.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Promotions\Index.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\OrderDetails\HistoryByCustomer.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboes\Create.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboes\Delete.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboes\Details.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboes\Edit.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboes\Index.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboDetails\Create.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboDetails\Delete.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboDetails\Details.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboDetails\Edit.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\ProductComboDetails\Index.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Create.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Details.cshtml" />
+    <Content Include="Areas\NhanVienBanHang\Views\Customers\Index.cshtml" />
     <None Include="Areas\NhanVienBanHang\Views\Shared\_Layout_NVBH.cshtml" />
     <Content Include="Areas\NhanVienBanHang\Views\Shared\Error.cshtml" />
     <Content Include="Content\fonts\ElegantIcons.eot" />

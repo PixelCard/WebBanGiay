@@ -37,7 +37,6 @@ namespace WebBanGiay.Models
         public Nullable<System.DateTime> ProcessedDate { get; set; }
         public Nullable<int> ShippingID { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
@@ -46,5 +45,6 @@ namespace WebBanGiay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public virtual Shipping Shipping { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WebBanGiay.Models.ProductCombo>
+@{
+    ViewBag.Title = "Danh sách combo sản phẩm";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h2 class="mb-6 text-center text-2xl font-bold text-blue-900 tracking-wide">Danh sách combo sản phẩm</h2>
+    <div class="flex justify-end mb-4">
+        @Html.ActionLink("Tạo combo mới", "Create", null, new { @class = "btn bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow transition" })
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded-lg shadow text-sm">
+            <thead>
+                <tr class="bg-blue-100 text-blue-900">
+                    <th class="py-2 px-4 text-left">Tên combo</th>
+                    <th class="py-2 px-4 text-left">Mô tả</th>
+                    <th class="py-2 px-4 text-left">Giá combo</th>
+                    <th class="py-2 px-4 text-left">Ảnh đại diện</th>
+                    <th class="py-2 px-4 text-left">Kích hoạt</th>
+                    <th class="py-2 px-4 text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-b hover:bg-blue-50">
+                        <td class="py-2 px-4">@item.ComboName</td>
+                        <td class="py-2 px-4">@item.Description</td>
+                        <td class="py-2 px-4">@item.ComboPrice.ToString("N0") VNĐ</td>
+                        <td class="py-2 px-4">@item.ImageURL</td>
+                        <td class="py-2 px-4">@(item.IsActive ? "Có" : "Không")</td>
+                        <td class="py-2 px-4 text-center">
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.ComboID }, new { @class = "btn bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-1 rounded shadow transition mx-1" })
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ComboID }, new { @class = "btn bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-1 rounded shadow transition mx-1" })
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.ComboID }, new { @class = "btn bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-1 rounded shadow transition mx-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

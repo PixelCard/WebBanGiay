@@ -212,26 +212,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="CNPM_LTModel.Customer">
-        <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
-          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="SMSNotification" ColumnName="SMSNotification" />
-          <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
-          <ScalarProperty Name="PreferredBrand" ColumnName="PreferredBrand" />
-          <ScalarProperty Name="PreferredSize" ColumnName="PreferredSize" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="CNPM_LTModel.Employee">
         <MappingFragment StoreEntitySet="Employees">
@@ -344,6 +324,59 @@
           <ScalarProperty Name="OTP" ColumnName="OTP" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductComboes">
+      <EntityTypeMapping TypeName="CNPM_LTModel.ProductCombo">
+        <MappingFragment StoreEntitySet="ProductCombo">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ComboPrice" ColumnName="ComboPrice" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ComboName" ColumnName="ComboName" />
+          <ScalarProperty Name="ComboID" ColumnName="ComboID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductComboDetails">
+      <EntityTypeMapping TypeName="CNPM_LTModel.ProductComboDetail">
+        <MappingFragment StoreEntitySet="ProductComboDetail">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="VariantID" ColumnName="VariantID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ComboID" ColumnName="ComboID" />
+          <ScalarProperty Name="ComboDetailID" ColumnName="ComboDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="CNPM_LTModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="LoaiID" ColumnName="LoaiID" />
+          <ScalarProperty Name="IDAccount" ColumnName="IDAccount" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SMSNotification" ColumnName="SMSNotification" />
+          <ScalarProperty Name="Newsletter" ColumnName="Newsletter" />
+          <ScalarProperty Name="PreferredBrand" ColumnName="PreferredBrand" />
+          <ScalarProperty Name="PreferredSize" ColumnName="PreferredSize" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiKhachHangs">
+      <EntityTypeMapping TypeName="CNPM_LTModel.LoaiKhachHang">
+        <MappingFragment StoreEntitySet="LoaiKhachHang">
+          <ScalarProperty Name="descriptions" ColumnName="descriptions" />
+          <ScalarProperty Name="LoaiKhachHangName" ColumnName="LoaiKhachHangName" />
+          <ScalarProperty Name="LoaiID" ColumnName="LoaiID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

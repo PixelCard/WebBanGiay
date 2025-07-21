@@ -71,6 +71,7 @@
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="LastLogin" Type="datetime" />
     <Property Name="IDAccount" Type="int" />
+    <Property Name="LoaiID" Type="int" />
   </EntityType>
   <EntityType Name="Employees">
     <Key>
@@ -105,6 +106,14 @@
     <Property Name="Notes" Type="nvarchar" MaxLength="255" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ReferenceID" Type="int" />
+  </EntityType>
+  <EntityType Name="LoaiKhachHang">
+    <Key>
+      <PropertyRef Name="LoaiID" />
+    </Key>
+    <Property Name="LoaiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoaiKhachHangName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="descriptions" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Material">
     <Key>
@@ -175,6 +184,27 @@
     <Property Name="EffectiveDate" Type="datetime" />
     <Property Name="ChangedBy" Type="int" />
     <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="ProductCombo">
+    <Key>
+      <PropertyRef Name="ComboID" />
+    </Key>
+    <Property Name="ComboID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ComboName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="ComboPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductComboDetail">
+    <Key>
+      <PropertyRef Name="ComboDetailID" />
+    </Key>
+    <Property Name="ComboDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ComboID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="VariantID" Type="int" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProductImages">
     <Key>
@@ -634,6 +664,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LoaiKhachHang">
+    <End Role="LoaiKhachHang" Type="Self.LoaiKhachHang" Multiplicity="0..1" />
+    <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiKhachHang">
+        <PropertyRef Name="LoaiID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="LoaiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductComboDetail_Combo">
+    <End Role="ProductCombo" Type="Self.ProductCombo" Multiplicity="1" />
+    <End Role="ProductComboDetail" Type="Self.ProductComboDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCombo">
+        <PropertyRef Name="ComboID" />
+      </Principal>
+      <Dependent Role="ProductComboDetail">
+        <PropertyRef Name="ComboID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductComboDetail_Product">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductComboDetail" Type="Self.ProductComboDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductComboDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductComboDetail_Variant">
+    <End Role="ProductVariants" Type="Self.ProductVariants" Multiplicity="0..1" />
+    <End Role="ProductComboDetail" Type="Self.ProductComboDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductVariants">
+        <PropertyRef Name="VariantID" />
+      </Principal>
+      <Dependent Role="ProductComboDetail">
+        <PropertyRef Name="VariantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Products">
     <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -710,12 +788,15 @@
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventoryTransactions" EntityType="Self.InventoryTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoaiKhachHang" EntityType="Self.LoaiKhachHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OTPLog" EntityType="Self.OTPLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethods" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCombo" EntityType="Self.ProductCombo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductComboDetail" EntityType="Self.ProductComboDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductImages" EntityType="Self.ProductImages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductReviews" EntityType="Self.ProductReviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
@@ -837,6 +918,22 @@
     <AssociationSet Name="FK_Account_Employees" Association="Self.FK_Account_Employees">
       <End Role="Account" EntitySet="Account" />
       <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LoaiKhachHang" Association="Self.FK_LoaiKhachHang">
+      <End Role="LoaiKhachHang" EntitySet="LoaiKhachHang" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductComboDetail_Combo" Association="Self.FK_ProductComboDetail_Combo">
+      <End Role="ProductCombo" EntitySet="ProductCombo" />
+      <End Role="ProductComboDetail" EntitySet="ProductComboDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductComboDetail_Product" Association="Self.FK_ProductComboDetail_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductComboDetail" EntitySet="ProductComboDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductComboDetail_Variant" Association="Self.FK_ProductComboDetail_Variant">
+      <End Role="ProductVariants" EntitySet="ProductVariants" />
+      <End Role="ProductComboDetail" EntitySet="ProductComboDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_Products" Association="Self.FK_Products">
       <End Role="Material" EntitySet="Material" />

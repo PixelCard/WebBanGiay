@@ -27,12 +27,8 @@
         <EntityTypeShape EntityType="CNPM_LTModel.Account" Width="1.5" PointX="0.75" PointY="9.625" />
         <EntityTypeShape EntityType="CNPM_LTModel.Role" Width="1.5" PointX="0.5" PointY="6.875" />
         <AssociationConnector Association="CNPM_LTModel.FK_Role" />
-        <EntityTypeShape EntityType="CNPM_LTModel.Customer" Width="1.5" PointX="3" PointY="11.75" />
         <EntityTypeShape EntityType="CNPM_LTModel.Employee" Width="1.5" PointX="3" PointY="17.25" />
-        <AssociationConnector Association="CNPM_LTModel.FK_Account_Customer" />
         <AssociationConnector Association="CNPM_LTModel.FK_Account_Employees" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" />
-        <AssociationConnector Association="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" />
         <AssociationConnector Association="CNPM_LTModel.FK__Inventory__Creat__14270015" />
         <AssociationConnector Association="CNPM_LTModel.FK__PriceHist__Chang__0E6E26BF" />
         <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Appro__02FC7413" />
@@ -52,7 +48,6 @@
         <AssociationConnector Association="CNPM_LTModel.FK__ProductVa__Produ__5165187F" />
         <EntityTypeShape EntityType="CNPM_LTModel.Order" Width="1.5" PointX="7.5" PointY="21.875" />
         <EntityTypeShape EntityType="CNPM_LTModel.Shipping" Width="1.5" PointX="5.25" PointY="20.5" />
-        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Customer__6A30C649" />
         <AssociationConnector Association="CNPM_LTModel.FK__Orders__Processe__73BA3083" />
         <AssociationConnector Association="CNPM_LTModel.FK__OrderDeta__Order__76969D2E" />
         <AssociationConnector Association="CNPM_LTModel.FK__Orders__PaymentM__6FE99F9F" />
@@ -60,6 +55,18 @@
         <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Order__7E37BEF6" />
         <AssociationConnector Association="CNPM_LTModel.FK_Shipping" />
         <EntityTypeShape EntityType="CNPM_LTModel.OTPLog" Width="1.5" PointX="12.625" PointY="2.375" />
+        <EntityTypeShape EntityType="CNPM_LTModel.ProductCombo" Width="1.5" PointX="13" PointY="6.125" />
+        <EntityTypeShape EntityType="CNPM_LTModel.ProductComboDetail" Width="1.5" PointX="15.25" PointY="7" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ProductComboDetail_Combo" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ProductComboDetail_Product" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ProductComboDetail_Variant" />
+        <EntityTypeShape EntityType="CNPM_LTModel.Customer" Width="1.5" PointX="6" PointY="2.625" />
+        <AssociationConnector Association="CNPM_LTModel.FK_Account_Customer" />
+        <AssociationConnector Association="CNPM_LTModel.FK__Orders__Customer__6A30C649" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ProductRe__Custo__7D439ABD" />
+        <AssociationConnector Association="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" />
+        <EntityTypeShape EntityType="CNPM_LTModel.LoaiKhachHang" Width="1.5" PointX="13.375" PointY="13.875" />
+        <AssociationConnector Association="CNPM_LTModel.FK_LoaiKhachHang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,47 @@
+﻿@model WebBanGiay.Models.ProductComboDetail
+@{
+    ViewBag.Title = "Xóa chi tiết combo sản phẩm";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto max-w-xl px-4 py-8">
+    <h2 class="mb-6 text-center text-2xl font-bold text-red-700 tracking-wide">Xóa chi tiết combo sản phẩm</h2>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Bạn có chắc chắn muốn xóa chi tiết này?</h3>
+        <dl class="grid grid-cols-1 gap-y-4 mb-6">
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Combo</dt>
+                <dd class="text-blue-800">@Model.ProductCombo?.ComboName</dd>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Sản phẩm</dt>
+                <dd class="text-blue-800">@Model.Product?.ProductName</dd>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Biến thể</dt>
+                <dd class="text-blue-800">@Model.ProductVariant?.SKU</dd>
+            </div>
+            <div class="flex justify-between">
+                <dt class="font-semibold text-gray-700">Số lượng</dt>
+                <dd><span class="badge badge-info" style="font-size:1em; padding:0.4em 1em;">@Model.Quantity</span></dd>
+            </div>
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="flex justify-end gap-2 mt-4">
+                <input type="submit" value="Xóa" class="btn bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded shadow transition" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded shadow transition" })
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .badge-info {
+        background-color: #4299e1;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+</style>

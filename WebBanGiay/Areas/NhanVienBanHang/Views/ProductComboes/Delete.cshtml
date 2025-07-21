@@ -1,0 +1,42 @@
+﻿@model WebBanGiay.Models.ProductCombo
+@{
+    ViewBag.Title = "Xóa combo sản phẩm";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto max-w-xl px-4 py-8">
+    <h2 class="mb-6 text-center text-2xl font-bold text-red-700 tracking-wide">Xóa combo sản phẩm</h2>
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Bạn có chắc chắn muốn xóa combo này?</h3>
+        <dl class="grid grid-cols-1 gap-y-4 mb-6">
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Tên combo</dt>
+                <dd class="text-blue-800">@Model.ComboName</dd>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Mô tả</dt>
+                <dd class="text-blue-800">@Model.Description</dd>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Giá combo</dt>
+                <dd class="text-blue-800">@Model.ComboPrice.ToString("N0") VNĐ</dd>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <dt class="font-semibold text-gray-700">Ảnh đại diện</dt>
+                <dd class="text-blue-800">@Model.ImageURL</dd>
+            </div>
+            <div class="flex justify-between">
+                <dt class="font-semibold text-gray-700">Kích hoạt</dt>
+                <dd>@(Model.IsActive ? "Có" : "Không")</dd>
+            </div>
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="flex justify-end gap-2 mt-4">
+                <input type="submit" value="Xóa" class="btn bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded shadow transition" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded shadow transition" })
+            </div>
+        }
+    </div>
+</div>

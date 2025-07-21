@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebBanGiay.Models.ProductComboDetail>
+@{
+    ViewBag.Title = "Danh sách chi tiết combo sản phẩm";
+    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h2 class="mb-6 text-center text-2xl font-bold text-blue-900 tracking-wide">Danh sách chi tiết combo sản phẩm</h2>
+    <div class="mb-4 text-right">
+        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition" })
+    </div>
+    <div class="table-responsive rounded-lg shadow overflow-x-auto">
+        <table class="table table-bordered table-hover w-full bg-white">
+            <thead style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: #fff;">
+                <tr class="text-center">
+                    <th>Combo</th>
+                    <th>Sản phẩm</th>
+                    <th>Biến thể</th>
+                    <th>Số lượng</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="text-center align-middle">
+                            <td>@item.ProductCombo?.ComboName</td>
+                            <td>@item.Product?.ProductName</td>
+                            <td>@item.ProductVariant?.SKU</td>
+                            <td><span class="badge badge-info" style="font-size:1em; padding:0.4em 1em;">@item.Quantity</span></td>
+                            <td>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.ComboDetailID }, new { @class = "btn btn-sm btn-warning mx-1" })
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.ComboDetailID }, new { @class = "btn btn-sm btn-info mx-1" })
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.ComboDetailID }, new { @class = "btn btn-sm btn-danger mx-1" })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="text-center text-muted">Không có dữ liệu.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .badge-info {
+        background-color: #4299e1;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+    .btn-warning { background: #f59e42; color: #fff; }
+    .btn-info { background: #4299e1; color: #fff; }
+    .btn-danger { background: #e53e3e; color: #fff; }
+    .btn-warning:hover, .btn-info:hover, .btn-danger:hover { opacity: 0.85; }
+    @@media (max-width: 768px) {
+        .container { font-size: 0.97em; }
+        .table-responsive { font-size: 0.95em; }
+        .mb-6 { margin-bottom: 1.2rem !important; }
+        .mb-4 { margin-bottom: 1rem !important; }
+    }
+</style>
