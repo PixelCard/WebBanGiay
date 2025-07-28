@@ -1,0 +1,411 @@
+﻿
+@{
+    ViewBag.Title = "Tìm kiếm sản phẩm";
+}
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+                        <ul>
+                            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                            <li>Free Shipping for all Order of $99</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        </div>
+                        <div class="header__top__right__language">
+                            <img src="~/Content/img/language.png" alt="">
+                            <div>English</div>
+                            <span class="arrow_carrot-down"></span>
+                            <ul>
+                                <li><a href="#">Spanis</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </div>
+                        <div class="header__top__right__auth">
+                            @if (Session["Email"] != null)
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                                <a href="@Url.Action("OrderAccountPage", "OrderAccount")" style="margin-left: 10px;"><i class="fa fa-list"></i> Đơn hàng</a>
+                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        <li class="active"><a href="@Url.Action("Search", "Home")">Tìm kiếm</a></li>
+                        <li>
+                            <a href="#">Trang</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
+                                <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
+                                @if (Session["Email"] != null)
+                                {
+                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                                    <li><a href="@Url.Action("OrderAccountPage", "OrderAccount")">Đơn hàng của tôi</a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                        <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")"><i class="fa fa-shopping-bag"></i> <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Count : 0)</span></a></li>
+                    </ul>
+                    <div class="header__cart__price">item: <span>@(Session["Cart"] != null ? ((List<WebBanGiay.Models.model_class.CartItem>)Session["Cart"]).Sum(item => item.TotalPrice).ToString("N0") + " VNĐ" : "0 VNĐ")</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Search Section Begin -->
+<section class="search-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="search__form">
+                    <form action="@Url.Action("Search", "Home")" method="get">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.SearchQuery" class="form-control">
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <select name="categoryId" class="form-control">
+                                    <option value="">Tất cả danh mục</option>
+                                    @if (ViewBag.Categories != null)
+                                    {
+                                        foreach (var category in ViewBag.Categories)
+                                        {
+                                            var selected = ViewBag.SelectedCategory != null && ViewBag.SelectedCategory == category.CategoryID;
+                                            <option value="@category.CategoryID" @(selected ? "selected" : "")>@category.CategoryName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <select name="brandId" class="form-control">
+                                    <option value="">Tất cả thương hiệu</option>
+                                    @if (ViewBag.Brands != null)
+                                    {
+                                        foreach (var brand in ViewBag.Brands)
+                                        {
+                                            var selected = ViewBag.SelectedBrand != null && ViewBag.SelectedBrand == brand.BrandID;
+                                            <option value="@brand.BrandID" @(selected ? "selected" : "")>@brand.BrandName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <select name="sortBy" class="form-control">
+                                    <option value="name" @(ViewBag.SortBy == "name" ? "selected" : "")>Tên A-Z</option>
+                                    <option value="price_asc" @(ViewBag.SortBy == "price_asc" ? "selected" : "")>Giá tăng dần</option>
+                                    <option value="price_desc" @(ViewBag.SortBy == "price_desc" ? "selected" : "")>Giá giảm dần</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <button type="submit" class="site-btn">
+                                    <i class="fa fa-search"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Advanced Search -->
+                        <div class="row mt-3">
+                            <div class="col-lg-3 col-md-6">
+                                <label>Giá từ:</label>
+                                <input type="number" name="minPrice" placeholder="0" value="@ViewBag.MinPrice" class="form-control">
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <label>Giá đến:</label>
+                                <input type="number" name="maxPrice" placeholder="Không giới hạn" value="@ViewBag.MaxPrice" class="form-control">
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="search-stats">
+                                    @if (!string.IsNullOrEmpty(ViewBag.SearchQuery) || ViewBag.SelectedCategory != null || ViewBag.SelectedBrand != null)
+                                    {
+                                        <p class="mb-0">
+                                            <i class="fa fa-info-circle"></i> 
+                                            Tìm thấy <strong>@ViewBag.TotalItems</strong> sản phẩm
+                                            @if (!string.IsNullOrEmpty(ViewBag.SearchQuery))
+                                            {
+                                                <span>cho từ khóa "<strong>@ViewBag.SearchQuery</strong>"</span>
+                                            }
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Search Section End -->
+
+<!-- Product Results Section Begin -->
+<section class="product-results spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                @if (ViewBag.Products != null && ((List<WebBanGiay.Models.Product>)ViewBag.Products).Any())
+                {
+                    <div class="row">
+                        @foreach (var product in ViewBag.Products)
+                        {
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="featured__item">
+                                    <div class="featured__item__pic set-bg" data-setbg="@(product.GetFirstImageUrl() ?? "/Content/img/product/product-1.jpg")">
+                                        <ul class="featured__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="featured__item__text">
+                                        <h6><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })">@(product.ProductName ?? "Sản phẩm không xác định")</a></h6>
+                                        <p class="product-category">
+                                            @(product.Category?.CategoryName ?? "Không xác định") - @(product.Brand?.BrandName ?? "Không xác định")
+                                        </p>
+                                        <h5>
+                                            @if (product.HasActiveVariants())
+                                            {
+                                                @(product.GetMinPrice().ToString("N0") + " VNĐ")
+                                            }
+                                            else
+                                            {
+                                                <span style="color: #999;">Liên hệ</span>
+                                            }
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    
+                    <!-- Pagination -->
+                    if (ViewBag.TotalPages > 1)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="pagination-container">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            @if (ViewBag.CurrentPage > 1)
+                                            {
+                                                <li class="page-item">
+                                                    <a class="page-link" href="@Url.Action("Search", "Home", new { q = ViewBag.SearchQuery, categoryId = ViewBag.SelectedCategory, brandId = ViewBag.SelectedBrand, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, sortBy = ViewBag.SortBy, page = ViewBag.CurrentPage - 1 })">
+                                                        <i class="fa fa-chevron-left"></i> Trước
+                                                    </a>
+                                                </li>
+                                            }
+                                            
+                                            @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                                            {
+                                                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                                    <a class="page-link" href="@Url.Action("Search", "Home", new { q = ViewBag.SearchQuery, categoryId = ViewBag.SelectedCategory, brandId = ViewBag.SelectedBrand, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, sortBy = ViewBag.SortBy, page = i })">@i</a>
+                                                </li>
+                                            }
+                                            
+                                            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                                            {
+                                                <li class="page-item">
+                                                    <a class="page-link" href="@Url.Action("Search", "Home", new { q = ViewBag.SearchQuery, categoryId = ViewBag.SelectedCategory, brandId = ViewBag.SelectedBrand, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, sortBy = ViewBag.SortBy, page = ViewBag.CurrentPage + 1 })">
+                                                        Sau <i class="fa fa-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="no-results">
+                                <div class="text-center">
+                                    <i class="fa fa-search" style="font-size: 64px; color: #ddd; margin-bottom: 20px;"></i>
+                                    <h3>Không tìm thấy sản phẩm</h3>
+                                    <p>Không có sản phẩm nào phù hợp với tiêu chí tìm kiếm của bạn.</p>
+                                    <a href="@Url.Action("Search", "Home")" class="site-btn">Tìm kiếm lại</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Results Section End -->
+
+<style>
+.search-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 0;
+    color: white;
+}
+
+.search__form {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.search__form input,
+.search__form select {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+}
+
+.search__form input:focus,
+.search__form select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.site-btn {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.site-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.search-stats {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.product-results {
+    padding: 60px 0;
+    background: #f8f9fa;
+}
+
+.featured__item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.featured__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-category {
+    font-size: 12px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.pagination-container {
+    margin-top: 40px;
+}
+
+.pagination .page-link {
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    margin: 0 2px;
+    border-radius: 5px;
+}
+
+.pagination .page-item.active .page-link {
+    background: #e74c3c;
+    border-color: #e74c3c;
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.no-results {
+    padding: 80px 0;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.no-results h3 {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.no-results p {
+    color: #999;
+    margin-bottom: 30px;
+}
+</style>
+

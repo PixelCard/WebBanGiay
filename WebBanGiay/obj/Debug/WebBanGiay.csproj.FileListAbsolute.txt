@@ -1,3 +1,5 @@
+D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.csproj.AssemblyReference.cache
+D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.csproj.CoreCompileInputs.cache
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.dll.config
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\WebBanGiay.pdb
@@ -76,8 +78,6 @@ D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\Newtonsoft.Json.xml
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\Antlr3.Runtime.pdb
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.csproj.AssemblyReference.cache
-D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.csproj.CoreCompileInputs.cache
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.csproj.Up2Date
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.dll
 D:\desktop\Bo\Nam 2\HK3\CNPM (Li Thuyet)\Project_Chinh\WebBanGiay\WebBanGiay\obj\Debug\WebBanGiay.pdb

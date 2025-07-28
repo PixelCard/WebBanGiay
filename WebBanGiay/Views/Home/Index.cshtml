@@ -28,18 +28,18 @@
                 <li><a href="#">English</a></li>
             </ul>
         </div>
-                                <div class="header__top__right__auth">
-                            @if (Session["Email"] != null)
-                            {
-                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
-                                <a href="@Url.Action("OrderAccountPage", "OrderAccount")" style="margin-left: 10px;"><i class="fa fa-list"></i> Đơn hàng</a>
-                                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
-                            }
-                        </div>
+        <div class="header__top__right__auth">
+            @if (Session["Email"] != null)
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> @Session["Email"]</a>
+                <a href="@Url.Action("OrderAccountPage", "OrderAccount")" style="margin-left: 10px;"><i class="fa fa-list"></i> Đơn hàng</a>
+                <a href="@Url.Action("Logout", "Account")" style="margin-left: 10px;"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+            }
+            else
+            {
+                <a href="@Url.Action("LoginPage", "Account")"><i class="fa fa-user"></i> Đăng nhập</a>
+            }
+        </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
@@ -50,12 +50,12 @@
                 <ul class="header__menu__dropdown">
                     <li><a href="@Url.Action("ShoppingCartPage", "ShoppingCart")">Giỏ hàng</a></li>
                     <li><a href="@Url.Action("Checkoutpage", "CheckOut")">Thanh toán</a></li>
-                                                    @if (Session["Email"] != null)
-                                {
-                                    <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
-                                    <li><a href="@Url.Action("OrderAccountPage", "OrderAccount")">Đơn hàng của tôi</a></li>
-                                    <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
-                                }
+                    @if (Session["Email"] != null)
+                    {
+                        <li><a href="@Url.Action("AccountDetails", "Account")">Thông tin tài khoản</a></li>
+                        <li><a href="@Url.Action("OrderAccountPage", "OrderAccount")">Đơn hàng của tôi</a></li>
+                        <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                    }
                     else
                     {
                         <li><a href="@Url.Action("LoginPage", "Account")">Đăng nhập</a></li>
@@ -82,8 +82,6 @@
     </div>
 </div>
 <!-- Humberger End -->
-
-
 <!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
@@ -182,8 +180,6 @@
     </div>
 </header>
 <!-- Header Section End -->
-
-
 <!-- Hero Section Begin -->
 <section class="hero">
     <div class="container">
@@ -208,12 +204,12 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
+                        <form action="@Url.Action("Search", "Home")" method="get">
                             <div class="hero__search__categories">
                                 Tất cả danh mục
                                 <span class="arrow_carrot-down"></span>
                             </div>
-                            <input type="text" placeholder="Bạn cần tìm gì?">
+                            <input type="text" name="q" placeholder="Bạn cần tìm gì?">
                             <button type="submit" class="site-btn">TÌM KIẾM</button>
                         </form>
                     </div>
@@ -251,8 +247,6 @@
     </div>
 </section>
 <!-- Hero Section End -->
-
-
 <!-- Brands Section Begin -->
 <section class="categories">
     <div class="container">
@@ -280,8 +274,6 @@
     </div>
 </section>
 <!-- Brands Section End -->
-
-
 <!-- Featured Section Begin -->
 <section class="featured spad">
     <div class="container">
@@ -292,13 +284,17 @@
                 </div>
                 <div class="featured__controls">
                     <ul>
-                        <li class="active" data-filter="*">Tất cả</li>
+                        <li class="@(ViewBag.SelectedCategory == null ? "active" : "")">
+                            <a href="@Url.Action("Index", "Home", new { categoryId = (int?)null })">Tất cả</a>
+                        </li>
                         @if (ViewBag.Categories != null)
                         {
                             foreach (var category in ViewBag.Categories)
                             {
-                                var categoryClass = category.CategoryName?.ToLower().Replace(" ", "-") ?? "default";
-                                <li data-filter=".@categoryClass">@category.CategoryName</li>
+                                var isActive = ViewBag.SelectedCategory != null && ViewBag.SelectedCategory == category.CategoryID;
+                                <li class="@(isActive ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Home", new { categoryId = category.CategoryID })">@category.CategoryName</a>
+                                </li>
                             }
                         }
                     </ul>
@@ -306,41 +302,171 @@
             </div>
         </div>
         <div class="row featured__filter">
-                @if (ViewBag.FeaturedProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.FeaturedProducts).Any())
+            @if (ViewBag.FeaturedProducts != null && ((List<WebBanGiay.Models.Product>)ViewBag.FeaturedProducts).Any())
+            {
+                foreach (var product in ViewBag.FeaturedProducts)
                 {
-                    foreach (var product in ViewBag.FeaturedProducts)
-                    {
-                        var brandClass = product.Brand?.BrandName?.ToLower().Replace(" ", "-") ?? "default";
-                        
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix @brandClass">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="@product.GetFirstImageUrl()">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })">@product.ProductName</a></h6>
-                                    <h5>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</h5>
-                                </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="@product.GetFirstImageUrl()">
+                                <ul class="featured__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="@Url.Action("ProductDetailsPage", "ProductDetails", new { id = product.ProductID })">@product.ProductName</a></h6>
+                                <h5>@(product.HasActiveVariants() ? product.GetMinPrice().ToString("N0") + " VNĐ" : "Liên hệ")</h5>
                             </div>
                         </div>
-                    }
-                }
-                else
-                {
-                    <div class="col-12 text-center">
-                        <p>Chưa có sản phẩm nào được hiển thị.</p>
                     </div>
                 }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>Chưa có sản phẩm nào được hiển thị.</p>
+                </div>
+            }
         </div>
     </div>
 </section>
 <!-- Featured Section End -->
+<!-- Combo Products Section Begin -->
+<section class="featured spad" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2 style="margin-bottom:12px">Combo Sản Phẩm</h2>
+                    <p>Tiết kiệm hơn với các combo được thiết kế đặc biệt</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (ViewBag.ProductCombos != null && ((List<WebBanGiay.Models.ProductCombo>)ViewBag.ProductCombos).Any())
+            {
+                var activeCombos = ((List<WebBanGiay.Models.ProductCombo>)ViewBag.ProductCombos)
+                    .Where(c => c.IsActive && c.endDate.HasValue && c.endDate.Value > DateTime.Now)
+                    .Take(8)
+                    .ToList();
 
+                foreach (var combo in activeCombos)
+                {
+                    var daysLeft = combo.endDate.HasValue ? (combo.endDate.Value - DateTime.Now).Days : 0;
+                    var isExpiringSoon = daysLeft <= 7 && daysLeft > 0;
 
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="featured__item combo-item" style="border: 2px solid #e3f2fd; border-radius: 10px; overflow: hidden;">
+                            <div class="featured__item__pic set-bg" data-setbg="@(string.IsNullOrEmpty(combo.ImageURL) ? "/Content/img/product/product-1.jpg" : combo.ImageURL)" style="position: relative;">
+                                <!-- Combo Badge -->
+                                <div style="position: absolute; top: 10px; left: 10px; background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; z-index: 2;">
+                                    <i class="fa fa-gift"></i> COMBO
+                                </div>
+
+                                <!-- Expiring Soon Badge -->
+                                @if (isExpiringSoon)
+                                {
+                                    <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(45deg, #ffa726, #ff9800); color: white; padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; z-index: 2;">
+                                        <i class="fa fa-clock-o"></i> Còn @daysLeft ngày
+                                    </div>
+                                }
+
+                                <!-- Time Limit Badge -->
+                                @if (combo.startDate.HasValue && combo.endDate.HasValue)
+                                {
+                                    var totalDays = (combo.endDate.Value - combo.startDate.Value).Days;
+                                    if (totalDays > 30)
+                                    {
+                                        <div style="position: absolute; bottom: 10px; left: 10px; background: rgba(244, 67, 54, 0.9); color: white; padding: 3px 8px; border-radius: 10px; font-size: 10px; z-index: 2;">
+                                            <i class="fa fa-exclamation-triangle"></i> >30 ngày
+                                        </div>
+                                    }
+                                }
+
+                                <ul class="featured__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="#" onclick="showComboDetails(@combo.ComboID, '@combo.ComboName', '@combo.Description', @combo.ComboPrice, '@(combo.startDate?.ToString("dd/MM/yyyy"))', '@(combo.endDate?.ToString("dd/MM/yyyy"))', '@combo.ImageURL'); return false;"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="#" class="add-combo-to-cart" data-combo-id="@combo.ComboID"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text" style="padding: 15px;">
+                                <h6 style="margin-bottom: 8px;">
+                                    <a href="#" onclick="showComboDetails(@combo.ComboID, '@combo.ComboName', '@combo.Description', @combo.ComboPrice, '@(combo.startDate?.ToString("dd/MM/yyyy"))', '@(combo.endDate?.ToString("dd/MM/yyyy"))', '@combo.ImageURL'); return false;" style="color: #333; text-decoration: none;">
+                                        @combo.ComboName
+                                    </a>
+                                </h6>
+
+                                @if (!string.IsNullOrEmpty(combo.Description))
+                                {
+                                    <p style="font-size: 12px; color: #666; margin-bottom: 10px; line-height: 1.4;">
+                                        @(combo.Description.Length > 60 ? combo.Description.Substring(0, 60) + "..." : combo.Description)
+                                    </p>
+                                }
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <h5 style="color: #e74c3c; font-weight: bold; margin: 0; font-size: 16px;">
+                                        @combo.ComboPrice.ToString("N0") VNĐ
+                                    </h5>
+                                    <span style="background: #27ae60; color: white; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: bold;">
+                                        <i class="fa fa-percent"></i> TIẾT KIỆM
+                                    </span>
+                                </div>
+
+                                <div style="font-size: 11px; color: #888; margin-bottom: 8px;">
+                                    <i class="fa fa-calendar"></i>
+                                    @if (combo.startDate.HasValue && combo.endDate.HasValue)
+                                    {
+                                        <span>@combo.startDate.Value.ToString("dd/MM") - @combo.endDate.Value.ToString("dd/MM/yyyy")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Chưa có thời gian</span>
+                                    }
+                                </div>
+
+                                <div style="display: flex; gap: 5px; margin-top: 10px;">
+                                    <button class="site-btn" style="flex: 1; padding: 8px; font-size: 12px; background: #e74c3c; border: none; color: white; border-radius: 5px;"
+                                            onclick="addComboToCart(@combo.ComboID)">
+                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                    </button>
+                                    <button class="site-btn" style="flex: 1; padding: 8px; font-size: 12px; background: #3498db; border: none; color: white; border-radius: 5px;"
+                                            onclick="showComboDetails(@combo.ComboID, '@combo.ComboName', '@combo.Description', @combo.ComboPrice, '@(combo.startDate?.ToString("dd/MM/yyyy"))', '@(combo.endDate?.ToString("dd/MM/yyyy"))', '@combo.ImageURL')">
+                                        <i class="fa fa-eye"></i> Chi tiết
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                if (!activeCombos.Any())
+                {
+                    <div class="col-12 text-center">
+                        <div style="padding: 40px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <i class="fa fa-gift" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                            <h4 style="color: #666; margin-bottom: 10px;">Chưa có combo nào</h4>
+                            <p style="color: #999;">Hiện tại chưa có combo sản phẩm nào đang hoạt động.</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <div style="padding: 40px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <i class="fa fa-gift" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h4 style="color: #666; margin-bottom: 10px;">Chưa có combo nào</h4>
+                        <p style="color: #999;">Hiện tại chưa có combo sản phẩm nào đang hoạt động.</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<!-- Combo Products Section End -->
 <!-- Latest Product Section Begin -->
 <section class="latest-product spad">
     <div class="container">
@@ -468,8 +594,6 @@
     </div>
 </section>
 <!-- Latest Product Section End -->
-
-
 <!-- Blog Section Begin -->
 <section class="from-blog spad">
     <div class="container">
@@ -530,3 +654,379 @@
     </div>
 </section>
 <!-- Blog Section End -->
+<!-- Combo Details Modal -->
+<div id="comboDetailsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="comboDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; border-bottom: none;">
+                <h5 class="modal-title" id="comboDetailsModalLabel">
+                    <i class="fa fa-gift"></i> Chi tiết Combo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="combo-image-container" style="text-align: center; margin-bottom: 20px;">
+                            <img id="comboModalImage" src="" alt="Combo Image" style="max-width: 100%; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 id="comboModalName" style="color: #333; margin-bottom: 15px;"></h4>
+                        <p id="comboModalDescription" style="color: #666; line-height: 1.6; margin-bottom: 20px;"></p>
+
+                        <div class="combo-info" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-weight: bold; color: #333;">Giá combo:</span>
+                                <span id="comboModalPrice" style="color: #e74c3c; font-size: 18px; font-weight: bold;"></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-weight: bold; color: #333;">Ngày bắt đầu:</span>
+                                <span id="comboModalStartDate" style="color: #666;"></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-weight: bold; color: #333;">Ngày kết thúc:</span>
+                                <span id="comboModalEndDate" style="color: #666;"></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: bold; color: #333;">Trạng thái:</span>
+                                <span id="comboModalStatus" style="padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;"></span>
+                            </div>
+                        </div>
+
+                        <div class="combo-products" style="margin-bottom: 20px;">
+                            <h6 style="color: #333; margin-bottom: 10px;">
+                                <i class="fa fa-list"></i> Sản phẩm trong combo:
+                            </h6>
+                            <div id="comboModalProducts" style="max-height: 200px; overflow-y: auto;">
+                                <!-- Products will be loaded here via AJAX -->
+                                <div style="text-align: center; padding: 20px;">
+                                    <i class="fa fa-spinner fa-spin" style="font-size: 20px; color: #ddd;"></i>
+                                    <p style="color: #999; margin-top: 10px;">Đang tải sản phẩm...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: none; padding: 20px;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="addComboToCartModal" style="background: #e74c3c; border: none;">
+                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variable to store current combo ID
+let currentComboId = null;
+
+// Show combo details modal
+function showComboDetails(comboId, comboName, description, price, startDate, endDate, imageUrl) {
+    currentComboId = comboId;
+
+    // Set modal content
+    document.getElementById('comboModalName').textContent = comboName;
+    document.getElementById('comboModalDescription').textContent = description || 'Không có mô tả';
+    document.getElementById('comboModalPrice').textContent = price.toLocaleString('vi-VN') + ' VNĐ';
+    document.getElementById('comboModalStartDate').textContent = startDate || 'Chưa có';
+    document.getElementById('comboModalEndDate').textContent = endDate || 'Chưa có';
+
+    // Set image
+    const modalImage = document.getElementById('comboModalImage');
+    if (imageUrl && imageUrl.trim() !== '') {
+        modalImage.src = imageUrl;
+    } else {
+        modalImage.src = '/Content/img/product/product-1.jpg';
+    }
+
+    // Set status
+    const statusElement = document.getElementById('comboModalStatus');
+    const endDateObj = endDate ? new Date(endDate.split('/').reverse().join('-')) : null;
+    const now = new Date();
+
+    if (endDateObj && endDateObj < now) {
+        statusElement.textContent = 'HẾT HẠN';
+        statusElement.style.backgroundColor = '#e74c3c';
+        statusElement.style.color = 'white';
+    } else {
+        statusElement.textContent = 'ĐANG HOẠT ĐỘNG';
+        statusElement.style.backgroundColor = '#27ae60';
+        statusElement.style.color = 'white';
+    }
+
+    // Load combo products via AJAX
+    loadComboProducts(comboId);
+
+    // Show modal
+    $('#comboDetailsModal').modal('show');
+}
+
+// Load combo products
+function loadComboProducts(comboId) {
+    const productsContainer = document.getElementById('comboModalProducts');
+
+    $.ajax({
+        url: '@Url.Action("GetComboProducts", "Home")',
+        type: 'GET',
+        data: { comboId: comboId },
+        success: function(response) {
+            if (response.success && response.products && response.products.length > 0) {
+                let productsHtml = '';
+                response.products.forEach(function(product) {
+                    productsHtml += `
+                        <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; background: white; border-radius: 5px; margin-bottom: 5px;">
+                            <img src="${product.imageUrl || '/Content/img/product/product-1.jpg'}"
+                                 alt="${product.productName}"
+                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+                            <div style="flex: 1;">
+                                <div style="font-weight: bold; color: #333; font-size: 14px;">${product.productName}</div>
+                                <div style="color: #666; font-size: 12px;">
+                                    ${product.colorName} - ${product.sizeName} (SL: ${product.quantity})
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #e74c3c; font-weight: bold; font-size: 14px;">${product.price.toLocaleString('vi-VN')} VNĐ</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                productsContainer.innerHTML = productsHtml;
+            } else {
+                productsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #999;">
+                        <i class="fa fa-exclamation-circle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                        <p>Không có sản phẩm nào trong combo này.</p>
+                    </div>
+                `;
+            }
+        },
+        error: function() {
+            productsContainer.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: #999;">
+                    <i class="fa fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                    <p>Có lỗi xảy ra khi tải thông tin sản phẩm.</p>
+                </div>
+            `;
+        }
+    });
+}
+
+// Combo cart functionality
+function addComboToCart(comboId) {
+    // Show loading state
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang thêm...';
+    button.disabled = true;
+
+    // Make AJAX call to add combo to cart
+    $.ajax({
+        url: '@Url.Action("AddComboToCart", "ShoppingCart")',
+        type: 'POST',
+        data: { comboId: comboId },
+        success: function(response) {
+            if (response.success) {
+                // Show success message
+                showNotification('Đã thêm combo vào giỏ hàng!', 'success');
+
+                // Update cart count in header
+                updateCartCount(response.cartCount);
+                updateCartTotal(response.cartTotal);
+
+                // Reset button
+                button.innerHTML = originalText;
+                button.disabled = false;
+
+                // Close modal if it's open
+                $('#comboDetailsModal').modal('hide');
+            } else {
+                // Show error message
+                showNotification(response.message || 'Có lỗi xảy ra khi thêm combo vào giỏ hàng!', 'error');
+
+                // Reset button
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        },
+        error: function() {
+            // Show error message
+            showNotification('Có lỗi xảy ra khi thêm combo vào giỏ hàng!', 'error');
+
+            // Reset button
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+    });
+}
+
+// Update cart count in header
+function updateCartCount(count) {
+    const cartCountElements = document.querySelectorAll('.header__cart span, .humberger__menu__cart span');
+    cartCountElements.forEach(element => {
+        element.textContent = count;
+    });
+}
+
+// Update cart total in header
+function updateCartTotal(total) {
+    const cartTotalElements = document.querySelectorAll('.header__cart__price span, .humberger__menu__cart .header__cart__price span');
+    cartTotalElements.forEach(element => {
+        element.textContent = total + ' VNĐ';
+    });
+}
+
+// Show notification
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        z-index: 9999;
+        animation: slideIn 0.3s ease-out;
+        max-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+
+    // Set background color based on type
+    if (type === 'success') {
+        notification.style.backgroundColor = '#27ae60';
+    } else if (type === 'error') {
+        notification.style.backgroundColor = '#e74c3c';
+    } else {
+        notification.style.backgroundColor = '#3498db';
+    }
+
+    notification.innerHTML = `
+        <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        ${message}
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Simple product filtering
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click event for combo cart buttons
+    const comboCartButtons = document.querySelectorAll('.add-combo-to-cart');
+    comboCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const comboId = this.getAttribute('data-combo-id');
+            addComboToCart(comboId);
+        });
+    });
+
+    // Add click event for modal add to cart button
+    const modalAddButton = document.getElementById('addComboToCartModal');
+    if (modalAddButton) {
+        modalAddButton.addEventListener('click', function() {
+            if (currentComboId) {
+                addComboToCart(currentComboId);
+            }
+        });
+    }
+});
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @@keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @@keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    .featured__controls li {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .featured__controls li:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+    }
+
+    .featured__controls li.active {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        color: white;
+        border-radius: 20px;
+        padding: 8px 16px;
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    }
+
+    .featured__controls li a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+
+    .featured__controls li.active a {
+        color: white;
+    }
+
+    .combo-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .combo-item .featured__item__pic:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    /* Debug styles */
+    .debug-info {
+        background: #f0f0f0;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-size: 12px;
+        border: 1px solid #ddd;
+    }
+`;
+document.head.appendChild(style);
+</script>

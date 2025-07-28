@@ -17,7 +17,7 @@
                             <i class="fas fa-plus me-1"></i>Tạo combo mới
                         </a>
                     </div>
-                </div>
+    </div>
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -32,11 +32,11 @@
                                     <th>Thời gian</th>
                                     <th>Trạng thái</th>
                                     <th class="text-center">Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                                     var isExpired = item.endDate.HasValue && item.endDate.Value < DateTime.Now;
                                     var isActive = item.IsActive && !isExpired;
                                     var daysLeft = item.endDate.HasValue ? (item.endDate.Value - DateTime.Now).Days : 0;
@@ -125,11 +125,11 @@
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
                     </div>
 
                     <div class="alert alert-warning mt-4">

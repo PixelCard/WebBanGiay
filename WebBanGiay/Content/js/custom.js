@@ -158,12 +158,13 @@
 
     // Search functionality
     $('.hero__search__form form').on('submit', function (e) {
-        e.preventDefault();
+        // Remove preventDefault to allow form submission to work properly
+        // e.preventDefault();
         var searchTerm = $(this).find('input[type="text"]').val();
 
         if (searchTerm.trim() !== '') {
-            // Here you can implement actual search functionality
-            alert('Tìm kiếm: ' + searchTerm);
+            // Form will submit normally to the search page
+            // No need for alert or custom handling
         }
     });
 

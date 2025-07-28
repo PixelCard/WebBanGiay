@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+    </div>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -80,8 +80,8 @@
                                             }
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+            </div>
+        </div>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -141,8 +141,8 @@
                                             }
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                        </div>
+                        </div>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -153,9 +153,9 @@
                                             {
                                                 <span class="text-muted">@Model.Customer.FullName</span>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        </div>
+                        </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label class="form-label fw-bold text-muted">Nhân viên xử lý</label>
@@ -168,10 +168,10 @@
                                             {
                                                 <span class="text-muted fst-italic">Chưa có nhân viên xử lý</span>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 
                             <div class="form-group mb-3">
                                 <label class="form-label fw-bold text-muted">Ghi chú</label>
@@ -251,10 +251,10 @@
                                             {
                                                 <span class="text-muted fst-italic">Chưa xử lý</span>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
 
                             @if (Model.Status != "Shipped" && Model.Status != "Delivered" && Model.Status != "Cancelled")
                             {
@@ -262,7 +262,7 @@
                                     <a href="@Url.Action("Cancel", new { id = Model.OrderID })" class="btn btn-danger w-100">
                                         <i class="fas fa-times me-1"></i>Hủy đơn hàng
                                     </a>
-                                </div>
+                        </div>
                             }
                             else
                             {
@@ -284,8 +284,8 @@
                                                 <span>Đơn hàng đã bị hủy</span>
                                             }
                                         </small>
-                                    </div>
-                                </div>
+                        </div>
+                        </div>
                             }
                         </div>
                     </div>

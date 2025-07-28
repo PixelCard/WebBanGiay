@@ -46,7 +46,7 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ComboID,ComboName,Description,ComboPrice,ImageURL,IsActive")] ProductCombo productCombo)
+        public ActionResult Create([Bind(Include = "ComboID,ComboName,Description,ComboPrice,ImageURL,IsActive,startDate,endDate")] ProductCombo productCombo)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace WebBanGiay.Areas.NhanVienBanHang.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ComboID,ComboName,Description,ComboPrice,ImageURL,IsActive")] ProductCombo productCombo)
+        public ActionResult Edit([Bind(Include = "ComboID,ComboName,Description,ComboPrice,ImageURL,IsActive,startDate,endDate")] ProductCombo productCombo)
         {
             if (ModelState.IsValid)
             {
