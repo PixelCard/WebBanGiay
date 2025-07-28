@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
 <h2>Index</h2>
@@ -34,10 +34,10 @@
             @Html.DisplayNameFor(model => model.ApprovedDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.Username)
+            @Html.DisplayNameFor(model => model.Customer.FullName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.Username)
+            @Html.DisplayNameFor(model => model.Employee.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Order.OrderNumber)
@@ -72,10 +72,10 @@
             @Html.DisplayFor(modelItem => item.ApprovedDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Customer.Username)
+            @Html.DisplayFor(modelItem => item.Customer.FullName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Employee.Username)
+            @Html.DisplayFor(modelItem => item.Employee.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Order.OrderNumber)

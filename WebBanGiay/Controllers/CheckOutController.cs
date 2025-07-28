@@ -101,12 +101,15 @@ namespace WebBanGiay.Controllers
                 shippingId = shipping.ShippingID;
             }
 
+            // Xác định trạng thái đơn hàng dựa trên phương thức thanh toán
+            string orderStatus = (paymentMethod == "cod") ? "Processing" : "pending";
+            
             // Tạo order mới
             var order = new Order
             {
                 CustomerID = customer.CustomerID,
                 OrderDate = DateTime.Now,
-                Status = "pending",
+                Status = orderStatus,
                 SubTotal = cart.Sum(x => x.TotalPrice),
                 TotalAmount = cart.Sum(x => x.TotalPrice) + 25.00m,
                 ShippingID = shippingId,

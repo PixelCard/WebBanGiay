@@ -1,69 +1,256 @@
 ﻿@model WebBanGiay.Models.Promotion
 
 @{
-    ViewBag.Title = "Chi tiết khuyến mãi";
+    ViewBag.Title = "Chi tiết Khuyến mãi";
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container" style="max-width: 700px; margin: 0 auto;">
-    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chi tiết khuyến mãi</h2>
-    <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
-        <dl class="row" style="font-size: 1.08em;">
-            <dt class="col-sm-5">Tên khuyến mãi</dt>
-            <dd class="col-sm-7">@Model.PromotionName</dd>
-            <dt class="col-sm-5">Mô tả</dt>
-            <dd class="col-sm-7">@Model.Description</dd>
-            <dt class="col-sm-5">Loại giảm giá</dt>
-            <dd class="col-sm-7">@Model.DiscountType</dd>
-            <dt class="col-sm-5">Giá trị giảm</dt>
-            <dd class="col-sm-7">@Model.DiscountValue</dd>
-            <dt class="col-sm-5">Đơn hàng tối thiểu</dt>
-            <dd class="col-sm-7">@Model.MinOrderAmount</dd>
-            <dt class="col-sm-5">Giảm tối đa</dt>
-            <dd class="col-sm-7">@Model.MaxDiscountAmount</dd>
-            <dt class="col-sm-5">Ngày bắt đầu</dt>
-            <dd class="col-sm-7">@Model.StartDate?.ToString("dd/MM/yyyy")</dd>
-            <dt class="col-sm-5">Ngày kết thúc</dt>
-            <dd class="col-sm-7">@Model.EndDate?.ToString("dd/MM/yyyy")</dd>
-            <dt class="col-sm-5">Trạng thái</dt>
-            <dd class="col-sm-7">
-                <span class="badge badge-@(Model.IsActive.HasValue ? "success" : "secondary")">@(Model.IsActive.HasValue ? "Đang hoạt động" : "Ngừng")</span>
-            </dd>
-            <dt class="col-sm-5">Giới hạn lượt dùng</dt>
-            <dd class="col-sm-7">@Model.UsageLimit</dd>
-            <dt class="col-sm-5">Đã sử dụng</dt>
-            <dd class="col-sm-7">@Model.UsedCount</dd>
-            <dt class="col-sm-5">Ngày tạo</dt>
-            <dd class="col-sm-7">@Model.CreatedDate?.ToString("dd/MM/yyyy")</dd>
-            <dt class="col-sm-5">Nhân viên tạo</dt>
-            <dd class="col-sm-7">@Model.Employee?.FullName</dd>
-        </dl>
-    </div>
-    <div class="text-center">
-        @Html.ActionLink("Sửa", "Edit", new { id = Model.PromotionID }, new { @class = "btn btn-warning mr-2" })
-        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Chi tiết Khuyến mãi
+                    </h3>
+                    <div class="d-flex gap-2">
+                        <a href="@Url.Action("Edit", new { id = Model.PromotionID })" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit me-1"></i>Sửa
+                        </a>
+                        <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Tên khuyến mãi</label>
+                                        <div class="form-control-plaintext fw-bold">@Model.PromotionName</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Loại giảm giá</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.DiscountType == "Percentage")
+                                            {
+                                                <span class="badge bg-info">Phần trăm (%)</span>
+                                            }
+                                            else if (Model.DiscountType == "FixedAmount")
+                                            {
+                                                <span class="badge bg-warning">Tiền (VNĐ)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">@Model.DiscountType</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Giá trị giảm</label>
+                                        <div class="form-control-plaintext fw-bold text-success">@Model.DiscountValue</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Giảm tối đa</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.MaxDiscountAmount.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.MaxDiscountAmount.Value.ToString("N0") VNĐ</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Không giới hạn</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Ngày bắt đầu</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-primary">@Model.StartDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Ngày kết thúc</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-warning">@Model.EndDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Trạng thái</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.IsActive == true)
+                                            {
+                                                <span class="badge bg-success">Hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Không hoạt động</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Giới hạn sử dụng</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.UsageLimit.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.UsageLimit.Value lần</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Không giới hạn</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Đã sử dụng</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-info">@Model.UsedCount lần</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Ngày tạo</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.CreatedDate.HasValue)
+                                            {
+                                                <small class="text-muted">@Model.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold text-muted">Mô tả</label>
+                                <div class="form-control-plaintext">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        @Model.Description
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Không có mô tả</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-info-circle me-1"></i>Thông tin bổ sung
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-muted small">Nhân viên tạo</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.Employee != null)
+                                            {
+                                                <span class="text-muted">@Model.Employee.FullName</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không xác định</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    @if (Model.IsActive == true)
+                                    {
+                                        <div class="alert alert-success py-2">
+                                            <small>
+                                                <i class="fas fa-check-circle me-1"></i>
+                                                <strong>Khuyến mãi đang hoạt động</strong><br>
+                                                Có thể áp dụng cho đơn hàng mới
+                                            </small>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning py-2">
+                                            <small>
+                                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                                <strong>Khuyến mãi không hoạt động</strong><br>
+                                                Không thể áp dụng cho đơn hàng mới
+                                            </small>
+                                        </div>
+                                    }
+
+                                    @{
+                                        var now = DateTime.Now;
+                                        var isExpired = Model.EndDate < now;
+                                        var isNotStarted = Model.StartDate > now;
+                                    }
+
+                                    @if (isExpired)
+                                    {
+                                        <div class="alert alert-danger py-2">
+                                            <small>
+                                                <i class="fas fa-clock me-1"></i>
+                                                <strong>Đã hết hạn</strong><br>
+                                                Khuyến mãi đã kết thúc vào @Model.EndDate.ToString("dd/MM/yyyy")
+                                            </small>
+                                        </div>
+                                    }
+                                    else if (isNotStarted)
+                                    {
+                                        <div class="alert alert-info py-2">
+                                            <small>
+                                                <i class="fas fa-calendar me-1"></i>
+                                                <strong>Chưa bắt đầu</strong><br>
+                                                Khuyến mãi sẽ bắt đầu vào @Model.StartDate.ToString("dd/MM/yyyy")
+                                            </small>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-success py-2">
+                                            <small>
+                                                <i class="fas fa-calendar-check me-1"></i>
+                                                <strong>Đang diễn ra</strong><br>
+                                                Khuyến mãi đang trong thời gian hiệu lực
+                                            </small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<style>
-    .badge-success {
-        background-color: #38a169;
-        color: #fff;
-        font-weight: 500;
-        padding: 0.4em 0.8em;
-        border-radius: 8px;
-    }
-    .badge-secondary {
-        background-color: #a0aec0;
-        color: #fff;
-        font-weight: 500;
-        padding: 0.4em 0.8em;
-        border-radius: 8px;
-    }
-    .card { border: none; }
-    .mr-2 { margin-right: 0.5em; }
-    @@media (max-width: 768px) {
-        .container { font-size: 0.97em; }
-        .mb-4 { margin-bottom: 1rem !important; }
-    }
-</style>

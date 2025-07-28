@@ -22,6 +22,7 @@ namespace WebBanGiay.Models
             this.PriceHistories = new HashSet<PriceHistory>();
             this.ShoppingCarts = new HashSet<ShoppingCart>();
             this.ProductComboDetails = new HashSet<ProductComboDetail>();
+            this.ComboTemplateDetails = new HashSet<ComboTemplateDetail>();
         }
     
         public int VariantID { get; set; }
@@ -46,5 +47,7 @@ namespace WebBanGiay.Models
         public virtual Product Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductComboDetail> ProductComboDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComboTemplateDetail> ComboTemplateDetails { get; set; }
     }
 }

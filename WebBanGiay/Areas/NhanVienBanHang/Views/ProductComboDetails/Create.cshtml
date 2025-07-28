@@ -4,37 +4,146 @@
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container mx-auto max-w-xl px-4 py-8">
-    <h2 class="mb-6 text-center text-2xl font-bold text-blue-900 tracking-wide">Thêm sản phẩm vào combo</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="space-y-5 bg-white p-6 rounded-lg shadow">
-            @Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-2" })
-            <div>
-                @Html.LabelFor(model => model.ComboID, "Combo", htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.DropDownList("ComboID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                @Html.ValidationMessageFor(model => model.ComboID, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.ProductID, "Sản phẩm", htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.VariantID, "Biến thể", htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.DropDownList("VariantID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                @Html.ValidationMessageFor(model => model.VariantID, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div class="flex justify-end gap-2 mt-4">
-                <input type="submit" value="Thêm" class="btn bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow transition" />
-                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded shadow transition" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm vào combo
+                    </h3>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning mb-4">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Quy định thêm sản phẩm:
+                        </h6>
+                        <ul class="mb-0 small">
+                            <li><strong>Chỉ được thêm sản phẩm còn hàng vào combo</strong></li>
+                            <li>Số lượng thêm không được vượt quá số lượng tồn kho</li>
+                            <li>Chỉ chọn sản phẩm phù hợp với mục đích của combo</li>
+                            <li>Đảm bảo combo có thể thực hiện được sau khi thêm sản phẩm</li>
+                        </ul>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ComboID, "Combo *", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("ComboID", null, "Chọn combo", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ComboID, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Chọn combo đang hoạt động và chưa hết hạn
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ProductID, "Sản phẩm *", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("ProductID", null, "Chọn sản phẩm", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-box me-1"></i>
+                                        <strong>Chỉ hiển thị sản phẩm còn hàng</strong>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.VariantID, "Biến thể *", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("VariantID", null, "Chọn biến thể", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.VariantID, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-tags me-1"></i>
+                                        <strong>Chỉ hiển thị biến thể còn hàng</strong>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.Quantity, "Số lượng *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số lượng", min = "1" } })
+                                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-calculator me-1"></i>
+                                        Số lượng không được vượt quá tồn kho
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mb-4">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle me-2"></i>Kiểm tra tồn kho:
+                            </h6>
+                            <p class="mb-0">
+                                Trước khi thêm sản phẩm, hãy đảm bảo rằng sản phẩm và biến thể được chọn 
+                                <strong>còn đủ số lượng trong kho</strong> để thực hiện combo.
+                            </p>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Thêm sản phẩm
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-times me-1"></i>Hủy
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
-    }
+    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productSelect = document.querySelector('select[name="ProductID"]');
+    const variantSelect = document.querySelector('select[name="VariantID"]');
+    const quantityInput = document.querySelector('input[name="Quantity"]');
+    
+    // Filter variants when product changes
+    if (productSelect && variantSelect) {
+        productSelect.addEventListener('change', function() {
+            const productId = this.value;
+            if (productId) {
+                // Clear current variants
+                variantSelect.innerHTML = '<option value="">Chọn biến thể</option>';
+                
+                // Fetch variants for selected product (this would need AJAX call in real implementation)
+                // For now, we'll just show a message
+                console.log('Selected product ID:', productId);
+            }
+        });
+    }
+    
+    // Validate quantity
+    if (quantityInput) {
+        quantityInput.addEventListener('input', function() {
+            const quantity = parseInt(this.value) || 0;
+            if (quantity < 1) {
+                this.setCustomValidity('Số lượng phải lớn hơn 0');
+                this.classList.add('is-invalid');
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+            }
+        });
+    }
+});
+</script>

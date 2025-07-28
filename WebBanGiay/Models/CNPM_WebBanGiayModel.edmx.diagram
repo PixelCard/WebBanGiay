@@ -67,7 +67,14 @@
         <AssociationConnector Association="CNPM_LTModel.FK__ShoppingC__Custo__06CD04F7" />
         <EntityTypeShape EntityType="CNPM_LTModel.LoaiKhachHang" Width="1.5" PointX="13.375" PointY="13.875" />
         <AssociationConnector Association="CNPM_LTModel.FK_LoaiKhachHang" />
-      </Diagram>
+        <EntityTypeShape EntityType="CNPM_LTModel.ComboTemplate" Width="1.5" PointX="5.25" PointY="27.75" />
+        <EntityTypeShape EntityType="CNPM_LTModel.ComboTemplateDetail" Width="1.5" PointX="12.75" PointY="20.875" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ComboTemplate_CreatedBy" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ComboTemplate_ModifiedBy" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ComboTemplateDetail_Template" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ComboTemplateDetail_Product" />
+        <AssociationConnector Association="CNPM_LTModel.FK_ComboTemplateDetail_Variant" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

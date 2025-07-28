@@ -3,74 +3,79 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <!-- Thêm Tailwind CSS từ CDN -->
+    <title>@ViewBag.Title - LC_Shoes Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3498db',
-                        secondary: '#2c3e50',
-                        accent: '#e74c3c',
-                        light: '#ecf0f1',
-                        dark: '#2c3e50',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Thêm vào phần head -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-    <!-- Thêm trước khi đóng body -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script> <!-- Optional: Tiếng Việt -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="bg-gray-50 font-sans antialiased">
-    <!-- Navbar -->
-    <nav class="bg-gradient-to-r from-secondary to-dark shadow-md">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                @Html.ActionLink("My App", "Index", "Home", new { area = "" },
-                new { @class = "text-white text-2xl font-bold hover:scale-105 transition-transform" })
-
-                <button class="md:hidden text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-
-                <div class="hidden md:flex space-x-4">
-                    @Html.ActionLink("Home", "Index", "Home", new { area = "" },
-                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
-                    @Html.ActionLink("About", "About", "Home", new { area = "" },
-                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
-                    @Html.ActionLink("Contact", "Contact", "Home", new { area = "" },
-                    new { @class = "text-white hover:bg-white/10 px-3 py-2 rounded transition hover:-translate-y-0.5" })
-                </div>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-gradient-to-b from-gray-800 to-gray-900 text-white w-64 flex-shrink-0 hidden md:flex flex-col transition-all duration-200">
+            <div class="px-6 py-6 text-2xl font-bold tracking-wide flex items-center gap-2">
+                <i class="fa-solid fa-shoe-prints text-blue-300"></i>
+                LC-Shoes Admin
             </div>
-        </div>
-    </nav>
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                @* Thay các link dưới đây bằng các link phù hợp cho admin *@
+                <a href="@Url.Action("Index", "Dashboard")" class="sidebar-link @((ViewContext.RouteData.Values["controller"].ToString() == "Dashboard") ? "bg-gray-700" : "hover:bg-gray-700") flex items-center gap-3 px-4 py-2 rounded transition">
+                    <i class="fa-solid fa-gauge"></i> Dashboard
+                </a>
+                <a href="@Url.Action("Index", "Users")" class="sidebar-link @((ViewContext.RouteData.Values["controller"].ToString() == "Users") ? "bg-gray-700" : "hover:bg-gray-700") flex items-center gap-3 px-4 py-2 rounded transition">
+                    <i class="fa-solid fa-users"></i> Users
+                </a>
+                <a href="@Url.Action("Index", "Products")" class="sidebar-link @((ViewContext.RouteData.Values["controller"].ToString() == "Products") ? "bg-gray-700" : "hover:bg-gray-700") flex items-center gap-3 px-4 py-2 rounded transition">
+                    <i class="fa-solid fa-box"></i> Products
+                </a>
+                <a href="@Url.Action("Index", "Orders")" class="sidebar-link @((ViewContext.RouteData.Values["controller"].ToString() == "Orders") ? "bg-gray-700" : "hover:bg-gray-700") flex items-center gap-3 px-4 py-2 rounded transition">
+                    <i class="fa-solid fa-receipt"></i> Orders
+                </a>
+                <a href="@Url.Action("Index", "Reports")" class="sidebar-link @((ViewContext.RouteData.Values["controller"].ToString() == "Reports") ? "bg-gray-700" : "hover:bg-gray-700") flex items-center gap-3 px-4 py-2 rounded transition">
+                    <i class="fa-solid fa-chart-line"></i> Reports
+                </a>
+            </nav>
+            <div class="px-6 py-4 mt-auto border-t border-gray-700">
+                <span class="block text-sm text-gray-200 font-semibold">@Session["UserName"]</span>
+                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="text-xs text-red-300 hover:text-red-500 mt-1 inline-block"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
+            </div>
+        </aside>
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8 min-h-[calc(100vh-120px)]">
-        @RenderBody()
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col min-h-screen">
+            <!-- Header -->
+            <header class="bg-white shadow flex items-center justify-between px-6 py-4 sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <button class="md:hidden text-gray-800 focus:outline-none" onclick="document.getElementById('sidebar').classList.toggle('hidden')">
+                        <i class="fa-solid fa-bars fa-lg"></i>
+                    </button>
+                    <span class="text-xl font-bold text-gray-800 tracking-wide">LC-Shoes Admin</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <button class="relative text-gray-700 hover:text-gray-900">
+                        <i class="fa-regular fa-bell fa-lg"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">2</span>
+                    </button>
+                    <span class="font-semibold text-gray-900">@Session["Email"]</span>
+                </div>
+            </header>
+            <main class="flex-1 p-6">
+                @RenderBody()
+            </main>
+            <footer class="bg-gray-900 text-gray-100 py-4 text-center text-sm">
+                &copy; @DateTime.Now.Year LC-Shoes Admin Dashboard. All rights reserved.
+            </footer>
+        </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-6 shadow-inner">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </div>
-    </footer>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<style>
+    .sidebar-link.bg-gray-700 {
+        font-weight: bold;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+    }
+</style>

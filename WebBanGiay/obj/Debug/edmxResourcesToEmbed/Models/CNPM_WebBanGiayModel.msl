@@ -330,6 +330,8 @@
     <EntitySetMapping Name="ProductComboes">
       <EntityTypeMapping TypeName="CNPM_LTModel.ProductCombo">
         <MappingFragment StoreEntitySet="ProductCombo">
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
           <ScalarProperty Name="ComboPrice" ColumnName="ComboPrice" />
@@ -377,6 +379,42 @@
           <ScalarProperty Name="descriptions" ColumnName="descriptions" />
           <ScalarProperty Name="LoaiKhachHangName" ColumnName="LoaiKhachHangName" />
           <ScalarProperty Name="LoaiID" ColumnName="LoaiID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComboTemplates">
+      <EntityTypeMapping TypeName="CNPM_LTModel.ComboTemplate">
+        <MappingFragment StoreEntitySet="ComboTemplate">
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="EstimatedDuration" ColumnName="EstimatedDuration" />
+          <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+          <ScalarProperty Name="ComboPrice" ColumnName="ComboPrice" />
+          <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+          <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComboTemplateDetails">
+      <EntityTypeMapping TypeName="CNPM_LTModel.ComboTemplateDetail">
+        <MappingFragment StoreEntitySet="ComboTemplateDetail">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="VariantID" ColumnName="VariantID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+          <ScalarProperty Name="TemplateDetailID" ColumnName="TemplateDetailID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

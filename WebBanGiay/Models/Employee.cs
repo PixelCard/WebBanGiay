@@ -23,6 +23,8 @@ namespace WebBanGiay.Models
             this.Promotions = new HashSet<Promotion>();
             this.Products = new HashSet<Product>();
             this.Orders = new HashSet<Order>();
+            this.ComboTemplates = new HashSet<ComboTemplate>();
+            this.ComboTemplates1 = new HashSet<ComboTemplate>();
         }
     
         public int EmployeeID { get; set; }
@@ -54,5 +56,9 @@ namespace WebBanGiay.Models
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComboTemplate> ComboTemplates { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComboTemplate> ComboTemplates1 { get; set; }
     }
 }

@@ -1,0 +1,238 @@
+﻿@model WebBanGiay.Models.Promotion
+
+@{
+    ViewBag.Title = "Xóa Khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Xác nhận xóa Khuyến mãi
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5 class="alert-heading">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Cảnh báo!
+                        </h5>
+                        <p class="mb-0">
+                            Bạn có chắc chắn muốn xóa khuyến mãi "<strong>@Model.PromotionName</strong>" không? 
+                            Hành động này không thể hoàn tác.
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.PromotionName)</label>
+                                        <div class="form-control-plaintext">
+                                            <strong>@Html.DisplayFor(model => model.PromotionName)</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.DiscountType)</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="badge bg-info">@Html.DisplayFor(model => model.DiscountType)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.Description)</label>
+                                <div class="form-control-plaintext">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        <span class="text-muted">@Model.Description</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Không có mô tả</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.DiscountValue)</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="fw-bold text-success">@Html.DisplayFor(model => model.DiscountValue)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.MinOrderAmount)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.MinOrderAmount.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.MinOrderAmount.Value.ToString("N0") VNĐ</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không có</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.MaxDiscountAmount)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.MaxDiscountAmount.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.MaxDiscountAmount.Value.ToString("N0") VNĐ</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không có</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.StartDate)</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-primary">@Model.StartDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.EndDate)</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-warning">@Model.EndDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.UsageLimit)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.UsageLimit.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.UsageLimit.Value</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không giới hạn</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.UsedCount)</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="badge bg-primary">@Html.DisplayFor(model => model.UsedCount)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.IsActive)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.IsActive == true)
+                                            {
+                                                <span class="badge bg-success">Hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Không hoạt động</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.CreatedDate)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.CreatedDate.HasValue)
+                                            {
+                                                <small class="text-muted">@Model.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Chưa thiết lập</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-primary">@Html.DisplayNameFor(model => model.Employee.FullName)</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.Employee != null)
+                                            {
+                                                <span class="text-muted">@Html.DisplayFor(model => model.Employee.FullName)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không có thông tin</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-header">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-info-circle me-2"></i>Thông tin xóa
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-danger">
+                                        <small>
+                                            <strong>Hậu quả khi xóa:</strong><br>
+                                            • Khuyến mãi sẽ bị xóa vĩnh viễn<br>
+                                            • Không thể khôi phục lại<br>
+                                            • Các đơn hàng đã sử dụng khuyến mãi vẫn giữ nguyên
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mt-4">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash me-1"></i>Xác nhận xóa
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

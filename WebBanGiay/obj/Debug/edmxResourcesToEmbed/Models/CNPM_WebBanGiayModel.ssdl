@@ -53,6 +53,40 @@
     <Property Name="ColorCode" Type="nvarchar" MaxLength="10" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
+  <EntityType Name="ComboTemplate">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TemplateName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="OriginalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ComboPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ProductCount" Type="int" Nullable="false" />
+    <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" />
+    <Property Name="Difficulty" Type="nvarchar" MaxLength="20" />
+    <Property Name="EstimatedDuration" Type="int" />
+    <Property Name="Tags" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ComboTemplateDetail">
+    <Key>
+      <PropertyRef Name="TemplateDetailID" />
+    </Key>
+    <Property Name="TemplateDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TemplateID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="VariantID" Type="int" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsRequired" Type="bit" Nullable="false" />
+    <Property Name="SortOrder" Type="int" />
+  </EntityType>
   <EntityType Name="Customers">
     <Key>
       <PropertyRef Name="CustomerID" />
@@ -195,6 +229,8 @@
     <Property Name="ComboPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="startDate" Type="datetime" />
+    <Property Name="endDate" Type="datetime" />
   </EntityType>
   <EntityType Name="ProductComboDetail">
     <Key>
@@ -664,6 +700,68 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ComboTemplate_CreatedBy">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="ComboTemplate" Type="Self.ComboTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="ComboTemplate">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplate_ModifiedBy">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="ComboTemplate" Type="Self.ComboTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="ComboTemplate">
+        <PropertyRef Name="LastModifiedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Product">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ComboTemplateDetail" Type="Self.ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Template">
+    <End Role="ComboTemplate" Type="Self.ComboTemplate" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ComboTemplateDetail" Type="Self.ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ComboTemplate">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="TemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Variant">
+    <End Role="ProductVariants" Type="Self.ProductVariants" Multiplicity="0..1" />
+    <End Role="ComboTemplateDetail" Type="Self.ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductVariants">
+        <PropertyRef Name="VariantID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="VariantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_LoaiKhachHang">
     <End Role="LoaiKhachHang" Type="Self.LoaiKhachHang" Multiplicity="0..1" />
     <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
@@ -785,6 +883,8 @@
     <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ComboTemplate" EntityType="Self.ComboTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ComboTemplateDetail" EntityType="Self.ComboTemplateDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventoryTransactions" EntityType="Self.InventoryTransactions" Schema="dbo" store:Type="Tables" />
@@ -918,6 +1018,26 @@
     <AssociationSet Name="FK_Account_Employees" Association="Self.FK_Account_Employees">
       <End Role="Account" EntitySet="Account" />
       <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplate_CreatedBy" Association="Self.FK_ComboTemplate_CreatedBy">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="ComboTemplate" EntitySet="ComboTemplate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplate_ModifiedBy" Association="Self.FK_ComboTemplate_ModifiedBy">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="ComboTemplate" EntitySet="ComboTemplate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Product" Association="Self.FK_ComboTemplateDetail_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Template" Association="Self.FK_ComboTemplateDetail_Template">
+      <End Role="ComboTemplate" EntitySet="ComboTemplate" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Variant" Association="Self.FK_ComboTemplateDetail_Variant">
+      <End Role="ProductVariants" EntitySet="ProductVariants" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_LoaiKhachHang" Association="Self.FK_LoaiKhachHang">
       <End Role="LoaiKhachHang" EntitySet="LoaiKhachHang" />

@@ -22,6 +22,7 @@ namespace WebBanGiay.Models
             this.ProductReviews = new HashSet<ProductReview>();
             this.ProductVariants = new HashSet<ProductVariant>();
             this.ProductComboDetails = new HashSet<ProductComboDetail>();
+            this.ComboTemplateDetails = new HashSet<ComboTemplateDetail>();
         }
     
         public int ProductID { get; set; }
@@ -48,6 +49,8 @@ namespace WebBanGiay.Models
         public virtual ICollection<ProductVariant> ProductVariants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductComboDetail> ProductComboDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComboTemplateDetail> ComboTemplateDetails { get; set; }
 
         // Helper methods
         public decimal GetMinPrice()

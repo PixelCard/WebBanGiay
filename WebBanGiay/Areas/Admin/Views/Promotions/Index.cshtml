@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<WebBanGiay.Models.Promotion>
 
 @{
-    ViewBag.Title = "Danh sách Khuyến mãi";
-    Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+    ViewBag.Title = "Quản lý Khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
 <div class="container-fluid">
@@ -13,6 +13,11 @@
                     <h3 class="card-title mb-0">
                         <i class="fas fa-tags me-2"></i>Danh sách Khuyến mãi
                     </h3>
+                    <div>
+                        <a href="@Url.Action("Create")" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>Thêm mới
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -28,8 +33,6 @@
                                     <th>@Html.DisplayNameFor(model => model.EndDate)</th>
                                     <th>@Html.DisplayNameFor(model => model.IsActive)</th>
                                     <th>@Html.DisplayNameFor(model => model.UsageLimit)</th>
-                                    <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
-                                    <th>@Html.DisplayNameFor(model => model.Employee.FullName)</th>
                                     <th class="text-center">Thao tác</th>
                                 </tr>
                             </thead>
@@ -47,18 +50,7 @@
                                             }
                                         </td>
                                         <td>
-                                            @if (item.DiscountType == "Percentage")
-                                            {
-                                                <span class="badge bg-info">Phần trăm (%)</span>
-                                            }
-                                            else if (item.DiscountType == "FixedAmount")
-                                            {
-                                                <span class="badge bg-warning">Tiền (VNĐ)</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="badge bg-secondary">@Html.DisplayFor(modelItem => item.DiscountType)</span>
-                                            }
+                                            <span class="badge bg-info">@Html.DisplayFor(modelItem => item.DiscountType)</span>
                                         </td>
                                         <td>
                                             <span class="fw-bold text-success">@Html.DisplayFor(modelItem => item.DiscountValue)</span>
@@ -95,18 +87,7 @@
                                                 <span class="text-muted">Không giới hạn</span>
                                             }
                                         </td>
-                                        <td>
-                                            @if (item.CreatedDate.HasValue)
-                                            {
-                                                <small class="text-muted">@item.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm")</small>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.Employee != null)
-                                            {
-                                                <span class="text-muted">@Html.DisplayFor(modelItem => item.Employee.FullName)</span>
-                                            }
-                                        </td>
+
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
                                                 <a href="@Url.Action("Details", new { id = item.PromotionID })" 
@@ -118,6 +99,11 @@
                                                    class="btn btn-sm btn-outline-warning" 
                                                    title="Sửa">
                                                     <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="@Url.Action("Delete", new { id = item.PromotionID })" 
+                                                   class="btn btn-sm btn-outline-danger" 
+                                                   title="Xóa">
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
                                         </td>

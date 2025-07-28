@@ -466,7 +466,7 @@
                                                 </small>
                                             </td>
                                             <td class="shoping__cart__price">
-                                                $@item.Price.ToString("0.00")
+                                                @item.Price.ToString("N0") VNĐ
                                             </td>
                                             <td class="shoping__cart__quantity">
                                                 <div class="quantity">
@@ -476,7 +476,7 @@
                                                 </div>
                                             </td>
                                             <td class="shoping__cart__total" id="total-@item.VariantID">
-                                                $@item.TotalPrice.ToString("0.00")
+                                                @item.TotalPrice.ToString("N0") VNĐ
                                             </td>
                                             <td class="shoping__cart__item__close">
                                                 <span class="icon_close" data-variant-id="@item.VariantID"></span>
@@ -523,8 +523,8 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>$@ViewBag.CartTotal.ToString("0.00")</span></li>
-                        <li>Total <span>$@ViewBag.CartTotal.ToString("0.00")</span></li>
+                        <li>Subtotal <span>@ViewBag.CartTotal.ToString("N0") VNĐ</span></li>
+                        <li>Total <span>@ViewBag.CartTotal.ToString("N0") VNĐ</span></li>
                     </ul>
                     <a href="@Url.Action("Checkoutpage", "CheckOut")" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>
@@ -558,8 +558,8 @@ $(document).ready(function () {
                 data: { variantId: variantId, quantity: newVal },
                 success: function (response) {
                     if (response.success) {
-                        $('#total-' + variantId).text('$' + response.totalPrice.toFixed(2));
-                        $('.shoping__checkout ul li span').last().text('$' + response.cartTotal.toFixed(2));
+                        $('#total-' + variantId).text(response.totalPrice.toLocaleString('vi-VN') + ' VNĐ');
+                        $('.shoping__checkout ul li span').last().text(response.cartTotal.toLocaleString('vi-VN') + ' VNĐ');
                         updateCartIcon(response.cartCount);
                     } else {
                         alert(response.message);
@@ -580,7 +580,7 @@ $(document).ready(function () {
             success: function(response) {
                 if (response.success) {
                     row.remove();
-                    $('.shoping__checkout ul li span').last().text('$' + response.cartTotal.toFixed(2));
+                    $('.shoping__checkout ul li span').last().text(response.cartTotal.toLocaleString('vi-VN') + ' VNĐ');
                     updateCartIcon(response.cartCount);
 
                     if (response.cartCount === 0) {

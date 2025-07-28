@@ -4,44 +4,180 @@
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container mx-auto max-w-xl px-4 py-8">
-    <h2 class="mb-6 text-center text-2xl font-bold text-blue-900 tracking-wide">Tạo combo sản phẩm</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="space-y-5 bg-white p-6 rounded-lg shadow">
-            @Html.ValidationSummary(true, "", new { @class = "text-red-500 mb-2" })
-            <div>
-                @Html.LabelFor(model => model.ComboName, htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.EditorFor(model => model.ComboName, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                @Html.ValidationMessageFor(model => model.ComboName, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.ComboPrice, htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.EditorFor(model => model.ComboPrice, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                @Html.ValidationMessageFor(model => model.ComboPrice, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                @Html.LabelFor(model => model.ImageURL, htmlAttributes: new { @class = "block font-semibold mb-1" })
-                @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-red-500 text-sm" })
-            </div>
-            <div>
-                <div class="flex items-center gap-2">
-                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "font-semibold mb-1" })
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-red-500 text-sm" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Tạo combo sản phẩm
+                    </h3>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                    </a>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ComboName, "Tên combo *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.ComboName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên combo" } })
+                                    @Html.ValidationMessageFor(model => model.ComboName, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ComboPrice, "Giá combo *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.ComboPrice, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập giá combo", min = "0", step = "1000" } })
+                                    @Html.ValidationMessageFor(model => model.ComboPrice, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Giá combo phải thấp hơn hoặc bằng tổng giá lẻ
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.Description, "Mô tả", new { @class = "form-label fw-bold" })
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "3", placeholder = "Nhập mô tả combo" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.startDate, "Ngày bắt đầu *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.startDate, new { htmlAttributes = new { @class = "form-control", type = "date", min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                                    @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        Ngày bắt đầu không được trong quá khứ
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.endDate, "Ngày kết thúc *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control", type = "date", min = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") } })
+                                    @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        <strong>Tối đa 30 ngày từ ngày bắt đầu</strong>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ImageURL, "Ảnh đại diện", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập URL ảnh" } })
+                                    @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <div class="form-check mt-4">
+                                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-check-input" } })
+                                        @Html.LabelFor(model => model.IsActive, "Kích hoạt combo", new { @class = "form-check-label fw-bold" })
+                                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger small" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mb-4">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle me-2"></i>Bước tiếp theo:
+                            </h6>
+                            <p class="mb-0">
+                                Sau khi tạo combo, bạn sẽ được chuyển đến trang thêm sản phẩm. 
+                                <strong>Chỉ chọn những sản phẩm còn hàng</strong> để đảm bảo combo có thể thực hiện được.
+                            </p>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Tạo combo
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-times me-1"></i>Hủy
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-            <div class="flex justify-end gap-2 mt-4">
-                <input type="submit" value="Tạo" class="btn bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow transition" />
-                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded shadow transition" })
-            </div>
         </div>
-    }
+    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startDateInput = document.querySelector('input[name="startDate"]');
+    const endDateInput = document.querySelector('input[name="endDate"]');
+    const comboPriceInput = document.querySelector('input[name="ComboPrice"]');
+    
+    // Set minimum end date when start date changes
+    if (startDateInput && endDateInput) {
+        startDateInput.addEventListener('change', function() {
+            const startDate = new Date(this.value);
+            const maxEndDate = new Date(startDate);
+            maxEndDate.setDate(startDate.getDate() + 30);
+            
+            endDateInput.min = this.value;
+            endDateInput.max = maxEndDate.toISOString().split('T')[0];
+            
+            // Update helper text
+            const helperText = endDateInput.parentNode.querySelector('small');
+            if (helperText) {
+                helperText.innerHTML = '<i class="fas fa-calendar me-1"></i><strong>Tối đa 30 ngày từ ngày bắt đầu (' + maxEndDate.toLocaleDateString('vi-VN') + ')</strong>';
+            }
+        });
+    }
+    
+    // Validate end date when it changes
+    if (endDateInput) {
+        endDateInput.addEventListener('change', function() {
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(this.value);
+            const diffTime = endDate - startDate;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays > 30) {
+                this.setCustomValidity('Thời gian combo không được vượt quá 30 ngày');
+                this.classList.add('is-invalid');
+            } else if (diffDays < 1) {
+                this.setCustomValidity('Ngày kết thúc phải sau ngày bắt đầu');
+                this.classList.add('is-invalid');
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+            }
+        });
+    }
+    
+    // Validate combo price
+    if (comboPriceInput) {
+        comboPriceInput.addEventListener('input', function() {
+            const price = parseFloat(this.value) || 0;
+            if (price < 0) {
+                this.setCustomValidity('Giá combo không được âm');
+                this.classList.add('is-invalid');
+            } else {
+                this.setCustomValidity('');
+                this.classList.remove('is-invalid');
+            }
+        });
+    }
+});
+</script>

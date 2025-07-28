@@ -1,0 +1,142 @@
+﻿@model WebBanGiay.Models.Promotion
+
+@{
+    ViewBag.Title = "Thêm Khuyến mãi mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-plus-circle me-2"></i>Thêm Khuyến mãi mới
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.PromotionName, "Tên khuyến mãi", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.PromotionName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên khuyến mãi" } })
+                                    @Html.ValidationMessageFor(model => model.PromotionName, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.DiscountType, "Loại giảm giá", new { @class = "form-label fw-bold" })
+                                    <select name="DiscountType" class="form-control">
+                                        <option value="">Chọn loại giảm giá</option>
+                                        <option value="Percentage">Phần trăm (%)</option>
+                                        <option value="FixedAmount">Tiền (VNĐ)</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.DiscountValue, "Giá trị giảm", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
+                                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.MaxDiscountAmount, "Giảm tối đa", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.MaxDiscountAmount, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
+                                    @Html.ValidationMessageFor(model => model.MaxDiscountAmount, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.StartDate, "Ngày bắt đầu", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.EndDate, "Ngày kết thúc", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.UsageLimit, "Giới hạn sử dụng", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.UsageLimit, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
+                                    @Html.ValidationMessageFor(model => model.UsageLimit, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.CreatedBy, "Người tạo", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("CreatedBy", null, "Chọn nhân viên", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    @Html.LabelFor(model => model.CreatedDate, "Ngày tạo", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-2">
+                                    <div class="form-check">
+                                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-check-input" } })
+                                        @Html.LabelFor(model => model.IsActive, "Kích hoạt khuyến mãi", new { @class = "form-check-label fw-bold" })
+                                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger small" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.Description, "Mô tả", new { @class = "form-label fw-bold" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "3", placeholder = "Nhập mô tả khuyến mãi" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <div class="alert alert-info py-2">
+                                <small>
+                                    <strong>Lưu ý:</strong><br>
+                                    • Giá trị giảm có thể là phần trăm (%) hoặc số tiền cố định<br>
+                                    • Đơn hàng tối thiểu: Số tiền tối thiểu để áp dụng khuyến mãi<br>
+                                    • Giảm tối đa: Số tiền giảm tối đa cho mỗi đơn hàng<br>
+                                    • Giới hạn sử dụng: Số lần tối đa có thể sử dụng khuyến mãi
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Lưu khuyến mãi
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

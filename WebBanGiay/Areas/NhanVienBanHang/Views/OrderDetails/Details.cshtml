@@ -5,48 +5,148 @@
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container" style="max-width: 600px; margin: 0 auto;">
-    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chi tiết sản phẩm trong đơn hàng</h2>
-    <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
-        <dl class="row" style="font-size: 1.08em;">
-            <dt class="col-sm-5">Số lượng</dt>
-            <dd class="col-sm-7">
-                <span class="badge badge-@(Model.Quantity >= 10 ? "danger" : "primary")" style="font-size:1em;">@Model.Quantity</span>
-            </dd>
-            <dt class="col-sm-5">Đơn giá</dt>
-            <dd class="col-sm-7">@Model.UnitPrice.ToString("N0") VNĐ</dd>
-            <dt class="col-sm-5">Thành tiền</dt>
-            <dd class="col-sm-7">@Model.TotalPrice.ToString("N0") VNĐ</dd>
-            <dt class="col-sm-5">Mã đơn hàng</dt>
-            <dd class="col-sm-7">@Model.Order?.OrderNumber</dd>
-            <dt class="col-sm-5">Mã SKU</dt>
-            <dd class="col-sm-7">@Model.ProductVariant?.SKU</dd>
-        </dl>
-    </div>
-    <div class="text-center">
-        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Chi tiết sản phẩm trong đơn hàng
+                    </h3>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Số lượng</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="badge @(Model.Quantity >= 10 ? "bg-danger" : "bg-primary") fs-6">
+                                                @Model.Quantity
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Đơn giá</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-success fw-bold">@Model.UnitPrice.ToString("N0") VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Thành tiền</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-danger fw-bold fs-5">@Model.TotalPrice.ToString("N0") VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Mã đơn hàng</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.Order != null && !string.IsNullOrEmpty(Model.Order.OrderNumber))
+                                            {
+                                                <span class="text-primary fw-bold">@Model.Order.OrderNumber</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Không có mã đơn hàng</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold text-muted">Mã SKU</label>
+                                <div class="form-control-plaintext">
+                                    @if (Model.ProductVariant != null && !string.IsNullOrEmpty(Model.ProductVariant.SKU))
+                                    {
+                                        <span class="text-muted">@Model.ProductVariant.SKU</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Không có SKU</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-box me-1"></i>Thông tin sản phẩm
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.ProductVariant != null)
+                                    {
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold text-muted small">Tên sản phẩm</label>
+                                            <div class="form-control-plaintext">
+                                                @if (Model.ProductVariant.Product != null && !string.IsNullOrEmpty(Model.ProductVariant.Product.ProductName))
+                                                {
+                                                    <span class="text-muted">@Model.ProductVariant.Product.ProductName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted fst-italic">Không có tên sản phẩm</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold text-muted small">Kích thước</label>
+                                            <div class="form-control-plaintext">
+                                                @if (Model.ProductVariant.Size != null && !string.IsNullOrEmpty(Model.ProductVariant.Size.SizeName))
+                                                {
+                                                    <span class="text-muted">@Model.ProductVariant.Size.SizeName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted fst-italic">Không có kích thước</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold text-muted small">Màu sắc</label>
+                                            <div class="form-control-plaintext">
+                                                @if (Model.ProductVariant.Color != null && !string.IsNullOrEmpty(Model.ProductVariant.Color.ColorName))
+                                                {
+                                                    <span class="text-muted">@Model.ProductVariant.Color.ColorName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted fst-italic">Không có màu sắc</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning">
+                                            <i class="fas fa-exclamation-triangle me-1"></i>
+                                            Không có thông tin sản phẩm
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<style>
-    .badge-primary {
-        background-color: #3182ce;
-        color: #fff;
-        padding: 0.4em 0.8em;
-        border-radius: 8px;
-    }
-    .badge-danger {
-        background-color: #e53e3e;
-        color: #fff;
-        padding: 0.4em 0.8em;
-        border-radius: 8px;
-    }
-    .card {
-        border: none;
-    }
-    .mr-2 { margin-right: 0.5em; }
-    @@media (max-width: 768px) {
-        .container { font-size: 0.97em; }
-        .mb-4 { margin-bottom: 1rem !important; }
-    }
-</style>

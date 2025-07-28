@@ -128,6 +128,7 @@
     <NavigationProperty Name="ShoppingCarts" Relationship="Self.FK__ShoppingC__Varia__07C12930" FromRole="ProductVariants" ToRole="ShoppingCart" />
     <NavigationProperty Name="Product" Relationship="CNPM_LTModel.FK__ProductVa__Produ__5165187F" FromRole="ProductVariant" ToRole="Product" />
     <NavigationProperty Name="ProductComboDetails" Relationship="CNPM_LTModel.FK_ProductComboDetail_Variant" FromRole="ProductVariant" ToRole="ProductComboDetail" />
+    <NavigationProperty Name="ComboTemplateDetails" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Variant" FromRole="ProductVariant" ToRole="ComboTemplateDetail" />
   </EntityType>
   <EntityType Name="Promotion">
     <Key>
@@ -452,6 +453,28 @@
       <End Role="LoaiKhachHang" EntitySet="LoaiKhachHangs" />
       <End Role="Customer" EntitySet="Customers" />
     </AssociationSet>
+    <EntitySet Name="ComboTemplates" EntityType="CNPM_LTModel.ComboTemplate" />
+    <EntitySet Name="ComboTemplateDetails" EntityType="CNPM_LTModel.ComboTemplateDetail" />
+    <AssociationSet Name="FK_ComboTemplate_CreatedBy" Association="CNPM_LTModel.FK_ComboTemplate_CreatedBy">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="ComboTemplate" EntitySet="ComboTemplates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplate_ModifiedBy" Association="CNPM_LTModel.FK_ComboTemplate_ModifiedBy">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="ComboTemplate" EntitySet="ComboTemplates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Template" Association="CNPM_LTModel.FK_ComboTemplateDetail_Template">
+      <End Role="ComboTemplate" EntitySet="ComboTemplates" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Product" Association="CNPM_LTModel.FK_ComboTemplateDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComboTemplateDetail_Variant" Association="CNPM_LTModel.FK_ComboTemplateDetail_Variant">
+      <End Role="ProductVariant" EntitySet="ProductVariants" />
+      <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetails" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -524,6 +547,8 @@
     <NavigationProperty Name="Admin" Relationship="CNPM_LTModel.FK__Employees__Creat__2F10007B" FromRole="Employee" ToRole="Admin" />
     <NavigationProperty Name="Products" Relationship="CNPM_LTModel.FK__Products__Create__4CA06362" FromRole="Employee" ToRole="Product" />
     <NavigationProperty Name="Orders" Relationship="CNPM_LTModel.FK__Orders__Processe__73BA3083" FromRole="Employee" ToRole="Order" />
+    <NavigationProperty Name="ComboTemplates" Relationship="CNPM_LTModel.FK_ComboTemplate_CreatedBy" FromRole="Employee" ToRole="ComboTemplate" />
+    <NavigationProperty Name="ComboTemplates1" Relationship="CNPM_LTModel.FK_ComboTemplate_ModifiedBy" FromRole="Employee" ToRole="ComboTemplate" />
   </EntityType>
   <Association Name="FK_Account_Employees">
     <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="0..1" />
@@ -667,6 +692,7 @@
     <NavigationProperty Name="ProductReviews" Relationship="CNPM_LTModel.FK__ProductRe__Produ__7C4F7684" FromRole="Product" ToRole="ProductReview" />
     <NavigationProperty Name="ProductVariants" Relationship="CNPM_LTModel.FK__ProductVa__Produ__5165187F" FromRole="Product" ToRole="ProductVariant" />
     <NavigationProperty Name="ProductComboDetails" Relationship="CNPM_LTModel.FK_ProductComboDetail_Product" FromRole="Product" ToRole="ProductComboDetail" />
+    <NavigationProperty Name="ComboTemplateDetails" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Product" FromRole="Product" ToRole="ComboTemplateDetail" />
   </EntityType>
   <Association Name="FK__Products__BrandI__48CFD27E">
     <End Type="CNPM_LTModel.Brand" Role="Brand" Multiplicity="0..1" />
@@ -884,6 +910,8 @@
     <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ProductComboDetails" Relationship="CNPM_LTModel.FK_ProductComboDetail_Combo" FromRole="ProductCombo" ToRole="ProductComboDetail" />
+    <Property Name="startDate" Type="DateTime" Precision="3" />
+    <Property Name="endDate" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="ProductComboDetail">
     <Key>
@@ -1025,6 +1053,108 @@
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="LoaiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ComboTemplate">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TemplateName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OriginalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ComboPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ProductCount" Type="Int32" Nullable="false" />
+    <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Difficulty" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EstimatedDuration" Type="Int32" />
+    <Property Name="Tags" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employee" Relationship="CNPM_LTModel.FK_ComboTemplate_CreatedBy" FromRole="ComboTemplate" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="CNPM_LTModel.FK_ComboTemplate_ModifiedBy" FromRole="ComboTemplate" ToRole="Employee" />
+    <NavigationProperty Name="ComboTemplateDetails" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Template" FromRole="ComboTemplate" ToRole="ComboTemplateDetail" />
+  </EntityType>
+  <EntityType Name="ComboTemplateDetail">
+    <Key>
+      <PropertyRef Name="TemplateDetailID" />
+    </Key>
+    <Property Name="TemplateDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TemplateID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="VariantID" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="IsRequired" Type="Boolean" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" />
+    <NavigationProperty Name="ComboTemplate" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Template" FromRole="ComboTemplateDetail" ToRole="ComboTemplate" />
+    <NavigationProperty Name="Product" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Product" FromRole="ComboTemplateDetail" ToRole="Product" />
+    <NavigationProperty Name="ProductVariant" Relationship="CNPM_LTModel.FK_ComboTemplateDetail_Variant" FromRole="ComboTemplateDetail" ToRole="ProductVariant" />
+  </EntityType>
+  <Association Name="FK_ComboTemplate_CreatedBy">
+    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ComboTemplate" Role="ComboTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="ComboTemplate">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplate_ModifiedBy">
+    <End Type="CNPM_LTModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ComboTemplate" Role="ComboTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="ComboTemplate">
+        <PropertyRef Name="LastModifiedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Template">
+    <End Type="CNPM_LTModel.ComboTemplate" Role="ComboTemplate" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CNPM_LTModel.ComboTemplateDetail" Role="ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ComboTemplate">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="TemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Product">
+    <End Type="CNPM_LTModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="CNPM_LTModel.ComboTemplateDetail" Role="ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComboTemplateDetail_Variant">
+    <End Type="CNPM_LTModel.ProductVariant" Role="ProductVariant" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.ComboTemplateDetail" Role="ComboTemplateDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductVariant">
+        <PropertyRef Name="VariantID" />
+      </Principal>
+      <Dependent Role="ComboTemplateDetail">
+        <PropertyRef Name="VariantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -239,9 +239,13 @@
                                         <div class="col-md-6 text-md-right">
                                             <span class="badge badge-@(order.Status == "Completed" ? "success" :
                                                                       order.Status == "Processing" ? "warning" :
+                                                                      order.Status == "Shipped" ? "info" :
+                                                                      order.Status == "Confirmed" ? "primary" :
                                                                       order.Status == "Cancelled" ? "danger" : "secondary")">
                                                 @(order.Status == "Completed" ? "Hoàn thành" :
                                                   order.Status == "Processing" ? "Đang xử lý" :
+                                                  order.Status == "Shipped" ? "Đang giao hàng" :
+                                                  order.Status == "Confirmed" ? "Đã xác nhận" :
                                                   order.Status == "Cancelled" ? "Đã hủy" : "Chờ xử lý")
                                             </span>
                                         </div>
@@ -287,6 +291,17 @@
                                                 data-order-id="@order.OrderID">
                                             Xem chi tiết đơn hàng
                                         </button>
+                                        
+                                        @* Nút hủy đơn hàng - chỉ hiển thị khi đơn hàng chưa ở trạng thái đang giao, hoàn thành, đã xác nhận hoặc đã hủy *@
+                                        @if (order.Status != "Completed" && order.Status != "Shipped" && order.Status != "Confirmed" && order.Status != "Cancelled")
+                                        {
+                                            <button class="btn btn-danger btn-sm cancel-order" type="button"
+                                                    data-order-id="@order.OrderID"
+                                                    data-order-number="@order.OrderNumber"
+                                                    style="margin-left: 10px;">
+                                                <i class="fa fa-times"></i> Hủy đơn hàng
+                                            </button>
+                                        }
                                     </div>
 
                                     <div class="order-details mt-3" id="orderDetails-@order.OrderID" style="display: none;">
@@ -418,9 +433,49 @@
             }
         });
 
+        // Xử lý nút hủy đơn hàng
+        $('.cancel-order').click(function () {
+            var orderId = $(this).data('order-id');
+            var orderNumber = $(this).data('order-number');
+            var button = $(this);
+
+            // Hiển thị confirm dialog
+            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng #' + orderNumber + '?')) {
+                // Disable nút để tránh click nhiều lần
+                button.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý...');
+
+                // Gửi request hủy đơn hàng
+                $.ajax({
+                    url: '@Url.Action("CancelOrder", "OrderAccount")',
+                    type: 'POST',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hiển thị thông báo thành công
+                            alert('Đã hủy đơn hàng thành công!');
+                            // Reload trang để cập nhật trạng thái
+                            location.reload();
+                        } else {
+                            // Hiển thị thông báo lỗi
+                            alert('Có lỗi xảy ra: ' + response.message);
+                            // Enable lại nút
+                            button.prop('disabled', false).html('<i class="fa fa-times"></i> Hủy đơn hàng');
+                        }
+                    },
+                    error: function () {
+                        // Hiển thị thông báo lỗi
+                        alert('Có lỗi xảy ra khi hủy đơn hàng. Vui lòng thử lại!');
+                        // Enable lại nút
+                        button.prop('disabled', false).html('<i class="fa fa-times"></i> Hủy đơn hàng');
+                    }
+                });
+            }
+        });
+
         // Debug: Kiểm tra xem có đơn hàng nào không
         console.log('Số lượng đơn hàng:', $('.order-item').length);
         console.log('Số lượng nút toggle:', $('.toggle-details').length);
+        console.log('Số lượng nút hủy:', $('.cancel-order').length);
     });
 </script>
 

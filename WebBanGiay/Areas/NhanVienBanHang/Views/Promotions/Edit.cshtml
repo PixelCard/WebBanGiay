@@ -1,99 +1,206 @@
 ﻿@model WebBanGiay.Models.Promotion
 
 @{
-    ViewBag.Title = "Chỉnh sửa khuyến mãi";
+    ViewBag.Title = "Chỉnh sửa Khuyến mãi";
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container" style="max-width: 700px; margin: 0 auto;">
-    <h2 class="mb-4 text-center" style="font-weight: bold; color: #2d3748; letter-spacing: 1px;">Chỉnh sửa khuyến mãi</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="card shadow-sm p-4 mb-4" style="border-radius: 16px; background: #f8fafc;">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.PromotionID)
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.PromotionName)
-                @Html.EditorFor(model => model.PromotionName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PromotionName, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.Description)
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.DiscountType)
-                @Html.EditorFor(model => model.DiscountType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiscountType, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.DiscountValue)
-                @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.MinOrderAmount)
-                @Html.EditorFor(model => model.MinOrderAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MinOrderAmount, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.MaxDiscountAmount)
-                @Html.EditorFor(model => model.MaxDiscountAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaxDiscountAmount, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.StartDate)
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.EndDate)
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.IsActive)
-                <div class="form-check">
-                    @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-check-input" } })
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-edit me-2"></i>Chỉnh sửa Khuyến mãi
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.PromotionID)
+                        @Html.HiddenFor(model => model.PromotionName)
+                        @Html.HiddenFor(model => model.Description)
+                        @Html.HiddenFor(model => model.DiscountType)
+                        @Html.HiddenFor(model => model.MaxDiscountAmount)
+                        @Html.HiddenFor(model => model.StartDate)
+                        @Html.HiddenFor(model => model.EndDate)
+                        @Html.HiddenFor(model => model.UsageLimit)
+                        @Html.HiddenFor(model => model.CreatedBy)
+                        @Html.HiddenFor(model => model.CreatedDate)
+                        @Html.HiddenFor(model => model.IsActive)
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Tên khuyến mãi</label>
+                                    <div class="form-control-plaintext fw-bold">@Model.PromotionName</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Loại giảm giá</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.DiscountType == "Percentage")
+                                        {
+                                            <span class="badge bg-info">Phần trăm (%)</span>
+                                        }
+                                        else if (Model.DiscountType == "FixedAmount")
+                                        {
+                                            <span class="badge bg-warning">Tiền (VNĐ)</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@Model.DiscountType</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Giảm tối đa (Admin thiết lập)</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.MaxDiscountAmount.HasValue)
+                                        {
+                                            <span class="text-danger fw-bold">@Model.MaxDiscountAmount.Value.ToString("N0") VNĐ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không giới hạn</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.DiscountValue, "Giá trị giảm *", new { @class = "form-label fw-bold" })
+                                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập giá trị giảm", max = Model.MaxDiscountAmount } })
+                                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        @if (Model.MaxDiscountAmount.HasValue)
+                                        {
+                                            <span>Tối đa: @Model.MaxDiscountAmount.Value.ToString("N0") VNĐ</span>
+                                        }
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Ngày bắt đầu</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-primary">@Model.StartDate.ToString("dd/MM/yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Ngày kết thúc</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-warning">@Model.EndDate.ToString("dd/MM/yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Trạng thái</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.IsActive == true)
+                                        {
+                                            <span class="badge bg-success">Hoạt động</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Không hoạt động</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Giới hạn sử dụng</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.UsageLimit.HasValue)
+                                        {
+                                            <span class="text-muted">@Model.UsageLimit.Value lần</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Không giới hạn</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold text-muted">Mô tả</label>
+                            <div class="form-control-plaintext">
+                                @if (!string.IsNullOrEmpty(Model.Description))
+                                {
+                                    @Model.Description
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Không có mô tả</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="alert alert-warning py-2">
+                                <small>
+                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                    <strong>Lưu ý:</strong><br>
+                                    • Chỉ có thể chỉnh sửa <strong>Giá trị giảm</strong><br>
+                                    • Giá trị giảm không được vượt quá <strong>Giảm tối đa</strong> do Admin thiết lập<br>
+                                    • Các thông tin khác chỉ để tham khảo, không thể chỉnh sửa
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Lưu thay đổi
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.UsageLimit)
-                @Html.EditorFor(model => model.UsageLimit, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UsageLimit, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.UsedCount)
-                @Html.EditorFor(model => model.UsedCount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UsedCount, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.CreatedBy, "Nhân viên tạo")
-                @Html.DropDownList("CreatedBy", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group mb-3">
-                @Html.LabelFor(model => model.CreatedDate)
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-            <div class="text-center mt-4">
-                <input type="submit" value="Lưu thay đổi" class="btn btn-primary px-4 py-2 mr-2" />
-                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
-            </div>
         </div>
-    }
+    </div>
 </div>
 
-<style>
-    .card { border: none; }
-    .mr-2 { margin-right: 0.5em; }
-    .form-check-input { margin-left: 0; }
-    @@media (max-width: 768px) {
-        .container { font-size: 0.97em; }
-        .mb-4 { margin-bottom: 1rem !important; }
-    }
-</style>
+<script>
+    // Client-side validation to ensure DiscountValue doesn't exceed MaxDiscountAmount
+    document.addEventListener('DOMContentLoaded', function() {
+        const discountValueInput = document.querySelector('input[name="DiscountValue"]');
+        const maxDiscountAmount = @(Model.MaxDiscountAmount.HasValue ? Model.MaxDiscountAmount.Value : 0);
+        
+        if (discountValueInput && maxDiscountAmount > 0) {
+            discountValueInput.addEventListener('input', function() {
+                const value = parseFloat(this.value) || 0;
+                if (value > maxDiscountAmount) {
+                    this.setCustomValidity('Giá trị giảm không được vượt quá ' + maxDiscountAmount.toLocaleString() + ' VNĐ');
+                    this.classList.add('is-invalid');
+                } else {
+                    this.setCustomValidity('');
+                    this.classList.remove('is-invalid');
+                }
+            });
+        }
+    });
+</script>

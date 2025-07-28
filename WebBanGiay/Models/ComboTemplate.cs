@@ -12,24 +12,34 @@ namespace WebBanGiay.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductCombo
+    public partial class ComboTemplate
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductCombo()
+        public ComboTemplate()
         {
-            this.ProductComboDetails = new HashSet<ProductComboDetail>();
+            this.ComboTemplateDetails = new HashSet<ComboTemplateDetail>();
         }
     
-        public int ComboID { get; set; }
-        public string ComboName { get; set; }
+        public int TemplateID { get; set; }
+        public string TemplateName { get; set; }
         public string Description { get; set; }
+        public decimal OriginalPrice { get; set; }
         public decimal ComboPrice { get; set; }
+        public int ProductCount { get; set; }
         public string ImageURL { get; set; }
         public bool IsActive { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public string Category { get; set; }
+        public string Difficulty { get; set; }
+        public Nullable<int> EstimatedDuration { get; set; }
+        public string Tags { get; set; }
     
+        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductComboDetail> ProductComboDetails { get; set; }
+        public virtual ICollection<ComboTemplateDetail> ComboTemplateDetails { get; set; }
     }
 }

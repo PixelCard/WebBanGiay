@@ -40,7 +40,7 @@ namespace WebBanGiay.Controllers
 
                 // Phân quyền chuyển trang
                 if (account.Role.TenRole == "Admin")
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    return RedirectToAction("Index", "AdminPage", new { area = "Admin" });
                 else if (account.Role.TenRole == "Employess") 
                     return RedirectToAction("OrdersByDate", "Statistics", new { area = "NhanVienBanHang" });
                 else

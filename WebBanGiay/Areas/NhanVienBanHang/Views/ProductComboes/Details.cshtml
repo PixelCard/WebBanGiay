@@ -4,34 +4,171 @@
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
 }
 
-<div class="container mx-auto max-w-xl px-4 py-8">
-    <h2 class="mb-6 text-center text-2xl font-bold text-blue-900 tracking-wide">Chi tiết combo sản phẩm</h2>
-    <div class="bg-white rounded-lg shadow p-6">
-        <dl class="grid grid-cols-1 gap-y-4">
-            <div class="flex justify-between border-b pb-2">
-                <dt class="font-semibold text-gray-700">Tên combo</dt>
-                <dd class="text-blue-800">@Model.ComboName</dd>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Chi tiết combo sản phẩm
+                    </h3>
+                    <div class="d-flex gap-2">
+                        <a href="@Url.Action("Edit", new { id = Model.ComboID })" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit me-1"></i>Sửa
+                        </a>
+                        <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Tên combo</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-primary fw-bold">@Model.ComboName</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Giá combo</label>
+                                        <div class="form-control-plaintext">
+                                            <span class="text-success fw-bold fs-5">@Model.ComboPrice.ToString("N0") VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Ngày bắt đầu</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.startDate.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.startDate.Value.ToString("dd/MM/yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Chưa có ngày</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label fw-bold text-muted">Ngày kết thúc</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.endDate.HasValue)
+                                            {
+                                                <span class="text-muted">@Model.endDate.Value.ToString("dd/MM/yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted fst-italic">Chưa có ngày</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold text-muted">Mô tả</label>
+                                <div class="form-control-plaintext">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        @Model.Description
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Không có mô tả</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold text-muted">Ảnh đại diện</label>
+                                <div class="form-control-plaintext">
+                                    @if (!string.IsNullOrEmpty(Model.ImageURL))
+                                    {
+                                        <span class="text-muted">@Model.ImageURL</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Không có ảnh</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-chart-line me-1"></i>Trạng thái combo
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-muted small">Trạng thái</label>
+                                        <div class="form-control-plaintext">
+                                            @if (Model.IsActive)
+                                            {
+                                                <span class="badge bg-success">Hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Không hoạt động</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    @if (Model.endDate.HasValue)
+                                    {
+                                        var daysLeft = (Model.endDate.Value - DateTime.Now).Days;
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold text-muted small">Thời gian còn lại</label>
+                                            <div class="form-control-plaintext">
+                                                @if (daysLeft > 0)
+                                                {
+                                                    if (daysLeft <= 7)
+                                                    {
+                                                        <span class="badge bg-warning">Còn @daysLeft ngày</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-info">Còn @daysLeft ngày</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Đã hết hạn</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-muted small">Quy định</label>
+                                        <div class="form-control-plaintext">
+                                            <ul class="list-unstyled small text-muted">
+                                                <li><i class="fas fa-check text-success me-1"></i>Theo mẫu có sẵn</li>
+                                                <li><i class="fas fa-check text-success me-1"></i>Giá trong phạm vi</li>
+                                                <li><i class="fas fa-check text-success me-1"></i>Sản phẩm còn hàng</li>
+                                                <li><i class="fas fa-check text-success me-1"></i>Thời hạn hợp lệ</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="flex justify-between border-b pb-2">
-                <dt class="font-semibold text-gray-700">Mô tả</dt>
-                <dd class="text-blue-800">@Model.Description</dd>
-            </div>
-            <div class="flex justify-between border-b pb-2">
-                <dt class="font-semibold text-gray-700">Giá combo</dt>
-                <dd class="text-blue-800">@Model.ComboPrice.ToString("N0") VNĐ</dd>
-            </div>
-            <div class="flex justify-between border-b pb-2">
-                <dt class="font-semibold text-gray-700">Ảnh đại diện</dt>
-                <dd class="text-blue-800">@Model.ImageURL</dd>
-            </div>
-            <div class="flex justify-between">
-                <dt class="font-semibold text-gray-700">Kích hoạt</dt>
-                <dd>@(Model.IsActive ? "Có" : "Không")</dd>
-            </div>
-        </dl>
-        <div class="flex justify-end gap-2 mt-6">
-            @Html.ActionLink("Sửa", "Edit", new { id = Model.ComboID }, new { @class = "btn bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded shadow transition" })
-            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded shadow transition" })
         </div>
     </div>
 </div>

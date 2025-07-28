@@ -1,178 +1,335 @@
 ﻿@model WebBanGiay.Models.Order
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Chỉnh sửa đơn hàng";
     Layout = "~/Areas/NhanVienBanHang/Views/Shared/_Layout_NVBH.cshtml";
+    var isShipped = Model.Status == "Shipped";
+    var isDisabled = isShipped ? "disabled" : "";
 }
 
-<div class="container mx-auto px-4 py-8">
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Chỉnh sửa đơn hàng #@Model.OrderNumber</h1>
-        <a href="@Url.Action("Index")" class="text-blue-600 hover:text-blue-800 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-            </svg>
-            Quay lại danh sách
-        </a>
-    </div>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Thông tin đơn hàng</h3>
-            </div>
-
-            <div class="px-6 py-4">
-                @Html.ValidationSummary(true, "", new { @class = "text-red-600 mb-4" })
-                @Html.HiddenFor(model => model.OrderID)
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Column 1 -->
-                    <div class="space-y-4">
-                        <div>
-                            @Html.LabelFor(model => model.OrderNumber, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.OrderNumber, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.OrderNumber, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.CustomerID, "CustomerID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                            @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @{
-                                var status = Model.Status as string;
-                                if (status == "Delivered")
-                                {
-                                    <span class="block px-3 py-2 bg-gray-100 rounded">@status</span>
-                                    @Html.HiddenFor(model => model.Status)
-                                }
-                                else if (status == "Pending" || status == "Processing")
-                                {
-                                    var options = new List<SelectListItem> {
-                                        new SelectListItem { Text = status, Value = status, Selected = true },
-                                        new SelectListItem { Text = "Shipped", Value = "Shipped" },
-                                        new SelectListItem { Text = "Cancelled", Value = "Cancelled" }
-                                    };
-                                    @Html.DropDownListFor(model => model.Status, options.Distinct(new SelectListItemComparer()), new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                                }
-                                else
-                                {
-                                    <span class="block px-3 py-2 bg-gray-100 rounded">@status</span>
-                                    @Html.HiddenFor(model => model.Status)
-                                }
-                            }
-                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-                    </div>
-
-                    <!-- Column 2 -->
-                    <div class="space-y-4">
-                        <div>
-                            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.PaymentMethodID, "PaymentMethodID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.DropDownList("PaymentMethodID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                            @Html.ValidationMessageFor(model => model.PaymentMethodID, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-                        <div>
-                            @Html.LabelFor(model => model.PaymentStatus, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.EditorFor(model => model.PaymentStatus, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                            @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-
-
-                        <div>
-                            @Html.LabelFor(model => model.ShippingID, "ShippingID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                            @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                            @Html.ValidationMessageFor(model => model.ShippingID, "", new { @class = "text-red-600 text-sm" })
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-edit me-2"></i>Chỉnh sửa đơn hàng #@Model.OrderNumber
+                    </h3>
                 </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.OrderID)
+                        @Html.HiddenFor(model => model.OrderNumber)
+                        @Html.HiddenFor(model => model.OrderDate)
+                        @Html.HiddenFor(model => model.SubTotal)
+                        @Html.HiddenFor(model => model.DiscountAmount)
+                        @Html.HiddenFor(model => model.TotalAmount)
+                        @Html.HiddenFor(model => model.PaymentMethodID)
+                        @Html.HiddenFor(model => model.PromotionID)
+                        @Html.HiddenFor(model => model.ProcessedBy)
+                        @Html.HiddenFor(model => model.ProcessedDate)
+                        @Html.HiddenFor(model => model.Notes)
 
-                <!-- Additional fields -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-red-600 text-sm" })
-                    </div>
+                        if (isShipped)
+                        {
+                            <div class="alert alert-warning mb-3">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Lưu ý:</strong> Đơn hàng đã được giao (Shipped) - không thể chỉnh sửa thông tin.
+                            </div>
+                        }
+                        
 
-                    <div>
-                        @Html.LabelFor(model => model.PromotionID, "PromotionID", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.DropDownList("PromotionID", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                        @Html.ValidationMessageFor(model => model.PromotionID, "", new { @class = "text-red-600 text-sm" })
-                    </div>
 
-                    <div>
-                        @Html.LabelFor(model => model.ProcessedBy, "ProcessedBy", htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.DropDownList("ProcessedBy", null, htmlAttributes: new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" })
-                        @Html.ValidationMessageFor(model => model.ProcessedBy, "", new { @class = "text-red-600 text-sm" })
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Mã đơn hàng</label>
+                                    <div class="form-control-plaintext fw-bold">@Model.OrderNumber</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Ngày đặt hàng</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-primary">@(Model.OrderDate?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa có ngày")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div>
-                        @Html.LabelFor(model => model.ProcessedDate, htmlAttributes: new { @class = "block text-sm font-medium text-gray-700 mb-1" })
-                        @Html.EditorFor(model => model.ProcessedDate, new { htmlAttributes = new { @class = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" } })
-                        @Html.ValidationMessageFor(model => model.ProcessedDate, "", new { @class = "text-red-600 text-sm" })
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Tổng tiền hàng</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-success fw-bold">@(Model.SubTotal.ToString("N0") ?? "0") VNĐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Giảm giá</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-warning">@(Model.DiscountAmount?.ToString("N0") ?? "0") VNĐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Tổng thanh toán</label>
+                                    <div class="form-control-plaintext">
+                                        <span class="text-danger fw-bold fs-5">@(Model.TotalAmount.ToString("N0") ?? "0") VNĐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Phương thức thanh toán</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.PaymentMethod != null)
+                                        {
+                                            <span class="text-muted">@Model.PaymentMethod.MethodName</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.CustomerID, "Khách hàng *", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("CustomerID", null, "Chọn khách hàng", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.Status, "Trạng thái đơn hàng *", new { @class = "form-label fw-bold" })
+                                    @{
+                                        var statusOptions = new List<SelectListItem>();
+                                        
+                                        if (Model.Status == "Pending")
+                                        {
+                                            statusOptions.Add(new SelectListItem { Text = "Chờ xử lý", Value = "Pending", Selected = true });
+                                            statusOptions.Add(new SelectListItem { Text = "Đang xử lý", Value = "Processing" });
+                                            statusOptions.Add(new SelectListItem { Text = "Đã giao hàng", Value = "Shipped" });
+                                            statusOptions.Add(new SelectListItem { Text = "Đã hủy", Value = "Cancelled" });
+                                        }
+                                        else if (Model.Status == "Processing")
+                                        {
+                                            statusOptions.Add(new SelectListItem { Text = "Chờ xử lý", Value = "Pending" });
+                                            statusOptions.Add(new SelectListItem { Text = "Đang xử lý", Value = "Processing", Selected = true });
+                                            statusOptions.Add(new SelectListItem { Text = "Đã giao hàng", Value = "Shipped" });
+                                            statusOptions.Add(new SelectListItem { Text = "Đã hủy", Value = "Cancelled" });
+                                        }
+                                        else if (Model.Status == "Shipped")
+                                        {
+                                            statusOptions.Add(new SelectListItem { Text = "Đã giao hàng", Value = "Shipped", Selected = true });
+                                        }
+                                        else if (Model.Status == "Delivered")
+                                        {
+                                            statusOptions.Add(new SelectListItem { Text = "Đã giao hàng", Value = "Shipped" });
+                                            statusOptions.Add(new SelectListItem { Text = "Đã nhận hàng", Value = "Delivered", Selected = true });
+                                        }
+                                        else
+                                        {
+                                            statusOptions.Add(new SelectListItem { Text = Model.Status, Value = Model.Status, Selected = true });
+                                        }
+                                    }
+                                    @Html.DropDownListFor(model => model.Status, statusOptions, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.PaymentStatus, "Trạng thái thanh toán *", new { @class = "form-label fw-bold" })
+                                    @{
+                                        var paymentStatusOptions = new List<SelectListItem>();
+                                        
+                                        if (Model.PaymentStatus == "Pending")
+                                        {
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Chờ thanh toán", Value = "Pending", Selected = true });
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Paid" });
+                                        }
+                                        else if (Model.PaymentStatus == "Paid")
+                                        {
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Chờ thanh toán", Value = "Pending" });
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Paid", Selected = true });
+                                        }
+                                        else if (Model.PaymentStatus == "Failed" || Model.PaymentStatus == "Refunded")
+                                        {
+                                            // Nếu đã Failed hoặc Refunded, chỉ có thể chuyển về Pending
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Chờ thanh toán", Value = "Pending" });
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Paid" });
+                                            paymentStatusOptions.Add(new SelectListItem { Text = Model.PaymentStatus == "Failed" ? "Thanh toán thất bại" : "Đã hoàn tiền", Value = Model.PaymentStatus, Selected = true });
+                                        }
+                                        else
+                                        {
+                                            // Trường hợp mặc định
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Chờ thanh toán", Value = "Pending", Selected = true });
+                                            paymentStatusOptions.Add(new SelectListItem { Text = "Đã thanh toán", Value = "Paid" });
+                                        }
+                                    }
+                                    @Html.DropDownListFor(model => model.PaymentStatus, paymentStatusOptions, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-danger small" })
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Nhân viên chỉ có thể chuyển giữa "Chờ thanh toán" và "Đã thanh toán"
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    @Html.LabelFor(model => model.ShippingID, "Địa chỉ giao hàng *", new { @class = "form-label fw-bold" })
+                                    @Html.DropDownList("ShippingID", null, "Chọn địa chỉ giao hàng", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ShippingID, "", new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Khuyến mãi</label>
+                                    <div class="form-control-plaintext">
+                                        @if (Model.Promotion != null)
+                                        {
+                                            <span class="badge bg-info">@Model.Promotion.PromotionName</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fst-italic">Không có khuyến mãi</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold text-muted">Ghi chú</label>
+                                    <div class="form-control-plaintext">
+                                        @if (!string.IsNullOrEmpty(Model.Notes))
+                                        {
+                                            @Model.Notes
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fst-italic">Không có ghi chú</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="alert alert-info py-2">
+                                <small>
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    <strong>Lưu ý:</strong><br>
+                                    • Chỉ có thể chỉnh sửa: <strong>Khách hàng</strong>, <strong>Trạng thái đơn hàng</strong>, <strong>Trạng thái thanh toán</strong>, <strong>Địa chỉ giao hàng</strong><br>
+                                    • Khi trạng thái chuyển sang <strong>"Đã giao hàng"</strong>, không thể chỉnh sửa thêm<br>
+                                    • Các thông tin khác chỉ để tham khảo
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Lưu thay đổi
+                                </button>
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                                </a>
+                            </div>
+                        </div>
+                    }
                 </div>
-            </div>
-
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end">
-                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                    Lưu thay đổi
-                </button>
             </div>
         </div>
-    }
+    </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-@functions {
-    public class SelectListItemComparer : IEqualityComparer<SelectListItem>
-    {
-        public bool Equals(SelectListItem x, SelectListItem y)
-        {
-            return x.Value == y.Value;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusSelect = document.querySelector('select[name="Status"]');
+        const form = document.querySelector('form');
+        
+        // Kiểm tra trạng thái hiện tại khi trang load
+        if (statusSelect && statusSelect.value === 'Shipped') {
+            // Nếu đã Shipped, disable form
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (input !== statusSelect) {
+                    input.disabled = true;
+                }
+            });
+            
+            // Disable submit button
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+            }
         }
-        public int GetHashCode(SelectListItem obj)
-        {
-            return obj.Value.GetHashCode();
+        
+        if (statusSelect) {
+            statusSelect.addEventListener('change', function() {
+                if (this.value === 'Shipped') {
+                    // Disable all form inputs when status is Shipped
+                    const inputs = form.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        if (input !== statusSelect) {
+                            input.disabled = true;
+                        }
+                    });
+                    
+                    // Disable submit button
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                    }
+                    
+                    // Show warning message
+                    const warningDiv = document.createElement('div');
+                    warningDiv.className = 'alert alert-warning mt-3';
+                    warningDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i><strong>Lưu ý:</strong> Đơn hàng đã được giao - không thể chỉnh sửa thêm thông tin.';
+                    
+                    const existingWarning = form.querySelector('.alert-warning');
+                    if (!existingWarning) {
+                        form.insertBefore(warningDiv, form.querySelector('.form-group.mt-3'));
+                    }
+                } else {
+                    // Re-enable form inputs when status is not Shipped
+                    const inputs = form.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        if (input.name === 'CustomerID' || input.name === 'PaymentStatus' || input.name === 'ShippingID') {
+                            input.disabled = false;
+                        }
+                    });
+                    
+                    // Enable submit button
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                    }
+                    
+                    // Remove warning message
+                    const warningDiv = form.querySelector('.alert-warning');
+                    if (warningDiv) {
+                        warningDiv.remove();
+                    }
+                }
+            });
         }
-    }
-}
+    });
+</script>
