@@ -196,6 +196,7 @@
     <EntitySetMapping Name="Accounts">
       <EntityTypeMapping TypeName="CNPM_LTModel.Account">
         <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="statusAccountID" ColumnName="statusAccountID" />
           <ScalarProperty Name="IDRole" ColumnName="IDRole" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -415,6 +416,14 @@
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
           <ScalarProperty Name="TemplateDetailID" ColumnName="TemplateDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="statusAccounts">
+      <EntityTypeMapping TypeName="CNPM_LTModel.statusAccount">
+        <MappingFragment StoreEntitySet="statusAccount">
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="statusAccountID" ColumnName="statusAccountID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

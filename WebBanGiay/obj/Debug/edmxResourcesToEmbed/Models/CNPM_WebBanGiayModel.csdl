@@ -475,6 +475,15 @@
       <End Role="ProductVariant" EntitySet="ProductVariants" />
       <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetails" />
     </AssociationSet>
+    <EntitySet Name="statusAccounts" EntityType="CNPM_LTModel.statusAccount" />
+    <AssociationSet Name="FK__Account__FK_stat__7755B73D" Association="CNPM_LTModel.FK__Account__FK_stat__7755B73D">
+      <End Role="statusAccount" EntitySet="statusAccounts" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_statusAccountID" Association="CNPM_LTModel.FK_statusAccountID">
+      <End Role="statusAccount" EntitySet="statusAccounts" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -500,6 +509,9 @@
     <NavigationProperty Name="Employees" Relationship="CNPM_LTModel.FK_Account_Employees" FromRole="Account" ToRole="Employee" />
     <NavigationProperty Name="Admins" Relationship="CNPM_LTModel.FK_Account_Admins" FromRole="Account" ToRole="Admin" />
     <NavigationProperty Name="Customers" Relationship="CNPM_LTModel.FK_Account_Customer" FromRole="Account" ToRole="Customer" />
+    <Property Name="statusAccountID" Type="Int32" />
+    <NavigationProperty Name="statusAccount" Relationship="CNPM_LTModel.FK__Account__FK_stat__7755B73D" FromRole="Account" ToRole="statusAccount" />
+    <NavigationProperty Name="statusAccount1" Relationship="CNPM_LTModel.FK_statusAccountID" FromRole="Account" ToRole="statusAccount" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -1155,6 +1167,39 @@
       </Principal>
       <Dependent Role="ComboTemplateDetail">
         <PropertyRef Name="VariantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="statusAccount">
+    <Key>
+      <PropertyRef Name="statusAccountID" />
+    </Key>
+    <Property Name="statusAccountID" Type="Int32" Nullable="false" />
+    <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accounts" Relationship="CNPM_LTModel.FK__Account__FK_stat__7755B73D" FromRole="statusAccount" ToRole="Account" />
+    <NavigationProperty Name="Accounts1" Relationship="CNPM_LTModel.FK_statusAccountID" FromRole="statusAccount" ToRole="Account" />
+  </EntityType>
+  <Association Name="FK__Account__FK_stat__7755B73D">
+    <End Type="CNPM_LTModel.statusAccount" Role="statusAccount" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="statusAccount">
+        <PropertyRef Name="statusAccountID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="statusAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_statusAccountID">
+    <End Type="CNPM_LTModel.statusAccount" Role="statusAccount" Multiplicity="0..1" />
+    <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="statusAccount">
+        <PropertyRef Name="statusAccountID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="statusAccountID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

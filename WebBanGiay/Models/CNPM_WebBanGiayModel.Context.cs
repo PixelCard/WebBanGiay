@@ -56,6 +56,7 @@ namespace WebBanGiay.Models
         public virtual DbSet<LoaiKhachHang> LoaiKhachHangs { get; set; }
         public virtual DbSet<ComboTemplate> ComboTemplates { get; set; }
         public virtual DbSet<ComboTemplateDetail> ComboTemplateDetails { get; set; }
+        public virtual DbSet<statusAccount> statusAccounts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

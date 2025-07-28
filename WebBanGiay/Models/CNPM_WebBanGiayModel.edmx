@@ -14,6 +14,7 @@
           <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IDRole" Type="int" />
+          <Property Name="statusAccountID" Type="int" />
         </EntityType>
         <EntityType Name="Admins">
           <Key>
@@ -359,6 +360,13 @@
           <Property Name="SizeType" Type="nvarchar" MaxLength="20" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="statusAccount">
+          <Key>
+            <PropertyRef Name="statusAccountID" />
+          </Key>
+          <Property Name="statusAccountID" Type="int" Nullable="false" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -369,6 +377,18 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK__Account__FK_stat__7755B73D">
+          <End Role="statusAccount" Type="Self.statusAccount" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusAccount">
+              <PropertyRef Name="statusAccountID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="statusAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Employees__Creat__2F10007B">
           <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
           <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
@@ -851,6 +871,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_statusAccountID">
+          <End Role="statusAccount" Type="Self.statusAccount" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusAccount">
+              <PropertyRef Name="statusAccountID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="statusAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -911,7 +943,12 @@
           <EntitySet Name="Shipping" EntityType="Self.Shipping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="statusAccount" EntityType="Self.statusAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__FK_stat__7755B73D" Association="Self.FK__Account__FK_stat__7755B73D">
+            <End Role="statusAccount" EntitySet="statusAccount" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
           <AssociationSet Name="FK__Employees__Creat__2F10007B" Association="Self.FK__Employees__Creat__2F10007B">
             <End Role="Admins" EntitySet="Admins" />
             <End Role="Employees" EntitySet="Employees" />
@@ -1071,6 +1108,10 @@
           <AssociationSet Name="FK_Shipping" Association="Self.FK_Shipping">
             <End Role="Shipping" EntitySet="Shipping" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_statusAccountID" Association="Self.FK_statusAccountID">
+            <End Role="statusAccount" EntitySet="statusAccount" />
+            <End Role="Account" EntitySet="Account" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1552,6 +1593,15 @@
             <End Role="ProductVariant" EntitySet="ProductVariants" />
             <End Role="ComboTemplateDetail" EntitySet="ComboTemplateDetails" />
           </AssociationSet>
+          <EntitySet Name="statusAccounts" EntityType="CNPM_LTModel.statusAccount" />
+          <AssociationSet Name="FK__Account__FK_stat__7755B73D" Association="CNPM_LTModel.FK__Account__FK_stat__7755B73D">
+            <End Role="statusAccount" EntitySet="statusAccounts" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_statusAccountID" Association="CNPM_LTModel.FK_statusAccountID">
+            <End Role="statusAccount" EntitySet="statusAccounts" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1577,6 +1627,9 @@
           <NavigationProperty Name="Employees" Relationship="CNPM_LTModel.FK_Account_Employees" FromRole="Account" ToRole="Employee" />
           <NavigationProperty Name="Admins" Relationship="CNPM_LTModel.FK_Account_Admins" FromRole="Account" ToRole="Admin" />
           <NavigationProperty Name="Customers" Relationship="CNPM_LTModel.FK_Account_Customer" FromRole="Account" ToRole="Customer" />
+          <Property Name="statusAccountID" Type="Int32" />
+          <NavigationProperty Name="statusAccount" Relationship="CNPM_LTModel.FK__Account__FK_stat__7755B73D" FromRole="Account" ToRole="statusAccount" />
+          <NavigationProperty Name="statusAccount1" Relationship="CNPM_LTModel.FK_statusAccountID" FromRole="Account" ToRole="statusAccount" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2235,6 +2288,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="statusAccount">
+          <Key>
+            <PropertyRef Name="statusAccountID" />
+          </Key>
+          <Property Name="statusAccountID" Type="Int32" Nullable="false" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Accounts" Relationship="CNPM_LTModel.FK__Account__FK_stat__7755B73D" FromRole="statusAccount" ToRole="Account" />
+          <NavigationProperty Name="Accounts1" Relationship="CNPM_LTModel.FK_statusAccountID" FromRole="statusAccount" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Account__FK_stat__7755B73D">
+          <End Type="CNPM_LTModel.statusAccount" Role="statusAccount" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusAccount">
+              <PropertyRef Name="statusAccountID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="statusAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_statusAccountID">
+          <End Type="CNPM_LTModel.statusAccount" Role="statusAccount" Multiplicity="0..1" />
+          <End Type="CNPM_LTModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusAccount">
+              <PropertyRef Name="statusAccountID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="statusAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2436,6 +2522,7 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="CNPM_LTModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="statusAccountID" ColumnName="statusAccountID" />
                 <ScalarProperty Name="IDRole" ColumnName="IDRole" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -2655,6 +2742,14 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
                 <ScalarProperty Name="TemplateDetailID" ColumnName="TemplateDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statusAccounts">
+            <EntityTypeMapping TypeName="CNPM_LTModel.statusAccount">
+              <MappingFragment StoreEntitySet="statusAccount">
+                <ScalarProperty Name="statusName" ColumnName="statusName" />
+                <ScalarProperty Name="statusAccountID" ColumnName="statusAccountID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

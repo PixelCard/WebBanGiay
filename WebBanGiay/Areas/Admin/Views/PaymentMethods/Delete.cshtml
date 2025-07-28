@@ -1,0 +1,167 @@
+﻿@model WebBanGiay.Models.PaymentMethod
+
+@{
+    ViewBag.Title = "Xóa phương thức thanh toán";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <h4 class="card-title mb-0 text-white">
+                        <i class="fa fa-exclamation-triangle me-2"></i>Xác nhận xóa phương thức thanh toán
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading">
+                            <i class="fa fa-warning me-2"></i>Cảnh báo!
+                        </h5>
+                        <p class="mb-0">Bạn có chắc chắn muốn xóa phương thức thanh toán này không? Hành động này không thể hoàn tác.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="info-group">
+                                <label class="info-label">
+                                    <i class="fa fa-credit-card me-1"></i>Tên phương thức
+                                </label>
+                                <div class="info-value">
+                                    @Html.DisplayFor(model => model.MethodName)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="info-group">
+                                <label class="info-label">
+                                    <i class="fa fa-toggle-on me-1"></i>Trạng thái
+                                </label>
+                                <div class="info-value">
+                                    @if (Model.IsActive)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="fa fa-check-circle me-1"></i>Hoạt động
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="fa fa-times-circle me-1"></i>Không hoạt động
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="info-group">
+                                <label class="info-label">
+                                    <i class="fa fa-info-circle me-1"></i>Mô tả
+                                </label>
+                                <div class="info-value">
+                                    @if (!string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        @Html.DisplayFor(model => model.Description)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Không có mô tả</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mt-4">
+                            <div class="d-flex justify-content-between">
+                                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                                    <i class="fa fa-arrow-left me-1"></i>Hủy bỏ
+                                </a>
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-trash me-1"></i>Xác nhận xóa
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 15px;
+}
+
+.card-header.bg-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+    border-radius: 15px 15px 0 0 !important;
+    border: none;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
+.info-group {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #e74c3c;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.info-value {
+    font-size: 1.1em;
+    color: #495057;
+    font-weight: 500;
+}
+
+.badge {
+    font-size: 0.9em;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+.btn {
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+}
+</style>

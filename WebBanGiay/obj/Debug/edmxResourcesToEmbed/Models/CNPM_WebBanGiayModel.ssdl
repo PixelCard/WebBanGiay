@@ -9,6 +9,7 @@
     <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="IDRole" Type="int" />
+    <Property Name="statusAccountID" Type="int" />
   </EntityType>
   <EntityType Name="Admins">
     <Key>
@@ -354,6 +355,13 @@
     <Property Name="SizeType" Type="nvarchar" MaxLength="20" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
+  <EntityType Name="statusAccount">
+    <Key>
+      <PropertyRef Name="statusAccountID" />
+    </Key>
+    <Property Name="statusAccountID" Type="int" Nullable="false" />
+    <Property Name="statusName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
@@ -364,6 +372,18 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <Association Name="FK__Account__FK_stat__7755B73D">
+    <End Role="statusAccount" Type="Self.statusAccount" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="statusAccount">
+        <PropertyRef Name="statusAccountID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="statusAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Employees__Creat__2F10007B">
     <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
     <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
@@ -846,6 +866,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_statusAccountID">
+    <End Role="statusAccount" Type="Self.statusAccount" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="statusAccount">
+        <PropertyRef Name="statusAccountID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="statusAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -906,7 +938,12 @@
     <EntitySet Name="Shipping" EntityType="Self.Shipping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="statusAccount" EntityType="Self.statusAccount" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Account__FK_stat__7755B73D" Association="Self.FK__Account__FK_stat__7755B73D">
+      <End Role="statusAccount" EntitySet="statusAccount" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
     <AssociationSet Name="FK__Employees__Creat__2F10007B" Association="Self.FK__Employees__Creat__2F10007B">
       <End Role="Admins" EntitySet="Admins" />
       <End Role="Employees" EntitySet="Employees" />
@@ -1066,6 +1103,10 @@
     <AssociationSet Name="FK_Shipping" Association="Self.FK_Shipping">
       <End Role="Shipping" EntitySet="Shipping" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_statusAccountID" Association="Self.FK_statusAccountID">
+      <End Role="statusAccount" EntitySet="statusAccount" />
+      <End Role="Account" EntitySet="Account" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

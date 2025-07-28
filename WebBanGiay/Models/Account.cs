@@ -27,6 +27,7 @@ namespace WebBanGiay.Models
         public string PasswordHash { get; set; }
         public string UserName { get; set; }
         public Nullable<int> IDRole { get; set; }
+        public Nullable<int> statusAccountID { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -35,5 +36,7 @@ namespace WebBanGiay.Models
         public virtual ICollection<Admin> Admins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
+        public virtual statusAccount statusAccount { get; set; }
+        public virtual statusAccount statusAccount1 { get; set; }
     }
 }
