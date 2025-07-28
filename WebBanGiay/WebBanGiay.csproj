@@ -496,7 +496,7 @@
     <Content Include="Areas\Admin\Views\Promotions\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Promotions\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Accounts\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Accounts\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Block.cshtml" />
     <Content Include="Areas\Admin\Views\Accounts\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Accounts\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Accounts\Index.cshtml" />

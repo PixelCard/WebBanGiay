@@ -69,10 +69,20 @@
                                 <div class="info-value">
                                     @if (Model.statusAccount != null)
                                     {
-                                        <span class="badge bg-success">
-                                            <i class="fa fa-check-circle me-1"></i>
-                                            @Html.DisplayFor(model => model.statusAccount.statusName)
-                                        </span>
+                                        if (Model.statusAccountID == 3)
+                                        {
+                                            <span class="badge bg-danger">
+                                                <i class="fa fa-ban me-1"></i>
+                                                @Html.DisplayFor(model => model.statusAccount.statusName)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="fa fa-check-circle me-1"></i>
+                                                @Html.DisplayFor(model => model.statusAccount.statusName)
+                                            </span>
+                                        }
                                     }
                                     else
                                     {
@@ -123,9 +133,23 @@
                             <a href="@Url.Action("Index")" class="btn btn-secondary">
                                 <i class="fa fa-arrow-left me-1"></i>Quay lại danh sách
                             </a>
-                            <a href="@Url.Action("Edit", new { id = Model.IDTK })" class="btn btn-primary">
-                                <i class="fa fa-edit me-1"></i>Chỉnh sửa
-                            </a>
+                            <div>
+                                <a href="@Url.Action("Edit", new { id = Model.IDTK })" class="btn btn-primary me-2">
+                                    <i class="fa fa-edit me-1"></i>Chỉnh sửa
+                                </a>
+                                @if (Model.statusAccountID != 3)
+                                {
+                                    <a href="@Url.Action("Block", new { id = Model.IDTK })" class="btn btn-warning">
+                                        <i class="fa fa-ban me-1"></i>Khóa tài khoản
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fa fa-ban me-1"></i>Đã khóa
+                                    </button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

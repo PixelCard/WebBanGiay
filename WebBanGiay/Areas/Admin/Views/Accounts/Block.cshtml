@@ -1,7 +1,7 @@
 ﻿@model WebBanGiay.Models.Account
 
 @{
-    ViewBag.Title = "Xóa tài khoản";
+    ViewBag.Title = "Khóa tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
@@ -9,17 +9,17 @@
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
             <div class="card">
-                <div class="card-header bg-danger">
+                <div class="card-header bg-warning">
                     <h4 class="card-title mb-0 text-white">
-                        <i class="fa fa-exclamation-triangle me-2"></i>Xác nhận xóa tài khoản
+                        <i class="fa fa-ban me-2"></i>Xác nhận khóa tài khoản
                     </h4>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning" role="alert">
                         <h5 class="alert-heading">
-                            <i class="fa fa-warning me-2"></i>Cảnh báo!
+                            <i class="fa fa-warning me-2"></i>Thông báo!
                         </h5>
-                        <p class="mb-0">Bạn có chắc chắn muốn xóa tài khoản này không? Hành động này không thể hoàn tác.</p>
+                        <p class="mb-0">Bạn có chắc chắn muốn khóa tài khoản này không? Tài khoản sẽ không thể đăng nhập cho đến khi được mở khóa.</p>
                     </div>
 
                     <div class="row">
@@ -71,15 +71,25 @@
                         <div class="col-md-6 mb-3">
                             <div class="info-group">
                                 <label class="info-label">
-                                    <i class="fa fa-check-circle me-1"></i>Trạng thái tài khoản
+                                    <i class="fa fa-check-circle me-1"></i>Trạng thái hiện tại
                                 </label>
                                 <div class="info-value">
                                     @if (Model.statusAccount != null)
                                     {
-                                        <span class="badge bg-success">
-                                            <i class="fa fa-check-circle me-1"></i>
-                                            @Html.DisplayFor(model => model.statusAccount.statusName)
-                                        </span>
+                                        if (Model.statusAccountID == 3)
+                                        {
+                                            <span class="badge bg-danger">
+                                                <i class="fa fa-ban me-1"></i>
+                                                @Html.DisplayFor(model => model.statusAccount.statusName)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="fa fa-check-circle me-1"></i>
+                                                @Html.DisplayFor(model => model.statusAccount.statusName)
+                                            </span>
+                                        }
                                     }
                                     else
                                     {
@@ -125,17 +135,19 @@
                         </div>
                     </div>
 
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("Block", "Accounts", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.IDTK)
+                        @Html.Hidden("statusAccountID", 3)
 
                         <div class="form-group mt-4">
                             <div class="d-flex justify-content-between">
                                 <a href="@Url.Action("Index")" class="btn btn-secondary">
                                     <i class="fa fa-arrow-left me-1"></i>Hủy bỏ
                                 </a>
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-trash me-1"></i>Xác nhận xóa
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fa fa-ban me-1"></i>Xác nhận khóa
                                 </button>
                             </div>
                         </div>
@@ -153,8 +165,8 @@
     border-radius: 15px;
 }
 
-.card-header.bg-danger {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+.card-header.bg-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
     border-radius: 15px 15px 0 0 !important;
     border: none;
 }
@@ -170,7 +182,7 @@
     background: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
-    border-left: 4px solid #e74c3c;
+    border-left: 4px solid #f39c12;
 }
 
 .info-label {
@@ -204,12 +216,14 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.btn-danger {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+.btn-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     border: none;
+    color: white;
 }
 
-.btn-danger:hover {
-    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+.btn-warning:hover {
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+    color: white;
 }
 </style>

@@ -15,6 +15,16 @@
                     </h4>
                 </div>
                 <div class="card-body">
+                    @if (Model.statusAccountID == 3)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <h5 class="alert-heading">
+                                <i class="fa fa-exclamation-triangle me-2"></i>Tài khoản đã bị khóa!
+                            </h5>
+                            <p class="mb-0">Tài khoản này đã bị khóa và không thể chỉnh sửa. Vui lòng mở khóa tài khoản trước khi chỉnh sửa.</p>
+                        </div>
+                    }
+                    
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
@@ -28,7 +38,7 @@
                                     <label class="form-label">
                                         <i class="fa fa-envelope me-1"></i>Email
                                     </label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập email..." } })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập email...", disabled = Model.statusAccountID == 3 } })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger small" })
                                 </div>
                             </div>
@@ -38,7 +48,7 @@
                                     <label class="form-label">
                                         <i class="fa fa-user me-1"></i>Tên người dùng
                                     </label>
-                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên người dùng..." } })
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên người dùng...", disabled = Model.statusAccountID == 3 } })
                                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger small" })
                                 </div>
                             </div>
@@ -50,7 +60,7 @@
                                     <label class="form-label">
                                         <i class="fa fa-lock me-1"></i>Mật khẩu
                                     </label>
-                                    @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Nhập mật khẩu mới..." } })
+                                    @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Nhập mật khẩu mới...", disabled = Model.statusAccountID == 3 } })
                                     @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger small" })
                                     <small class="form-text text-muted">Để trống nếu không muốn thay đổi mật khẩu</small>
                                 </div>
@@ -61,7 +71,7 @@
                                     <label class="form-label">
                                         <i class="fa fa-shield me-1"></i>Vai trò
                                     </label>
-                                    @Html.DropDownList("IDRole", null, "Chọn vai trò...", new { @class = "form-select" })
+                                    @Html.DropDownList("IDRole", null, "Chọn vai trò...", new { @class = "form-select", disabled = Model.statusAccountID == 3 })
                                     @Html.ValidationMessageFor(model => model.IDRole, "", new { @class = "text-danger small" })
                                 </div>
                             </div>
@@ -73,7 +83,7 @@
                                     <label class="form-label">
                                         <i class="fa fa-check-circle me-1"></i>Trạng thái tài khoản
                                     </label>
-                                    @Html.DropDownList("statusAccountID", null, "Chọn trạng thái...", new { @class = "form-select" })
+                                    @Html.DropDownList("statusAccountID", null, "Chọn trạng thái...", new { @class = "form-select", disabled = Model.statusAccountID == 3 })
                                     @Html.ValidationMessageFor(model => model.statusAccountID, "", new { @class = "text-danger small" })
                                 </div>
                             </div>
@@ -84,7 +94,7 @@
                                 <a href="@Url.Action("Index")" class="btn btn-secondary">
                                     <i class="fa fa-arrow-left me-1"></i>Quay lại danh sách
                                 </a>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" @(Model.statusAccountID == 3 ? "disabled" : "")>
                                     <i class="fa fa-save me-1"></i>Lưu thay đổi
                                 </button>
                             </div>

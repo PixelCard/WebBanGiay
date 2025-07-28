@@ -102,8 +102,8 @@ namespace WebBanGiay.Areas.Admin.Controllers
             return View(account);
         }
 
-        // GET: Admin/Accounts/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Admin/Accounts/Block/5
+        public ActionResult Block(int? id)
         {
             if (id == null)
             {
@@ -117,14 +117,23 @@ namespace WebBanGiay.Areas.Admin.Controllers
             return View(account);
         }
 
-        // POST: Admin/Accounts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Admin/Accounts/Block/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Block(int id, int statusAccountID)
         {
             Account account = db.Accounts.Find(id);
-            db.Accounts.Remove(account);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Cập nhật trạng thái tài khoản thành "Blocked" (statusID = 3)
+            account.statusAccountID = statusAccountID;
+            db.Entry(account).State = EntityState.Modified;
             db.SaveChanges();
+
+            TempData["SuccessMessage"] = "Tài khoản đã được khóa thành công!";
             return RedirectToAction("Index");
         }
 
